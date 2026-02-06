@@ -23,6 +23,7 @@ const VoiceAssistant: React.FC = () => {
     const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
     const nextStartTimeRef = useRef<number>(0);
     const audioQueueRef = useRef<AudioBufferSourceNode[]>([]);
+    const gainNodeRef = useRef<GainNode | null>(null);
 
     // Control Refs
     const sessionPromiseRef = useRef<Promise<any> | null>(null);
@@ -105,6 +106,12 @@ const VoiceAssistant: React.FC = () => {
             // Setup Audio Contexts
             const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
             audioContextRef.current = new AudioContextClass({ sampleRate: 24000 }); // Output rate
+
+            // Setup Output Gain (to increase volume)
+            const gainNode = audioContextRef.current.createGain();
+            gainNode.gain.value = 2.0; // Increase volume by 2.0x (requested "increase")
+            gainNode.connect(audioContextRef.current.destination);
+            gainNodeRef.current = gainNode;
 
             // Input Context (Mic)
             const inputContext = new AudioContextClass({ sampleRate: 16000 });
@@ -203,7 +210,13 @@ const VoiceAssistant: React.FC = () => {
 
                             const source = ctx.createBufferSource();
                             source.buffer = buffer;
-                            source.connect(ctx.destination);
+
+                            // Connect to GainNode for volume boost
+                            if (gainNodeRef.current) {
+                                source.connect(gainNodeRef.current);
+                            } else {
+                                source.connect(ctx.destination);
+                            }
 
                             // Apply 1.05x Speed (Slightly faster but natural)
                             const playbackRate = 1.05;
@@ -340,6 +353,7 @@ const VoiceAssistant: React.FC = () => {
             }
             audioContextRef.current = null;
         }
+        gainNodeRef.current = null;
 
         // Reset queues and timers
         nextStartTimeRef.current = 0;

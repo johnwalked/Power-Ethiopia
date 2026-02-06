@@ -1,0 +1,7 @@
+{
+  "name": "CE Power",
+  "description": "Premium generators and water pumps for industrial and home use.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

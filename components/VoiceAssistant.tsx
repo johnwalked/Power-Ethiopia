@@ -109,7 +109,7 @@ const VoiceAssistant: React.FC = () => {
 
             // Setup Output Gain (to increase volume)
             const gainNode = audioContextRef.current.createGain();
-            gainNode.gain.value = 2.0; // Increase volume by 2.0x (requested "increase")
+            gainNode.gain.value = 1.5; // Adjusted to 1.5x based on user feedback (previous was 2.0x)
             gainNode.connect(audioContextRef.current.destination);
             gainNodeRef.current = gainNode;
 
@@ -168,8 +168,10 @@ const VoiceAssistant: React.FC = () => {
                     - Recommend **Gold Refinement Slurry Pumps** (High Head) for gold washing processes.
                     
                     [LANGUAGE PROTOCOL]
-                    - Current UI Language: ${language}.
-                    - Be fluent in Amharic, English, Chinese, Tigrinya, and Afaan Oromoo.
+                    - **SEAMLESS SWITCHING**: You MUST automatically detect the language the user is speaking and respond in that SAME language immediately.
+                    - **MULTI-LINGUAL**: Be perfectly fluent in Amharic, English, Tigrinya, Afaan Oromoo, and Chinese.
+                    - **NO FRICTION**: Never ask the user to switch languages. Simply adapt and follow their lead.
+                    - Current UI Context: ${language} (Use this as a starting point, but let the user's voice lead).
                     - If speaking Amharic, use natural, flowing native terms. No robotic translation.`,
                 },
                 callbacks: {

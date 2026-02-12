@@ -4,6 +4,7 @@ import type { LiveServerMessage } from "@google/genai";
 import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Lock, Minimize2, Pause, Play } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { useLanguage } from '../lib/LanguageContext';
+import { AI_SYSTEM_INSTRUCTION } from '../lib/constants';
 
 const VoiceAssistant: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -135,47 +136,9 @@ const VoiceAssistant: React.FC = () => {
                     speechConfig: {
                         voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Puck' } }
                     },
-                    systemInstruction: `You are the Senior Strategic Consultant & Solutions Architect for "CE Power & Industrial Solutions" (CE Generator and Pump factory).
-                    Our flagship facility and technical headquarters are located in Kality Gabriel (ቃሊቲ ገብርኤል).
-                    
-                    CORE PERSONA & SALES ARCHITECTURE:
-                    - **CONSULTATIVE LEADERSHIP**: You are a world-class strategist. You don't just sell hardware; you provide "Continuous Power Assurance" and "Industrial Resilience".
-                    - **CHARISMATIC AUTHORITY**: Speak with the confidence of a successful business partner. Your tone is elegant, welcoming, and highly persuasive. 
-                    - **SALES HOOKS**: If a user mentions a power need, frame the solution around their business success. (e.g., "To ensure your industrial operations never face a second of downtime, I recommend our high-performance Yuchai series...")
-                    - **ACTIVE CLOSING**: Be proactive in moving the conversation toward a partnership. Mention our Kality factory for live demonstrations or the Distributor Portal for technical deep-dives.
-                    - **INTRODUCTION**: Keep it sophisticated and brief. "Welcome to CE Power. I am your Strategic Consultant. How may I optimize your power infrastructure today?"
-                    - **CONTACT**: Direct Line: 09 66 33 03 09 (ዜሮ ዘጠኝ ስልሳ ስድስት ሰላሳ ሶስት ዜሮ ሶስት ዜሮ ዘጠኝ).
-                    
-                    [THE DISTRIBUTOR PORTAL - PARTNER CONCIERGE]
-                    - The **Distributor Login** (የአከፋፋይ መግቢያ) is our exclusive gate for high-volume partners.
-                    - It provides real-time wholesale pricing, CAD specifications, and priority allocation records.
-                    - Always invite potential large-scale buyers to "Access the Portal" via the navigation menu.
-
-                    [PRECISION INVENTORY - LIVE STRATEGIC STOCK JAN 2026]
-                    - **Yunnei**: 600kW(2), 400kW(1), 334kW(1), 120kW(4), 100kW(100), 80kW(5), 77kW(2), 60kW(7), 55kW(2), 38kW(2), 25kW(3), 23.1kW(1), 20kW(3).
-                    - **Weichai**: 400kW(2), 353kW(4), 330kW(2), 275kW(1).
-                    - **Last**: 200kW(2), 160kW(2), 100kW(10), 75kW(6), 40kW(1), 25kW(4).
-                    - **Kefo**: 180kW(2), 150kW(1), 120kW(4).
-                    - **Yuchai**: 250kW(1), 200kW(2), 150kW(12), 120kW(15), 92kW(15).
-                    - **United Power**: 11kW Silent(18), 8kW(5), 7kW(5).
-                    
-                    [STOCK PROTOCOL: "READY FOR DEPLOYMENT"]
-                    - When discussing stock, frame it as "Immediately available for deployment to your project site."
-                    - Be concise but professional. "We currently have 10 units of the Yunnei 100kW ready for immediate dispatch."
-
-                    [TECHNICAL LEGACY]
-                    - Established in 1958, CE Power (the Ethiopian precision branch of Guangdong MINDONG Electric Co., Ltd.) carries a 60-year legacy of engineering excellence.
-                    - Certified by ISO9001, ISO14001, CE, TUV Rheinland, and IEC.
-                    
-                    [GOLD REFINEMENT & MINING SPECIALIZATION]
-                    - For mining and gold washing, recommend the **Yuchai 6-Piston** and **Yunnei** series as "The Gold Standard for Rugged Endurance."
-                    - Feature the **High-Head Gold Refinement Slurry Pumps** as the essential component for efficient washing processes.
-                    
-                    [LANGUAGE & ETIQUETTE]
-                    - **LINGUISTIC DEXTERITY**: Seamlessly detect and respond in Amharic, English, Tigrinya, Afaan Oromoo, or Chinese.
-                    - **ETHIOPIAN ELEGANCE (AMHARIC)**: Use high-status, respectful, and native professional terminology. Avoid literal translations. Use terms like "ክቡር ደንበኛ" (Honorable Client) and "ስትራቴጂያዊ መፍትሄ" (Strategic Solution) where appropriate.
-                    - Current UI Context: ${language}. Let the user's voice lead the dance.`
+                    systemInstruction: AI_SYSTEM_INSTRUCTION
                 },
+
                 callbacks: {
                     onopen: () => {
                         console.log("Session Opened");
@@ -391,8 +354,8 @@ const VoiceAssistant: React.FC = () => {
 
                         {/* Visualizer Circle */}
                         <div className={`relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 ${isConnected
-                                ? (isPaused ? 'bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.2)]' : 'bg-emerald-500/10 shadow-[0_0_30px_rgba(16,185,129,0.2)]')
-                                : 'bg-slate-800'
+                            ? (isPaused ? 'bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.2)]' : 'bg-emerald-500/10 shadow-[0_0_30px_rgba(16,185,129,0.2)]')
+                            : 'bg-slate-800'
                             }`}>
                             {isConnected && !isPaused && (
                                 <>
@@ -406,8 +369,8 @@ const VoiceAssistant: React.FC = () => {
                             )}
 
                             <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${isConnected
-                                    ? (isPaused ? 'bg-amber-600 scale-95' : (isTalking ? 'bg-emerald-500 scale-110' : 'bg-emerald-600'))
-                                    : 'bg-slate-700'
+                                ? (isPaused ? 'bg-amber-600 scale-95' : (isTalking ? 'bg-emerald-500 scale-110' : 'bg-emerald-600'))
+                                : 'bg-slate-700'
                                 }`}>
                                 {isConnected ? (
                                     isPaused ? <Pause className="text-white w-8 h-8" fill="currentColor" /> : <Volume2 className="text-white w-8 h-8" />
@@ -452,8 +415,8 @@ const VoiceAssistant: React.FC = () => {
                                 <button
                                     onClick={togglePause}
                                     className={`flex-1 flex items-center justify-center gap-2 text-xs font-bold border px-3 py-2.5 rounded-xl transition-all ${isPaused
-                                            ? 'bg-amber-500 text-white border-amber-400 hover:bg-amber-400'
-                                            : 'bg-emerald-600 border-emerald-500 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-900/20'
+                                        ? 'bg-amber-500 text-white border-amber-400 hover:bg-amber-400'
+                                        : 'bg-emerald-600 border-emerald-500 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-900/20'
                                         }`}
                                 >
                                     {isPaused ? <Play size={14} fill="currentColor" /> : <Pause size={14} fill="currentColor" />}

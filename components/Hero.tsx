@@ -29,9 +29,9 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
           loop
           muted
           playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover opacity-60 mix-blend-luminosity"
+          className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
         >
-          <source src={`${import.meta.env.BASE_URL}videos/landing%20page%202.mp4`} type="video/mp4" />
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
         </video>
         {/* Gradients to blend smoothly with the background layer */}
         <div className="absolute inset-0 bg-slate-950/30 z-10 mix-blend-multiply" />

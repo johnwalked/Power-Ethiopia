@@ -21,56 +21,103 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
   };
 
   return (
-    <section className="relative pt-48 pb-20 px-6 flex flex-col items-center justify-center text-center max-w-7xl mx-auto min-h-[60vh]">
-      
-      {!user && (
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-10 cursor-default animate-in fade-in slide-in-from-bottom-4 duration-700 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
-          <span className="text-[11px] font-bold text-emerald-400 tracking-widest uppercase">
-            {t.badge}
-          </span>
-        </div>
-      )}
+    <div className="relative w-full flex flex-col items-center justify-center min-h-[80vh]">
+      {/* Background Video Layer */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 bg-slate-950">
+        {['/videos/landing%20page%203.mp4', '/videos/landing%20page%202.mp4', '/videos/landing%20page.mp4'].map((src, index) => (
+          <video
+            key={src}
+            autoPlay={index === 0}
+            muted
+            playsInline
+            preload="auto"
+            onTimeUpdate={(e) => {
+              const video = e.currentTarget;
+              // Start crossfade 300ms before current video ends to avoid frozen frame
+              const timeLeft = video.duration - video.currentTime;
+              if (video.duration > 0 && timeLeft <= 0.3 && video.style.opacity !== '0') {
+                const nextIndex = (index + 1) % 3;
+                const nextVideo = video.parentElement?.children[nextIndex] as HTMLVideoElement;
+                if (nextVideo) {
+                  video.style.opacity = '0';
+                  video.style.zIndex = '0';
+                  nextVideo.style.opacity = '0.6';
+                  nextVideo.style.zIndex = '10';
+                  nextVideo.currentTime = 0;
+                  const playPromise = nextVideo.play();
+                  // Catch potential play interruption to avoid console errors
+                  if (playPromise !== undefined) {
+                    playPromise.catch(() => { });
+                  }
+                }
+              }
+            }}
+            className="absolute top-0 left-0 w-full h-full object-cover mix-blend-luminosity transition-opacity duration-300 ease-in-out"
+            style={{
+              opacity: index === 0 ? 0.6 : 0,
+              zIndex: index === 0 ? 10 : 0,
+            }}
+          >
+            <source src={src} type="video/mp4" />
+          </video>
+        ))}
+        {/* Gradients to blend smoothly with the background layer */}
+        <div className="absolute inset-0 bg-slate-950/30 z-10 mix-blend-multiply" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950 to-transparent z-20" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-950 to-transparent z-20" />
+      </div>
 
-      {user ? (
-        <div className="animate-in fade-in zoom-in duration-700 mb-12">
+      <section className="relative z-10 pt-48 pb-20 px-6 flex flex-col items-center justify-center text-center max-w-7xl mx-auto w-full">
+
+        {!user && (
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-10 cursor-default animate-in fade-in slide-in-from-bottom-4 duration-700 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
+            <span className="text-[11px] font-bold text-emerald-400 tracking-widest uppercase">
+              {t.badge}
+            </span>
+          </div>
+        )}
+
+        {user ? (
+          <div className="animate-in fade-in zoom-in duration-700 mb-12">
             <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
               {t.welcome} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-200">
                 {getFirstName()}
               </span>
             </h1>
-        </div>
-      ) : (
-        <h1 className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 leading-[1.15]">
-          {t.headline} <br />
-          <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite] pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-            {t.headlineSpan}
-          </span>
-        </h1>
-      )}
-
-      <p className="max-w-2xl text-xl text-slate-400 mb-16 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-        {t.subheadline}
-      </p>
-
-      <div className="w-full flex justify-center mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 min-h-[56px] relative z-20">
-        {loading ? (
-          <div className="flex items-center justify-center px-12 py-3">
-             <Loader2 className="w-6 h-6 text-emerald-500 animate-spin opacity-50" />
           </div>
-        ) : !user && (
-          <button 
-            onClick={onOpenAuth}
-            className="px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] hover:-translate-y-1 transition-all duration-500 bg-emerald-600 flex items-center justify-center gap-2 active:scale-95 text-base border border-emerald-500/50"
-          >
-            <LogIn className="w-5 h-5" />
-            {t.cta}
-          </button>
+        ) : (
+          <h1 className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 leading-[1.15]">
+            {t.headline} <br />
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite] pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+              {t.headlineSpan}
+            </span>
+          </h1>
         )}
-      </div>
 
-    </section>
+        <p className="max-w-2xl text-xl text-slate-400 mb-16 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+          {t.subheadline}
+        </p>
+
+        <div className="w-full flex justify-center mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 min-h-[56px] relative z-20">
+          {loading ? (
+            <div className="flex items-center justify-center px-12 py-3">
+              <Loader2 className="w-6 h-6 text-emerald-500 animate-spin opacity-50" />
+            </div>
+          ) : !user && (
+            <button
+              onClick={onOpenAuth}
+              className="px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] hover:-translate-y-1 transition-all duration-500 bg-emerald-600 flex items-center justify-center gap-2 active:scale-95 text-base border border-emerald-500/50"
+            >
+              <LogIn className="w-5 h-5" />
+              {t.cta}
+            </button>
+          )}
+        </div>
+
+      </section>
+    </div>
   );
 };
 

@@ -24,43 +24,15 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
     <div className="relative w-full flex flex-col items-center justify-center min-h-[80vh]">
       {/* Background Video Layer */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 bg-slate-950">
-        {[`${import.meta.env.BASE_URL}videos/landing%20page%203.mp4`, `${import.meta.env.BASE_URL}videos/landing%20page%202.mp4`, `${import.meta.env.BASE_URL}videos/landing%20page.mp4`].map((src, index) => (
-          <video
-            key={src}
-            autoPlay={index === 0}
-            muted
-            playsInline
-            preload="auto"
-            onTimeUpdate={(e) => {
-              const video = e.currentTarget;
-              // Start crossfade 300ms before current video ends to avoid frozen frame
-              const timeLeft = video.duration - video.currentTime;
-              if (video.duration > 0 && timeLeft <= 0.3 && video.style.opacity !== '0') {
-                const nextIndex = (index + 1) % 3;
-                const nextVideo = video.parentElement?.children[nextIndex] as HTMLVideoElement;
-                if (nextVideo) {
-                  video.style.opacity = '0';
-                  video.style.zIndex = '0';
-                  nextVideo.style.opacity = '0.6';
-                  nextVideo.style.zIndex = '10';
-                  nextVideo.currentTime = 0;
-                  const playPromise = nextVideo.play();
-                  // Catch potential play interruption to avoid console errors
-                  if (playPromise !== undefined) {
-                    playPromise.catch(() => { });
-                  }
-                }
-              }
-            }}
-            className="absolute top-0 left-0 w-full h-full object-cover mix-blend-luminosity transition-opacity duration-300 ease-in-out"
-            style={{
-              opacity: index === 0 ? 0.6 : 0,
-              zIndex: index === 0 ? 10 : 0,
-            }}
-          >
-            <source src={src} type="video/mp4" />
-          </video>
-        ))}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover opacity-60 mix-blend-luminosity"
+        >
+          <source src={`${import.meta.env.BASE_URL}videos/landing%20page%202.mp4`} type="video/mp4" />
+        </video>
         {/* Gradients to blend smoothly with the background layer */}
         <div className="absolute inset-0 bg-slate-950/30 z-10 mix-blend-multiply" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950 to-transparent z-20" />

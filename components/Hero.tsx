@@ -24,7 +24,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
     <div className="relative w-full flex flex-col items-center justify-center min-h-[80vh]">
       {/* Background Video Layer */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 bg-slate-950">
-        {['/videos/landing%20page%203.mp4', '/videos/landing%20page%202.mp4', '/videos/landing%20page.mp4'].map((src, index) => (
+        {[`${import.meta.env.BASE_URL}videos/landing%20page%203.mp4`, `${import.meta.env.BASE_URL}videos/landing%20page%202.mp4`, `${import.meta.env.BASE_URL}videos/landing%20page.mp4`].map((src, index) => (
           <video
             key={src}
             autoPlay={index === 0}

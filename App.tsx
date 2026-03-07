@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BackgroundEffects from './components/ui/BackgroundEffects';
@@ -47,7 +48,6 @@ const App: React.FC = () => {
         return <Solutions onNavigate={navigate} />;
       case '/':
       default:
-        // Main landing page view
         return <Hero onOpenAuth={openAuthModal} onNavigate={navigate} />;
     }
   };
@@ -55,45 +55,66 @@ const App: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950">
-        <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-200 text-slate-100">
+    <div className="relative min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-200 text-slate-100 bg-slate-950">
       <BackgroundEffects />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar onNavigate={navigate} onOpenAuth={openAuthModal} />
-        <main>
-          <Suspense fallback={
-            <div className="min-h-[60vh] flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-emerald-500/50 animate-spin" />
-            </div>
-          }>
-            {renderContent()}
-          </Suspense>
+
+        <main className="flex-grow">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentPath}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            >
+              <Suspense fallback={
+                <div className="min-h-[60vh] flex items-center justify-center">
+                  <Loader2 className="w-8 h-8 text-emerald-500/50 animate-spin" />
+                </div>
+              }>
+                {renderContent()}
+              </Suspense>
+            </motion.div>
+          </AnimatePresence>
         </main>
+
+        <footer className="relative z-10 py-12 px-6 border-t border-white/5 bg-slate-950/50 backdrop-blur-xl">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2 group cursor-default">
+              <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:rotate-12 transition-transform">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-bold text-lg text-slate-200 tracking-tight">CE Power</span>
+            </div>
+            <div className="flex flex-col items-center md:items-end gap-2">
+              <p className="text-sm text-slate-400 font-medium">
+                Premium Power Solutions for Ethiopia
+              </p>
+              <p className="text-xs text-slate-600">
+                © {new Date().getFullYear()} CE Power Systems. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
 
-      {/* Voice Assistant - Always visible, handles its own access control */}
       <VoiceAssistant />
       <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none z-0" />
-
-      <footer className="relative z-10 py-8 px-6 border-t border-white/5 bg-slate-950/50 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-              <Zap className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-slate-200">CE Power</span>
-          </div>
-          <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} CE Power Systems. All rights reserved.
-          </p>
-        </div>
-      </footer>
 
       <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </div>

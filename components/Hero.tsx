@@ -1,9 +1,10 @@
-
 import React from 'react';
-import { Loader2, LogIn } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Loader2, LogIn, ArrowRight } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { useLanguage } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
+import StreamingVideo from './StreamingVideo';
 
 interface HeroProps {
   onOpenAuth: () => void;
@@ -20,75 +21,113 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
     return user?.email?.split('@')[0] || 'Partner';
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   return (
-    <div className="relative w-full flex flex-col items-center justify-center min-h-[80vh]">
-      {/* Background Video Layer */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 bg-slate-950">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
-        >
-          <source src="/videos/hero-bg.mp4" type="video/mp4" />
-        </video>
-        {/* Gradients to blend smoothly with the background layer */}
-        <div className="absolute inset-0 bg-slate-950/30 z-10 mix-blend-multiply" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950 to-transparent z-20" />
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-950 to-transparent z-20" />
-      </div>
+    <div className="relative w-full flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
+      {/* Optimized Background Video Layer */}
+      <StreamingVideo src="/videos/hero-bg.mp4" overlayOpacity={0.6} />
 
-      <section className="relative z-10 pt-48 pb-20 px-6 flex flex-col items-center justify-center text-center max-w-7xl mx-auto w-full">
-
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 pt-48 pb-20 px-6 flex flex-col items-center justify-center text-center max-w-7xl mx-auto w-full"
+      >
         {!user && (
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-10 cursor-default animate-in fade-in slide-in-from-bottom-4 duration-700 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+          <motion.div
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-10 cursor-default shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+          >
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
             <span className="text-[11px] font-bold text-emerald-400 tracking-widest uppercase">
               {t.badge}
             </span>
-          </div>
+          </motion.div>
         )}
 
-        {user ? (
-          <div className="animate-in fade-in zoom-in duration-700 mb-12">
-            <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
-              {t.welcome} <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-200">
-                {getFirstName()}
+        <AnimatePresence mode="wait">
+          {user ? (
+            <motion.div
+              key="welcome-user"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, y: -20 }}
+              className="mb-12"
+            >
+              <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
+                {t.welcome} <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-200">
+                  {getFirstName()}
+                </span>
+              </h1>
+            </motion.div>
+          ) : (
+            <motion.h1
+              key="headline-guest"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, y: -20 }}
+              className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-12 leading-[1.15]"
+            >
+              {t.headline} <br />
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite] pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                {t.headlineSpan}
               </span>
-            </h1>
-          </div>
-        ) : (
-          <h1 className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 leading-[1.15]">
-            {t.headline} <br />
-            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite] pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-              {t.headlineSpan}
-            </span>
-          </h1>
-        )}
+            </motion.h1>
+          )}
+        </AnimatePresence>
 
-        <p className="max-w-2xl text-xl text-slate-400 mb-16 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+        <motion.p
+          variants={itemVariants}
+          className="max-w-2xl text-xl text-slate-400 mb-16 leading-relaxed font-medium"
+        >
           {t.subheadline}
-        </p>
+        </motion.p>
 
-        <div className="w-full flex justify-center mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 min-h-[56px] relative z-20">
+        <motion.div
+          variants={itemVariants}
+          className="w-full flex justify-center mb-12 min-h-[56px] relative z-20"
+        >
           {loading ? (
             <div className="flex items-center justify-center px-12 py-3">
               <Loader2 className="w-6 h-6 text-emerald-500 animate-spin opacity-50" />
             </div>
           ) : !user && (
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               onClick={onOpenAuth}
-              className="px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] hover:-translate-y-1 transition-all duration-500 bg-emerald-600 flex items-center justify-center gap-2 active:scale-95 text-base border border-emerald-500/50"
+              className="group px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all duration-500 bg-emerald-600 flex items-center justify-center gap-2 text-base border border-emerald-500/50 overflow-hidden relative"
             >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <LogIn className="w-5 h-5" />
               {t.cta}
-            </button>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </motion.button>
           )}
-        </div>
-
-      </section>
+        </motion.div>
+      </motion.section>
     </div>
   );
 };

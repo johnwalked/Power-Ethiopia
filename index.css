@@ -27,7 +27,7 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -36,7 +36,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
-  border-radius: 5px;
+  border-radius: 4px;
   border: 2px solid #0f172a;
 }
 
@@ -44,7 +44,7 @@ body {
   background: #334155;
 }
 
-/* Base Animations */
+/* GPU-accelerated animations */
 @keyframes pulse-slow {
 
   0%,
@@ -67,6 +67,41 @@ body {
   }
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .animate-progress {
   animation: progress 10s linear forwards;
+  will-change: width;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Performance: GPU layers for frequently animated elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Lazy image fade-in */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([src=""]) {
+  opacity: 1;
 }

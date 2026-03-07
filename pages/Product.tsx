@@ -347,7 +347,8 @@ const Product: React.FC<PageProps> = ({ onNavigate }) => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+                      loading="lazy"
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 will-change-transform"
                     />
 
                     {/* Brand Badge */}
@@ -461,7 +462,7 @@ const Product: React.FC<PageProps> = ({ onNavigate }) => {
                     {getCompareProducts().map(p => (
                       <th key={p.id} className="p-4 border-b border-white/10 min-w-[200px] md:min-w-[250px] bg-slate-900/50">
                         <div className="flex flex-col items-center text-center gap-3">
-                          <img src={p.image} className="w-24 h-24 object-cover rounded-lg border border-white/10" alt={p.name} />
+                          <img src={p.image} loading="lazy" className="w-24 h-24 object-cover rounded-lg border border-white/10" alt={p.name} />
                           <div>
                             <div className="text-emerald-500 text-xs font-bold uppercase mb-1">{p.brand}</div>
                             <div className="text-white font-bold text-sm leading-tight">{p.name}</div>

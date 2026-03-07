@@ -1,9 +1,12 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { LiveServerMessage } from "@google/genai";
+import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Lock, Minimize2, Pause, Play } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { useLanguage } from '../lib/LanguageContext';
+import { GENERATORS, PUMPS } from '../lib/productData';
+
 
 const VoiceAssistant: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +31,16 @@ const VoiceAssistant: React.FC = () => {
     // Control Refs
     const sessionPromiseRef = useRef<Promise<any> | null>(null);
     const isPausedRef = useRef(false);
+    const glimpseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Helper: Find product by ID from local data
+    const findProductById = useCallback((id: string) => {
+        const gen = GENERATORS.find(g => g.id === id);
+        if (gen) return { name: gen.name, image: gen.image };
+        const pump = PUMPS.find(p => p.id === id);
+        if (pump) return { name: pump.name, image: pump.image };
+        return null;
+    }, []);
 
     // Helper: Decode Audio
     const decodeAudioData = async (
@@ -249,30 +262,43 @@ const VoiceAssistant: React.FC = () => {
                         }
 
                         // Handle Tool Calls (Glimpse Feature)
-                        const toolCall = (msg.serverContent?.modelTurn?.parts?.[0] as any)?.toolCall;
-                        if (toolCall) {
-                            const showImageCall = toolCall.functionCalls?.find((fc: any) => fc.name === "show_product_image");
+                        // CRITICAL: Gemini Live sends toolCall as a TOP-LEVEL field on the message,
+                        // NOT nested inside serverContent.modelTurn.parts.
+                        const toolCallMsg = (msg as any).toolCall;
+                        if (toolCallMsg) {
+                            console.log('[Digital John] Tool call received:', JSON.stringify(toolCallMsg));
+                            const functionCalls = toolCallMsg.functionCalls || [];
+                            const showImageCall = functionCalls.find((fc: any) => fc.name === 'show_product_image');
                             if (showImageCall) {
-                                const { productId, productName, imageUrl } = showImageCall.args;
-                                setActiveGlimpse({ id: productId, name: productName, image: imageUrl });
+                                const { productId, productName, imageUrl } = showImageCall.args || {};
+                                console.log('[Digital John] Showing glimpse for:', productId, productName, imageUrl);
 
-                                // Set 10-second timer to clear glimpse
-                                setTimeout(() => {
+                                // Use local data as fallback if AI didn't provide image
+                                const localProduct = findProductById(productId);
+                                const finalName = productName || localProduct?.name || productId;
+                                const finalImage = imageUrl || localProduct?.image || '/images/mindong-30ds.png';
+
+                                // Clear any previous timer
+                                if (glimpseTimerRef.current) clearTimeout(glimpseTimerRef.current);
+
+                                setActiveGlimpse({ id: productId, name: finalName, image: finalImage });
+
+                                // 10-second auto-dismiss
+                                glimpseTimerRef.current = setTimeout(() => {
                                     setActiveGlimpse(null);
+                                    glimpseTimerRef.current = null;
                                 }, 10000);
 
-                                // Send dummy tool response to satisfy protocol
+                                // Send tool response to let the model continue speaking
                                 sessionPromiseRef.current?.then(session => {
-                                    session.sendRealtimeInput({
-                                        toolResponse: {
-                                            functionResponses: [{
-                                                name: "show_product_image",
-                                                response: { success: true },
-                                                id: showImageCall.id
-                                            }]
-                                        }
+                                    session.sendToolResponse({
+                                        functionResponses: [{
+                                            name: 'show_product_image',
+                                            response: { displayed: true, productId },
+                                            id: showImageCall.id
+                                        }]
                                     });
-                                });
+                                }).catch(err => console.warn('[Digital John] Tool response error:', err));
                             }
                         }
 
@@ -362,6 +388,8 @@ const VoiceAssistant: React.FC = () => {
         setIsTalking(false);
         setIsPaused(false);
         isPausedRef.current = false;
+        setActiveGlimpse(null);
+        if (glimpseTimerRef.current) { clearTimeout(glimpseTimerRef.current); glimpseTimerRef.current = null; }
 
         // Close the session properly to release resources
         if (sessionPromiseRef.current) {
@@ -510,31 +538,40 @@ const VoiceAssistant: React.FC = () => {
             )}
 
             {/* Floating Glimpse Overlay */}
-            {activeGlimpse && (
-                <div className="absolute bottom-24 right-0 w-64 animate-in fade-in zoom-in slide-in-from-bottom-5 duration-300 z-[120]">
-                    <div className="relative group overflow-hidden rounded-2xl bg-white/10 backdrop-blur-3xl border border-white/20 shadow-2xl">
-                        {/* Shimmer Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <AnimatePresence>
+                {activeGlimpse && (
+                    <motion.div
+                        key={activeGlimpse.id}
+                        initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        className="absolute bottom-24 right-0 w-72 z-[120]"
+                    >
+                        <div className="relative group overflow-hidden rounded-2xl bg-slate-900/80 backdrop-blur-2xl border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                            {/* Shimmer sweep */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_ease-in-out_infinite] pointer-events-none z-10" />
 
-                        <div className="p-1">
-                            <img
-                                src={activeGlimpse.image}
-                                alt={activeGlimpse.name}
-                                className="w-full h-40 object-cover rounded-xl shadow-inner"
-                            />
-                        </div>
+                            <div className="p-1.5">
+                                <img
+                                    src={activeGlimpse.image}
+                                    alt={activeGlimpse.name}
+                                    className="w-full h-44 object-contain rounded-xl bg-slate-800/50"
+                                />
+                            </div>
 
-                        <div className="p-4 bg-emerald-600/90 text-white">
-                            <p className="text-[10px] font-bold uppercase tracking-wider opacity-70 mb-1">Live Glimpse</p>
-                            <h4 className="font-bold text-sm leading-tight">{activeGlimpse.name}</h4>
+                            <div className="px-4 pt-3 pb-4 bg-gradient-to-t from-emerald-700/90 to-emerald-600/80 text-white">
+                                <p className="text-[9px] font-extrabold uppercase tracking-[0.2em] text-emerald-200/70 mb-1">⚡ Live Glimpse</p>
+                                <h4 className="font-bold text-sm leading-tight">{activeGlimpse.name}</h4>
 
-                            <div className="mt-2 h-1 w-full bg-white/20 rounded-full overflow-hidden">
-                                <div className="h-full bg-white animate-progress" />
+                                <div className="mt-3 h-1 w-full bg-white/20 rounded-full overflow-hidden">
+                                    <div className="h-full bg-white rounded-full animate-progress" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Access Denied Bubble */}
             {accessDenied && (

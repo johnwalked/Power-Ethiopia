@@ -22,12 +22,12 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
 
   const [headlineIndex, setHeadlineIndex] = useState(0);
 
-  // Rotate headlines every 5 seconds
+  // Rotate headlines every 8 seconds (slower for better readability)
   useEffect(() => {
     if (user) return;
     const interval = setInterval(() => {
       setHeadlineIndex(prev => (prev + 1) % headlines.length);
-    }, 5000);
+    }, 8000);
     return () => clearInterval(interval);
   }, [user, headlines.length]);
 
@@ -53,12 +53,12 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
       y: 0,
       filter: 'blur(0px)',
       transition: {
-        duration: 0.6,
-        delay: i * 0.08,
+        duration: 0.8, // Slightly slower (was 0.6)
+        delay: i * 0.1, // Slightly more stagger (was 0.08)
         ease: [0.16, 1, 0.3, 1] as const
       }
     }),
-    exit: { opacity: 0, y: -30, filter: 'blur(4px)', transition: { duration: 0.3 } }
+    exit: { opacity: 0, y: -20, filter: 'blur(4px)', transition: { duration: 0.4 } } // Slower exit (was 0.3)
   };
 
   const currentHeadline = headlines[headlineIndex];

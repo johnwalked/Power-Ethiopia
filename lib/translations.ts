@@ -18,7 +18,21 @@ export const translations: Record<Language, any> = {
       headlineSpan: "need it most",
       subheadline: "Premium generators and high-capacity water pumps engineered for reliability. Powering homes, construction sites, and industries worldwide.",
       cta: "Distributor Login",
-      loading: "Synthesizing Visuals..."
+      loading: "Synthesizing Visuals...",
+      headlines: [
+        { line: "Power when you", span: "need it most" },
+        { line: "Built for", span: "Ethiopia's future" },
+        { line: "60+ years of", span: "industrial trust" },
+        { line: "Reliable energy", span: "zero compromise" },
+        { line: "From factory", span: "to your doorstep" }
+      ],
+      subtexts: [
+        "Premium generators and high-capacity water pumps engineered for reliability. Powering homes, construction sites, and industries across Ethiopia.",
+        "CE Power — China's leading generator manufacturer — now with a direct factory branch in Kality, Addis Ababa.",
+        "ISO 9001 certified, CE marked, TÜV Rheinland approved. Over 10,000 units deployed worldwide.",
+        "Silent and open-frame diesel generators from 8 kW to 3,000 kW. Water pumps from 2\" to 12\" inch.",
+        "Direct factory pricing. No middlemen. Full warranty. 24/7 technical support and spare parts."
+      ]
     },
     stats: {
       unitsSold: "Units Sold",
@@ -142,7 +156,21 @@ export const translations: Record<Language, any> = {
       headlineSpan: "የማይጠፋ ኃይል",
       subheadline: "ለአስተማማኝነት የተሰሩ ፕሪሚየም ጄኔሬተሮች እና ከፍተኛ አቅም ያላቸው የውሃ ፓምፖች። ለቤቶች፣ ለግንባታ ቦታዎች እና ለኢንዱስትሪዎች ኃይል ይሰጣል።",
       cta: "የአከፋፋይ መግቢያ",
-      loading: "ምስሎችን በማዘጋጀት ላይ..."
+      loading: "ምስሎችን በማዘጋጀት ላይ...",
+      headlines: [
+        { line: "ኃይል በሚፈልጉበት", span: "ጊዜ" },
+        { line: "ለኢትዮጵያ", span: "የወደፊት ዘመን" },
+        { line: "60+ ዓመታት", span: "የኢንዱስትሪ እምነት" },
+        { line: "አስተማማኝ ኃይል", span: "ያለ ምንም ስምምነት" },
+        { line: "ከፋብሪካ", span: "እስከ በርዎ ድረስ" }
+      ],
+      subtexts: [
+        "ለአስተማማኝነት የተሰሩ ፕሪሚየም ጄኔሬተሮች እና ከፍተኛ አቅም ያላቸው የውሃ ፓምፖች። በመላ ኢትዮጵያ ለቤቶች፣ ለግንባታ ቦታዎች እና ለኢንዱስትሪዎች ኃይል ይሰጣል።",
+        "CE Power — የቻይና ቀዳሚ ጄኔሬተር አምራች — አሁን በቃሊቲ፣ አዲስ አበባ ቀጥተኛ የፋብሪካ ቅርንጫፍ አለው።",
+        "ISO 9001 የተረጋገጠ፣ CE ምልክት ያለው፣ TÜV Rheinland የተፈቀደለት። ከ10,000 በላይ ክፍሎች በዓለም ዙሪያ ተሰራጭተዋል።",
+        "ጸጥ ያለ እና ክፍት ፍሬም ዲዜል ጄኔሬተሮች ከ8 kW እስከ 3,000 kW። የውሃ ፓምፖች ከ2 ኢንች እስከ 12 ኢንች።",
+        "ቀጥተኛ የፋብሪካ ዋጋ። ምንም አማላጅ የለም። ሙሉ ዋስትና። 24/7 ቴክኒካል ድጋፍ እና መለዋወጫዎች።"
+      ]
     },
     stats: {
       unitsSold: "የተሸጡ ክፍሎች",
@@ -266,7 +294,21 @@ export const translations: Record<Language, any> = {
       headlineSpan: "提供动力",
       subheadline: "专为可靠性设计的高级发电机和大容量水泵。为全球家庭、建筑工地和工业提供动力。",
       cta: "分销商登录",
-      loading: "正在合成视觉效果..."
+      loading: "正在合成视觉效果...",
+      headlines: [
+        { line: "在您最需要时", span: "提供动力" },
+        { line: "为埃塞俄比亚", span: "打造未来" },
+        { line: "60+年", span: "工业信赖" },
+        { line: "可靠能源", span: "零妥协" },
+        { line: "从工厂", span: "直达家门" }
+      ],
+      subtexts: [
+        "专为可靠性设计的高级发电机和大容量水泵。为埃塞俄比亚的家庭、建筑工地和工业提供动力。",
+        "CE Power — 中国领先的发电机制造商 — 现已在亚的斯亚贝巴卡利提设有直属工厂分支。",
+        "ISO 9001认证，CE标志，TÜV莱茵认证。全球部署超过10,000台设备。",
+        "静音型和开放式柴油发电机，功率范围8 kW至3,000 kW。水泵口径2英寸至12英寸。",
+        "工厂直销价格。无中间商。全面保修。24/7技术支持和备件供应。"
+      ]
     },
     stats: {
       unitsSold: "已售台数",
@@ -390,7 +432,21 @@ export const translations: Record<Language, any> = {
       headlineSpan: "ዘይቋርጽ ሓይሊ",
       subheadline: "ንተኣማንነት ዝተሰርሑ ፕሪምየም ጀነሬተራትን ልዑል ዓቅሚ ዘለዎም ፓምፕ ማይን። ንገዛውቲ፣ ህንጻን ኢንዱስትሪታትን ሓይሊ ይህብ።",
       cta: "ናይ አከፋፋይ መእተዊ",
-      loading: "ስእሊ የዳልው ኣሎ..."
+      loading: "ስእሊ የዳልው ኣሎ...",
+      headlines: [
+        { line: "ሓይሊ ኣብ", span: "ዘድልየኩም እዋን" },
+        { line: "ንኢትዮጵያ", span: "መጻኢ ዘመን" },
+        { line: "60+ ዓመት", span: "ናይ ኢንዱስትሪ ተኣማንነት" },
+        { line: "ኣስተማማኒ ሓይሊ", span: "ብዘይ ስምምዕ" },
+        { line: "ካብ ፋብሪካ", span: "ክሳብ ማዕጾኹም" }
+      ],
+      subtexts: [
+        "ንተኣማንነት ዝተሰርሑ ፕሪምየም ጀነሬተራትን ልዑል ዓቅሚ ዘለዎም ፓምፕ ማይን። ኣብ ኢትዮጵያ ንገዛውቲ፣ ህንጻን ኢንዱስትሪታትን ሓይሊ ይህብ።",
+        "CE Power — ቀዳማይ ናይ ቻይና ኣፍራዪ ጀነሬተር — ሕጂ ኣብ ቃሊቲ፣ ኣዲስ ኣበባ ቀጥታ ናይ ፋብሪካ ጨንፈር ኣለዎ።",
+        "ISO 9001 ዝተረጋገጸ፣ CE ምልክት ዘለዎ፣ TÜV Rheinland ዝተፈቐደ። ኣብ ዓለም ልዕሊ 10,000 ክፍሊ ዝተዘርግሐ።",
+        "ጸጥ ዝበለን ክፉት ፍሬምን ዲዘል ጀነሬተራት ካብ 8 kW ክሳብ 3,000 kW። ፓምፕ ማይ ካብ 2 ኢንች ክሳብ 12 ኢንች።",
+        "ቀጥታ ናይ ፋብሪካ ዋጋ። ማእከላይ ሰብ የለን። ምሉእ ዋስትና። 24/7 ቴክኒካል ደገፍን መለዋወጢን።"
+      ]
     },
     stats: {
       unitsSold: "ዝተሸጡ",
@@ -514,7 +570,21 @@ export const translations: Record<Language, any> = {
       headlineSpan: "barbaachisutti",
       subheadline: "Jenereetaroota qulqullina olaanaa fi pompii bishaanii humna guddaa qaban kan amansiisummaa qaban. Manneen, bakka ijaarsaa fi industiriiwwan humneessu.",
       cta: "Seensa Raabsaa",
-      loading: "Fakkii qopheessaa jira..."
+      loading: "Fakkii qopheessaa jira...",
+      headlines: [
+        { line: "Humna yeroo", span: "barbaachisutti" },
+        { line: "Itoophiyaaf", span: "kan ijaarame" },
+        { line: "Waggaa 60+", span: "amansiisummaa industirii" },
+        { line: "Humna amansiisaa", span: "waliigaltee malee" },
+        { line: "Warshaa irraa", span: "balbala keessanitti" }
+      ],
+      subtexts: [
+        "Jenereetaroota qulqullina olaanaa fi pompii bishaanii humna guddaa qaban. Itoophiyaa guutuutti manneen, bakka ijaarsaa fi industiriiwwan humneessu.",
+        "CE Power — warshaa jenereetaraa dursaa Chaayinaa — amma damee warshaa kallattii Kaaliitii, Finfinnee keessa qaba.",
+        "ISO 9001 mirkanaa'e, mallattoo CE, TÜV Rheinland fudhatame. Addunyaa irratti meeshaalee 10,000 ol tamsaa'e.",
+        "Jenereetaroota diizeelii sagalee xiqqaa fi bifa banaa 8 kW hanga 3,000 kW. Pompii bishaanii 2 hanga 12 inchii.",
+        "Gatii kallattii warshaa. Giddugaleessa malee. Wabiisummaa guutuu. Deeggarsa teeknikaa 24/7 fi qaamolee jijjiirraa."
+      ]
     },
     stats: {
       unitsSold: "Meeshaalee Gurguraman",

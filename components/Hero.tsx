@@ -11,38 +11,25 @@ interface HeroProps {
   onNavigate: (path: string) => void;
 }
 
-// Rotating headline data — each entry has a main line and a gradient-highlighted span
-const ROTATING_HEADLINES = [
-  { line: "Power when you", span: "need it most" },
-  { line: "Built for", span: "Ethiopia's future" },
-  { line: "60+ years of", span: "industrial trust" },
-  { line: "Reliable energy", span: "zero compromise" },
-  { line: "From factory", span: "to your doorstep" },
-];
-
-const ROTATING_SUBTEXTS = [
-  "Premium generators and high-capacity water pumps engineered for reliability. Powering homes, construction sites, and industries across Ethiopia.",
-  "CE Power — China's leading generator manufacturer — now with a direct factory branch in Kality, Addis Ababa.",
-  "ISO 9001 certified, CE marked, TÜV Rheinland approved. Over 10,000 units deployed worldwide.",
-  "Silent and open-frame diesel generators from 8 kW to 3,000 kW. Water pumps from 2\" to 12\" inch.",
-  "Direct factory pricing. No middlemen. Full warranty. 24/7 technical support and spare parts.",
-];
-
 const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
   const { user, loading } = useAuth();
   const { language } = useLanguage();
   const t = translations[language].hero;
 
+  // Pull rotating data from translations
+  const headlines: { line: string; span: string }[] = t.headlines || [{ line: t.headline, span: t.headlineSpan }];
+  const subtexts: string[] = t.subtexts || [t.subheadline];
+
   const [headlineIndex, setHeadlineIndex] = useState(0);
 
   // Rotate headlines every 5 seconds
   useEffect(() => {
-    if (user) return; // Skip rotation when logged in
+    if (user) return;
     const interval = setInterval(() => {
-      setHeadlineIndex(prev => (prev + 1) % ROTATING_HEADLINES.length);
+      setHeadlineIndex(prev => (prev + 1) % headlines.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [user]);
+  }, [user, headlines.length]);
 
   const getFirstName = () => {
     if (user?.displayName) return user.displayName;
@@ -68,14 +55,14 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
       transition: {
         duration: 0.6,
         delay: i * 0.08,
-        ease: [0.16, 1, 0.3, 1]
+        ease: [0.16, 1, 0.3, 1] as const
       }
     }),
     exit: { opacity: 0, y: -30, filter: 'blur(4px)', transition: { duration: 0.3 } }
   };
 
-  const currentHeadline = ROTATING_HEADLINES[headlineIndex];
-  const currentSubtext = ROTATING_SUBTEXTS[headlineIndex];
+  const currentHeadline = headlines[headlineIndex];
+  const currentSubtext = subtexts[headlineIndex];
 
   return (
     <div className="relative w-full flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
@@ -206,13 +193,13 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
             transition={{ delay: 1 }}
             className="flex items-center gap-2"
           >
-            {ROTATING_HEADLINES.map((_, i) => (
+            {headlines.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setHeadlineIndex(i)}
                 className={`rounded-full transition-all duration-500 ${i === headlineIndex
-                    ? 'w-8 h-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
-                    : 'w-2 h-2 bg-slate-600 hover:bg-slate-500'
+                  ? 'w-8 h-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
+                  : 'w-2 h-2 bg-slate-600 hover:bg-slate-500'
                   }`}
               />
             ))}

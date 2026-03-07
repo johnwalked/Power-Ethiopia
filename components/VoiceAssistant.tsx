@@ -12,6 +12,7 @@ const VoiceAssistant: React.FC = () => {
     const [isPaused, setIsPaused] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [accessDenied, setAccessDenied] = useState(false);
+    const [activeGlimpse, setActiveGlimpse] = useState<{ id: string; name: string; image: string } | null>(null);
 
     const { user, loading } = useAuth();
     const { language } = useLanguage();
@@ -136,15 +137,18 @@ const VoiceAssistant: React.FC = () => {
                     - **WORLD'S #1 SALES EXPERT**: You are the smooth, confident, and highly persuasive expert. You don't just answer questions; you *close deals* with charm.
                     - **AUTHORITY**: You are the "Engine Expert". You know every bolt and wire. Speak with absolute confidence.
                     - **VIBE**: Professional but relaxed, like a wealthy and successful business partner.
-                    - **CRITICAL**: Keep your introduction **EXTREMELY SHORT** and **ON POINT**. Do not ramble.
                     - **CONTACT**: Phone: 09 66 33 03 09 (ዜሮ ዘጠኝ ስልሳ ስድስት ሰላሳ ሶስት ዜሮ ሶስት ዜሮ ዘጠኝ).
                     
-                    [DISTRIBUTOR PORTAL]
-                    - The **Distributor Login** (የአከፋፋይ መግቢያ) in our navigation menu is the primary portal for our partners.
-                    - Partners can login there to access detailed technical specifications, wholesale pricing, and availability records.
-                    - If asked about logins or partnerships, refer them to the "Distributor Login" button in the navigation.
-
-                    [PRODUCT INVENTORY KNOWLEDGE - LIVE STOCK JAN 2026]
+                    [PRODUCT KNOWLEDGE - FULL CATALOG]
+                    - Use your detailed technical knowledge to explain product benefits.
+                    - For generators: Mentions Power (kW), Brand, Type (Silent/Open), Voltage, Phase, Weight, and Fuel Consumption.
+                    - For pumps: Mention HP, Inlet Size, Max Head, Flow Rate, and Engine Model.
+                    
+                    [GLIMPSE FEATURE]
+                    - IMPORTANT: Whenever a user asks to see a product or expresses interest in a specific product, call the "show_product_image" tool. 
+                    - This will show a 10-second floating glimpse of the product on their screen while you explain its features.
+                    
+                    [INVENTORY - LIVE STOCK JAN 2026]
                     - **Yunnei**: 600kW(2), 400kW(1), 334kW(1), 120kW(4), 100kW(100), 80kW(5), 77kW(2), 60kW(7), 55kW(2), 38kW(2), 25kW(3), 23.1kW(1), 20kW(3).
                     - **Weichai**: 400kW(2), 353kW(4), 330kW(2), 275kW(1).
                     - **Last**: 200kW(2), 160kW(2), 100kW(10), 75kW(6), 40kW(1), 25kW(4).
@@ -156,14 +160,37 @@ const VoiceAssistant: React.FC = () => {
                     - Established in 1958, CE Power (branch of Guangdong MINDONG Electric Co., Ltd.) has over 60 years of history.
                     - Manufacturing Standards: ISO9001, ISO14001, CE, TUV Rheinland, and IEC certified.
                     
-                    [GOLD REFINEMENT SPECIALIZATION]
-                    - Recommend **Yuchai 6-Piston** series and **Yunnei** for extreme durability in mining conditions.
-                    - Recommend **Gold Refinement Slurry Pumps** (High Head) for gold washing processes.
-                    
                     [LANGUAGE PROTOCOL]
                     - Current UI Language: ${language}.
-                    - Be fluent in Amharic, English, Chinese, Tigrinya, and Afaan Oromoo.
-                    - If speaking Amharic, use natural, flowing native terms. No robotic translation.`,
+                    - Be fluent in Amharic, English, Chinese, Tigrinya, and Afaan Oromoo.`,
+                    tools: [{
+                        googleSearch: {}
+                    }, {
+                        functionDeclarations: [
+                            {
+                                name: "show_product_image",
+                                description: "Display a 10-second floating glimpse of a specific product image.",
+                                parameters: {
+                                    type: "object" as any,
+                                    properties: {
+                                        productId: {
+                                            type: "string" as any,
+                                            description: "The unique ID of the product to show (e.g., 'mdz-30ds', 'yunnei-600kw-pump')."
+                                        },
+                                        productName: {
+                                            type: "string" as any,
+                                            description: "The display name of the product."
+                                        },
+                                        imageUrl: {
+                                            type: "string" as any,
+                                            description: "The relative path to the image (e.g., '/images/mindong-30ds.png')."
+                                        }
+                                    },
+                                    required: ["productId", "productName", "imageUrl"]
+                                }
+                            }
+                        ]
+                    }]
                 },
                 callbacks: {
                     onopen: () => {
@@ -219,6 +246,34 @@ const VoiceAssistant: React.FC = () => {
                             // Adjust duration calculation for playback rate
                             nextStartTimeRef.current += buffer.duration / playbackRate;
                             audioQueueRef.current.push(source);
+                        }
+
+                        // Handle Tool Calls (Glimpse Feature)
+                        const toolCall = (msg.serverContent?.modelTurn?.parts?.[0] as any)?.toolCall;
+                        if (toolCall) {
+                            const showImageCall = toolCall.functionCalls?.find((fc: any) => fc.name === "show_product_image");
+                            if (showImageCall) {
+                                const { productId, productName, imageUrl } = showImageCall.args;
+                                setActiveGlimpse({ id: productId, name: productName, image: imageUrl });
+
+                                // Set 10-second timer to clear glimpse
+                                setTimeout(() => {
+                                    setActiveGlimpse(null);
+                                }, 10000);
+
+                                // Send dummy tool response to satisfy protocol
+                                sessionPromiseRef.current?.then(session => {
+                                    session.sendRealtimeInput({
+                                        toolResponse: {
+                                            functionResponses: [{
+                                                name: "show_product_image",
+                                                response: { success: true },
+                                                id: showImageCall.id
+                                            }]
+                                        }
+                                    });
+                                });
+                            }
                         }
 
                         // Handle Interruption
@@ -450,6 +505,33 @@ const VoiceAssistant: React.FC = () => {
                                 </button>
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* Floating Glimpse Overlay */}
+            {activeGlimpse && (
+                <div className="absolute bottom-24 right-0 w-64 animate-in fade-in zoom-in slide-in-from-bottom-5 duration-300 z-[120]">
+                    <div className="relative group overflow-hidden rounded-2xl bg-white/10 backdrop-blur-3xl border border-white/20 shadow-2xl">
+                        {/* Shimmer Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
+                        <div className="p-1">
+                            <img
+                                src={activeGlimpse.image}
+                                alt={activeGlimpse.name}
+                                className="w-full h-40 object-cover rounded-xl shadow-inner"
+                            />
+                        </div>
+
+                        <div className="p-4 bg-emerald-600/90 text-white">
+                            <p className="text-[10px] font-bold uppercase tracking-wider opacity-70 mb-1">Live Glimpse</p>
+                            <h4 className="font-bold text-sm leading-tight">{activeGlimpse.name}</h4>
+
+                            <div className="mt-2 h-1 w-full bg-white/20 rounded-full overflow-hidden">
+                                <div className="h-full bg-white animate-progress" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

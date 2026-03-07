@@ -31,25 +31,42 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a; 
+  background: #0f172a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b; 
+  background: #1e293b;
   border-radius: 5px;
   border: 2px solid #0f172a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155; 
+  background: #334155;
 }
 
 /* Base Animations */
 @keyframes pulse-slow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
 
-.animate-pulse-slow {
-  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+.animate-progress {
+  animation: progress 10s linear forwards;
 }

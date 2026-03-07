@@ -18,9 +18,34 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
-        if (videoRef.current && videoRef.current.readyState >= 3) {
+        const video = videoRef.current;
+        if (!video) return;
+
+        // If already loaded (cached), mark immediately
+        if (video.readyState >= 3) {
             setIsLoaded(true);
+            return;
         }
+
+        // Force play on interaction for restrictive browsers
+        const tryPlay = () => {
+            video.play().catch(() => { /* silently fail */ });
+        };
+
+        video.addEventListener('canplaythrough', () => setIsLoaded(true));
+        video.addEventListener('loadeddata', () => setIsLoaded(true));
+
+        // Some mobile browsers require user interaction — try on first touch
+        document.addEventListener('touchstart', tryPlay, { once: true });
+        document.addEventListener('click', tryPlay, { once: true });
+
+        // Trigger load explicitly
+        video.load();
+
+        return () => {
+            document.removeEventListener('touchstart', tryPlay);
+            document.removeEventListener('click', tryPlay);
+        };
     }, []);
 
     return (
@@ -52,6 +77,7 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
                 loop
                 muted
                 playsInline
+                preload="auto"
                 onLoadedData={() => setIsLoaded(true)}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isLoaded ? overlayOpacity : 0 }}

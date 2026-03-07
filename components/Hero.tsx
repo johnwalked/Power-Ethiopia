@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, LogIn, ArrowRight } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
@@ -11,39 +11,75 @@ interface HeroProps {
   onNavigate: (path: string) => void;
 }
 
+// Rotating headline data — each entry has a main line and a gradient-highlighted span
+const ROTATING_HEADLINES = [
+  { line: "Power when you", span: "need it most" },
+  { line: "Built for", span: "Ethiopia's future" },
+  { line: "60+ years of", span: "industrial trust" },
+  { line: "Reliable energy", span: "zero compromise" },
+  { line: "From factory", span: "to your doorstep" },
+];
+
+const ROTATING_SUBTEXTS = [
+  "Premium generators and high-capacity water pumps engineered for reliability. Powering homes, construction sites, and industries across Ethiopia.",
+  "CE Power — China's leading generator manufacturer — now with a direct factory branch in Kality, Addis Ababa.",
+  "ISO 9001 certified, CE marked, TÜV Rheinland approved. Over 10,000 units deployed worldwide.",
+  "Silent and open-frame diesel generators from 8 kW to 3,000 kW. Water pumps from 2\" to 12\" inch.",
+  "Direct factory pricing. No middlemen. Full warranty. 24/7 technical support and spare parts.",
+];
+
 const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
   const { user, loading } = useAuth();
   const { language } = useLanguage();
   const t = translations[language].hero;
+
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+
+  // Rotate headlines every 5 seconds
+  useEffect(() => {
+    if (user) return; // Skip rotation when logged in
+    const interval = setInterval(() => {
+      setHeadlineIndex(prev => (prev + 1) % ROTATING_HEADLINES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [user]);
 
   const getFirstName = () => {
     if (user?.displayName) return user.displayName;
     return user?.email?.split('@')[0] || 'Partner';
   };
 
+  // Stagger entrance animation
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      }
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
     }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
+  // Per-word animation for headlines
+  const wordVariants = {
+    hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.6,
+        delay: i * 0.08,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }),
+    exit: { opacity: 0, y: -30, filter: 'blur(4px)', transition: { duration: 0.3 } }
   };
+
+  const currentHeadline = ROTATING_HEADLINES[headlineIndex];
+  const currentSubtext = ROTATING_SUBTEXTS[headlineIndex];
 
   return (
     <div className="relative w-full flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
-      {/* Optimized Background Video Layer */}
+      {/* Background Video */}
       <StreamingVideo src="/videos/hero-bg.mp4" overlayOpacity={0.6} />
 
       <motion.section
@@ -52,61 +88,95 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
         animate="visible"
         className="relative z-10 pt-48 pb-20 px-6 flex flex-col items-center justify-center text-center max-w-7xl mx-auto w-full"
       >
+        {/* Badge */}
         {!user && (
           <motion.div
-            variants={itemVariants}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-10 cursor-default shadow-[0_0_15px_rgba(16,185,129,0.2)]"
           >
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
             <span className="text-[11px] font-bold text-emerald-400 tracking-widest uppercase">
               {t.badge}
             </span>
           </motion.div>
         )}
 
-        <AnimatePresence mode="wait">
-          {user ? (
-            <motion.div
-              key="welcome-user"
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0, y: -20 }}
-              className="mb-12"
-            >
-              <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
-                {t.welcome} <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-200">
-                  {getFirstName()}
-                </span>
-              </h1>
-            </motion.div>
-          ) : (
-            <motion.h1
-              key="headline-guest"
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0, y: -20 }}
-              className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-12 leading-[1.15]"
-            >
-              {t.headline} <br />
-              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 bg-[length:200%_auto] animate-[pulse_5s_ease-in-out_infinite] pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                {t.headlineSpan}
-              </span>
-            </motion.h1>
-          )}
-        </AnimatePresence>
+        {/* Main Headline — Rotating */}
+        <div className="min-h-[180px] md:min-h-[220px] flex items-center justify-center mb-12">
+          <AnimatePresence mode="wait">
+            {user ? (
+              <motion.div
+                key="welcome-user"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
+                  {t.welcome} <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-200">
+                    {getFirstName()}
+                  </span>
+                </h1>
+              </motion.div>
+            ) : (
+              <motion.h1
+                key={`headline-${headlineIndex}`}
+                className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.15]"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                {/* Animate each word separately for a staggered reveal */}
+                {currentHeadline.line.split(' ').map((word, i) => (
+                  <motion.span
+                    key={`line-${headlineIndex}-${i}`}
+                    custom={i}
+                    variants={wordVariants}
+                    className="inline-block mr-[0.3em]"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <br />
+                {currentHeadline.span.split(' ').map((word, i) => (
+                  <motion.span
+                    key={`span-${headlineIndex}-${i}`}
+                    custom={i + currentHeadline.line.split(' ').length}
+                    variants={wordVariants}
+                    className="inline-block mr-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.h1>
+            )}
+          </AnimatePresence>
+        </div>
 
-        <motion.p
-          variants={itemVariants}
-          className="max-w-2xl text-xl text-slate-400 mb-16 leading-relaxed font-medium"
-        >
-          {t.subheadline}
-        </motion.p>
+        {/* Subtext — Rotating */}
+        <div className="min-h-[80px] flex items-center justify-center mb-16">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={`sub-${headlineIndex}`}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+              className="max-w-2xl text-lg md:text-xl text-slate-400 leading-relaxed font-medium"
+            >
+              {user ? t.subheadline : currentSubtext}
+            </motion.p>
+          </AnimatePresence>
+        </div>
 
+        {/* CTA */}
         <motion.div
-          variants={itemVariants}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="w-full flex justify-center mb-12 min-h-[56px] relative z-20"
         >
           {loading ? (
@@ -127,6 +197,27 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
             </motion.button>
           )}
         </motion.div>
+
+        {/* Page indicator dots */}
+        {!user && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="flex items-center gap-2"
+          >
+            {ROTATING_HEADLINES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setHeadlineIndex(i)}
+                className={`rounded-full transition-all duration-500 ${i === headlineIndex
+                    ? 'w-8 h-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
+                    : 'w-2 h-2 bg-slate-600 hover:bg-slate-500'
+                  }`}
+              />
+            ))}
+          </motion.div>
+        )}
       </motion.section>
     </div>
   );

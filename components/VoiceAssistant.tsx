@@ -14,7 +14,6 @@ const VoiceAssistant: React.FC = () => {
     const [isTalking, setIsTalking] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [accessDenied, setAccessDenied] = useState(false);
     const [activeGlimpse, setActiveGlimpse] = useState<{ id: string; name: string; image: string } | null>(null);
 
     const { user, loading } = useAuth();
@@ -39,6 +38,14 @@ const VoiceAssistant: React.FC = () => {
         if (gen) return { name: gen.name, image: gen.image };
         const pump = PUMPS.find(p => p.id === id);
         if (pump) return { name: pump.name, image: pump.image };
+
+        // Fallback: loose search
+        const searchStr = id.toLowerCase();
+        const looseGen = GENERATORS.find(g => g.id.toLowerCase().includes(searchStr) || g.name.toLowerCase().includes(searchStr));
+        if (looseGen) return { name: looseGen.name, image: looseGen.image };
+        const loosePump = PUMPS.find(p => p.id.toLowerCase().includes(searchStr) || p.name.toLowerCase().includes(searchStr));
+        if (loosePump) return { name: loosePump.name, image: loosePump.image };
+
         return null;
     }, []);
 
@@ -342,21 +349,6 @@ const VoiceAssistant: React.FC = () => {
     const handleActivation = () => {
         if (loading) return;
 
-        if (!user) {
-            // Trigger Access Denied Behavior
-            setAccessDenied(true);
-
-            // Native Text-to-Speech
-            const utterance = new SpeechSynthesisUtterance("Only registered users can access Digital John.");
-            utterance.rate = 1.1;
-            utterance.pitch = 0.8; // Lower pitch for access denied message too
-            window.speechSynthesis.speak(utterance);
-
-            // Reset visual state after 3 seconds
-            setTimeout(() => setAccessDenied(false), 3000);
-            return;
-        }
-
         // If connected but minimized, just open UI
         if (isConnected) {
             setIsOpen(true);
@@ -434,8 +426,8 @@ const VoiceAssistant: React.FC = () => {
     return (
         <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4">
 
-            {/* Expanded Interface (Authenticated Only) */}
-            {isOpen && user && (
+            {/* Expanded Interface */}
+            {isOpen && (
                 <div className="bg-slate-900/30 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 w-80 overflow-hidden animate-in slide-in-from-bottom-5 duration-200">
                     <div className="bg-white/5 p-4 flex justify-between items-center text-white border-b border-white/10">
                         <h3 className="font-bold flex items-center gap-2">
@@ -573,37 +565,27 @@ const VoiceAssistant: React.FC = () => {
                 )}
             </AnimatePresence>
 
-            {/* Access Denied Bubble */}
-            {accessDenied && (
-                <div className="absolute bottom-20 right-0 bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xl whitespace-nowrap animate-in fade-in slide-in-from-right-4 flex items-center gap-2 z-[110] border border-red-500/50">
-                    <Lock size={12} className="text-red-400" />
-                    Only registered users can access Digital John.
-                    <div className="absolute -bottom-1 right-6 w-3 h-3 bg-slate-800 rotate-45 border-r border-b border-red-500/50" />
-                </div>
-            )}
+
 
             {/* Floating Action Button */}
             {!isOpen && (
                 <button
                     onClick={handleActivation}
                     className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 group relative
-                ${accessDenied ? 'bg-red-600 hover:bg-red-500 animate-shake' :
-                            isConnected
-                                ? (isPaused ? 'bg-amber-500 hover:bg-amber-400 border border-amber-300/50' : 'bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/50 shadow-[0_0_20px_rgba(16,185,129,0.5)]')
-                                : 'bg-slate-800 hover:bg-slate-700 border border-white/10'
+                        ${isConnected
+                            ? (isPaused ? 'bg-amber-500 hover:bg-amber-400 border border-amber-300/50' : 'bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/50 shadow-[0_0_20px_rgba(16,185,129,0.5)]')
+                            : 'bg-slate-800 hover:bg-slate-700 border border-white/10'
                         }
             `}
                 >
                     {/* Pulsing effect when connected but minimized */}
-                    {isConnected && !isPaused && !accessDenied && (
+                    {isConnected && !isPaused && (
                         <div className="absolute inset-0 rounded-full border-2 border-emerald-400 animate-ping opacity-30" />
                     )}
 
-                    <div className={`absolute inset-0 rounded-full opacity-20 animate-ping group-hover:opacity-30 ${accessDenied ? 'bg-red-500' : (isPaused ? 'bg-amber-500' : 'bg-emerald-500')}`} />
+                    <div className={`absolute inset-0 rounded-full opacity-20 animate-ping group-hover:opacity-30 ${isPaused ? 'bg-amber-500' : 'bg-emerald-500'}`} />
 
-                    {accessDenied ? (
-                        <Lock size={24} className="text-white relative z-10" />
-                    ) : isConnected && isPaused ? (
+                    {isConnected && isPaused ? (
                         <Pause size={24} className="text-white relative z-10" fill="currentColor" />
                     ) : (
                         <Mic size={24} className={`relative z-10 ${isConnected ? 'text-white' : 'text-emerald-400'}`} />

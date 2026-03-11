@@ -11,7 +11,7 @@ interface HeroProps {
   onNavigate: (path: string) => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
+const Hero: React.FC<HeroProps> = ({ onOpenAuth }) => {
   const { user, loading } = useAuth();
   const { language } = useLanguage();
   const t = translations[language].hero;

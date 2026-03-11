@@ -37,37 +37,7 @@ export interface WaterPump {
 }
 
 export const GENERATORS: Generator[] = [
-    {
-        id: 'mdz-30ds',
-        name: 'CE Power MDZ30DS Soundproof',
-        brand: 'CE Power',
-        powerKW: 24,
-        type: 'Silent',
-        image: '/images/mindong-30ds.png',
-        inStock: true,
-        description: 'The MDZ series Soundproof generator set. Features an automatic/manual control function, intergral salient pole rotor technique, and world-famous brand engines.',
-        voltage: '400/230V',
-        phase: '3 Phase',
-        fuelConsumption: '6.3 L/hr',
-        dimensions: '2400 x 1000 x 1620 mm',
-        weight: '1205 kg'
-    },
-    {
-        id: 'mdz-110ds',
-        name: 'CE Power MDZ110DS Soundproof',
-        brand: 'CE Power',
-        powerKW: 88,
-        type: 'Silent',
-        image: '/images/mindong-110ds.png',
-        inStock: true,
-        description: 'High-capacity soundproof generator set with advanced sound attenuation. Ideal for urban environments requiring stable power.',
-        voltage: '400/230V',
-        phase: '3 Phase',
-        fuelConsumption: '22 L/hr',
-        dimensions: '3000 x 1100 x 1720 mm',
-        weight: '1944 kg'
-    },
-    {
+{
         id: 'mdz-240yc',
         name: 'Yuchai MDZ240YC Industrial',
         brand: 'Yuchai',
@@ -82,22 +52,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1850 x 900 x 1200 mm',
         weight: '875 kg'
     },
-    {
-        id: 'mdz50ng',
-        name: 'MDZ50NG Natural Gas',
-        brand: 'Jichai',
-        powerKW: 50,
-        type: 'Silent',
-        image: '/images/mdz50ng_natural_gas_1768809923679.png',
-        inStock: true,
-        description: 'High-efficiency natural gas generator powered by M4BTAA3.9-NG engine. Features electronic speed control and ECU ignition.',
-        voltage: '400V',
-        phase: '3-Phase',
-        fuelConsumption: '14.5 m3/h',
-        dimensions: '1900x750x1150 mm',
-        weight: '1100 kg'
-    },
-    {
+{
         id: 'mdz1400ck',
         name: 'MDZ1400CK High Voltage',
         brand: 'Cummins',
@@ -112,37 +67,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '5800x2200x2520 mm',
         weight: '12500 kg'
     },
-    {
-        id: 'mg2500',
-        name: 'MG2500 Portable',
-        brand: 'CE Power',
-        powerKW: 2.5,
-        type: 'Portable',
-        image: '/images/mg2500_portable_gasoline_1768810001240.png',
-        inStock: true,
-        description: 'Compact and light weight gasoline generator. Perfect for small homes, camping, or mobile work stations.',
-        voltage: '220V',
-        phase: 'Single-Phase',
-        fuelConsumption: '1.2 L/h',
-        dimensions: '600x440x445 mm',
-        weight: '43 kg'
-    },
-    {
-        id: 'mk9500e',
-        name: 'MK9500E Heavy Duty',
-        brand: 'Kohler',
-        powerKW: 9.5,
-        type: 'Portable',
-        image: '/images/mk9500e_heavy_duty_gasoline_1768810056926.png',
-        inStock: true,
-        description: 'Heavy duty portable gasoline generator equipped with Kohler CH640 engine. Features electric start.',
-        voltage: '220V',
-        phase: 'Single-Phase',
-        fuelConsumption: '3.5 L/h',
-        dimensions: '1010x630x695 mm',
-        weight: '216 kg'
-    },
-    {
+{
         id: 'mdz-30dk',
         name: 'Dongfeng Cummins MDZ30DK',
         brand: 'Cummins',
@@ -157,7 +82,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1580 x 650 x 1146 mm',
         weight: '777 kg'
     },
-    {
+{
         id: 'mdz-275ck',
         name: 'Chongqing Cummins MDZ275CK',
         brand: 'Cummins',
@@ -172,67 +97,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3000 x 1054 x 1758 mm',
         weight: '2460 kg'
     },
-    {
-        id: 'mdz-10pk',
-        name: 'Perkins MDZ10PK Elite',
-        brand: 'Perkins',
-        powerKW: 8,
-        type: 'Silent',
-        image: '/images/perkins-10pk.png',
-        inStock: true,
-        description: 'Compact Perkins generator set. Perkins is world-famous for reliability and durability.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '3.0 L/hr',
-        dimensions: '1360 x 670 x 1313 mm',
-        weight: '220 kg'
-    },
-    {
-        id: 'mdz-300mtu',
-        name: 'MTU MDZ300MTU Power',
-        brand: 'MTU',
-        powerKW: 240,
-        type: 'Open',
-        image: '/images/mtu-300mtu.png',
-        inStock: true,
-        description: 'Powered by MTU engine from Germany Daimler MTU. Renowned for advanced and high power density.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '10.5 G/kW.H',
-        dimensions: '3000 x 1450 x 1815 mm',
-        weight: '2760 kg'
-    },
-    {
-        id: 'mdz-93vo',
-        name: 'Volvo MDZ93VO Series',
-        brand: 'Volvo',
-        powerKW: 75,
-        type: 'Silent',
-        image: '/images/volvo-93vo.png',
-        inStock: true,
-        description: 'Volvo series environment consciousness genset. Features quality, safety, and care for the environment.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '21.3 L/H',
-        dimensions: '1940 x 900 x 1505 mm',
-        weight: '1150 kg'
-    },
-    {
-        id: 'me-11500e',
-        name: 'CE Power ME11500E Gasoline',
-        brand: 'CE Power',
-        powerKW: 8.5,
-        type: 'Portable',
-        image: '/images/mindong-gasoline.png',
-        inStock: true,
-        description: 'Suitable for backup power for business stores, agricultural workshops, and shopping malls.',
-        voltage: '220V',
-        phase: 'Single Phase',
-        fuelConsumption: '3.5 L/hr',
-        dimensions: '800 x 630 x 844 mm',
-        weight: '184 kg'
-    },
-    {
+{
         id: 'weichai-80kw',
         name: 'Weichai 100kVA/80kW Generator',
         brand: 'Weichai',
@@ -247,7 +112,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2200 x 900 x 1500 mm',
         weight: '1200 kg'
     },
-    {
+{
         id: 'weichai-80kw-open',
         name: 'Weichai 80kW Open Generator',
         brand: 'Weichai',
@@ -262,7 +127,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2100 x 850 x 1400 mm',
         weight: '1100 kg'
     },
-    {
+{
         id: 'weichai-500kw',
         name: 'Weichai 625kVA/500kW Generator',
         brand: 'Weichai',
@@ -277,7 +142,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3500 x 1400 x 2000 mm',
         weight: '4500 kg'
     },
-    {
+{
         id: 'weichai-3000kw',
         name: 'Weichai 3750kVA/3000kW Generator',
         brand: 'Weichai',
@@ -292,7 +157,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '6000 x 2200 x 2800 mm',
         weight: '18000 kg'
     },
-    {
+{
         id: 'yuchai-100kw',
         name: 'Yuchai 125kVA/100kW Generator',
         brand: 'Yuchai',
@@ -307,7 +172,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2400 x 1000 x 1600 mm',
         weight: '1350 kg'
     },
-    {
+{
         id: 'yuchai-100kw-open',
         name: 'Yuchai 100kW Open Generator',
         brand: 'Yuchai',
@@ -322,7 +187,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2300 x 950 x 1500 mm',
         weight: '1250 kg'
     },
-    {
+{
         id: 'yuchai-1000kw',
         name: 'Yuchai 1250kVA/1000kW Generator',
         brand: 'Yuchai',
@@ -337,7 +202,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '6058 x 2438 x 2591 mm',
         weight: '8000 kg'
     },
-    {
+{
         id: 'yuchai-2000kw',
         name: 'Yuchai 2500kVA/2000kW Generator',
         brand: 'Yuchai',
@@ -352,67 +217,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '12192 x 2438 x 2896 mm',
         weight: '15000 kg'
     },
-    {
-        id: 'perkins-100kw',
-        name: 'Perkins 125kVA/100kW Generator',
-        brand: 'Perkins',
-        powerKW: 100,
-        type: 'Silent',
-        image: '/images/perkins-100kw.png',
-        inStock: true,
-        description: 'Classic UK design Perkins engine generator.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '22 L/hr',
-        dimensions: '2500 x 1000 x 1600 mm',
-        weight: '1400 kg'
-    },
-    {
-        id: 'perkins-100kw-open',
-        name: 'Perkins 100kW Open Generator',
-        brand: 'Perkins',
-        powerKW: 100,
-        type: 'Open',
-        image: '/images/perkins-100kw-open.png',
-        inStock: true,
-        description: 'Durable open type Perkins generator.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '22 L/hr',
-        dimensions: '2400 x 950 x 1500 mm',
-        weight: '1300 kg'
-    },
-    {
-        id: 'perkins-1000kw',
-        name: 'Perkins 1250kVA/1000kW Generator',
-        brand: 'Perkins',
-        powerKW: 1000,
-        type: 'Silent',
-        image: '/images/perkins-1000kw.png',
-        inStock: true,
-        description: 'Reliable high power Perkins generator.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '215 L/hr',
-        dimensions: '6058 x 2438 x 2591 mm',
-        weight: '9000 kg'
-    },
-    {
-        id: 'perkins-2000kw',
-        name: 'Perkins 2500kVA/2000kW Generator',
-        brand: 'Perkins',
-        powerKW: 2000,
-        type: 'Silent',
-        image: '/images/perkins-2000kw.png',
-        inStock: true,
-        description: 'Flagship Perkins power solution.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '430 L/hr',
-        dimensions: '12192 x 2438 x 2896 mm',
-        weight: '16000 kg'
-    },
-    {
+{
         id: 'cummins-100kw',
         name: 'Cummins 125kVA/100kW Generator',
         brand: 'Cummins',
@@ -427,7 +232,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2450 x 1000 x 1600 mm',
         weight: '1380 kg'
     },
-    {
+{
         id: 'cummins-1000kw',
         name: 'Cummins 1250kVA/1000kW Generator',
         brand: 'Cummins',
@@ -442,52 +247,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '6058 x 2438 x 2591 mm',
         weight: '8500 kg'
     },
-    {
-        id: 'mtu-1000kw',
-        name: 'MTU 1250kVA/1000kW Generator',
-        brand: 'MTU',
-        powerKW: 1000,
-        type: 'Silent',
-        image: '/images/mtu-1000kw.png',
-        inStock: true,
-        description: 'German engineering MTU engine generator.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '195 L/hr',
-        dimensions: '6058 x 2438 x 2591 mm',
-        weight: '8200 kg'
-    },
-    {
-        id: 'mtu-2000kw',
-        name: 'MTU 2500kVA/2000kW Generator',
-        brand: 'MTU',
-        powerKW: 2000,
-        type: 'Silent',
-        image: '/images/mtu-2000kw.png',
-        inStock: true,
-        description: 'Advanced MTU series 4000 engine.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '390 L/hr',
-        dimensions: '12192 x 2438 x 2896 mm',
-        weight: '14800 kg'
-    },
-    {
-        id: 'volvo-500kw',
-        name: 'Volvo 625kVA/500kW Generator',
-        brand: 'Volvo',
-        powerKW: 500,
-        type: 'Silent',
-        image: '/images/volvo-500kw.png',
-        inStock: true,
-        description: 'High efficiency Volvo power.',
-        voltage: '400V',
-        phase: '3 Phase',
-        fuelConsumption: '100 L/hr',
-        dimensions: '3500 x 1400 x 2000 mm',
-        weight: '4200 kg'
-    },
-    {
+{
         id: 'yunnei-15kw',
         name: 'Yunnei 18kVA/15kW Generator',
         brand: 'Yunnei',
@@ -502,7 +262,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1600 x 700 x 1000 mm',
         weight: '600 kg'
     },
-    {
+{
         id: 'yunnei-50kw',
         name: 'Yunnei 63kVA/50kW Generator',
         brand: 'Yunnei',
@@ -517,7 +277,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2000 x 900 x 1300 mm',
         weight: '950 kg'
     },
-    {
+{
         id: 'yunnei-100kw',
         name: 'Yunnei 125kVA/100kW Generator',
         brand: 'Yunnei',
@@ -532,7 +292,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2400 x 1000 x 1600 mm',
         weight: '1250 kg'
     },
-    {
+{
         id: 'kefo-50kw',
         name: 'Kefo 63kVA/50kW Generator',
         brand: 'Kefo',
@@ -547,7 +307,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2000 x 900 x 1300 mm',
         weight: '920 kg'
     },
-    {
+{
         id: 'yuchai-150kw-md150',
         name: 'Yuchai MD150 Industrial',
         brand: 'Yuchai',
@@ -562,7 +322,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2450 x 1080 x 1770 mm',
         weight: '1220 kg'
     },
-    {
+{
         id: 'yuchai-200kw-md200',
         name: 'Yuchai MD-200 Industrial',
         brand: 'Yuchai',
@@ -577,7 +337,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3600 x 1500 x 2200 mm',
         weight: '2900 kg'
     },
-    {
+{
         id: 'yuchai-250kw-mdz350',
         name: 'Yuchai MDZ350YC Industrial',
         brand: 'Yuchai',
@@ -592,7 +352,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '4000 x 1200 x 2020 mm',
         weight: '3100 kg'
     },
-    {
+{
         id: 'yunnei-600kw',
         name: 'Yunnei 600kW Generator',
         brand: 'Yunnei',
@@ -604,7 +364,7 @@ export const GENERATORS: Generator[] = [
         voltage: '400V',
         phase: '3 Phase'
     },
-    {
+{
         id: 'yunnei-400kw',
         name: 'Yunnei 400kW Generator',
         brand: 'Yunnei',
@@ -616,7 +376,7 @@ export const GENERATORS: Generator[] = [
         voltage: '400V',
         phase: '3 Phase'
     },
-    {
+{
         id: 'weichai-400kw-new',
         name: 'Weichai 400kW Generator',
         brand: 'Weichai',
@@ -628,7 +388,7 @@ export const GENERATORS: Generator[] = [
         voltage: '400V',
         phase: '3 Phase'
     },
-    {
+{
         id: 'last-200kw',
         name: 'Last 200kW Generator',
         brand: 'Last',
@@ -640,7 +400,7 @@ export const GENERATORS: Generator[] = [
         voltage: '400V',
         phase: '3 Phase'
     },
-    {
+{
         id: 'united-11kw',
         name: 'United Power 11kW Silent',
         brand: 'United Power',
@@ -652,7 +412,7 @@ export const GENERATORS: Generator[] = [
         voltage: '220/380V',
         phase: '3 Phase'
     },
-    {
+{
         id: 'yuchai-6-piston-gold',
         name: 'Yuchai 6-Piston Gold Refiner',
         brand: 'Yuchai',
@@ -666,8 +426,7 @@ export const GENERATORS: Generator[] = [
         fuelConsumption: '20L/hr',
         weight: '2800 kg'
     },
-    // Adding more from the constants.ts Jan 2026 update
-    {
+{
         id: 'yunnei-334kw',
         name: 'Yunnei 334kW Generator',
         brand: 'Yunnei',
@@ -682,7 +441,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3800 x 1600 x 2100 mm',
         weight: '3850 kg'
     },
-    {
+{
         id: 'yunnei-120kw-new',
         name: 'Yunnei 120kW Generator',
         brand: 'Yunnei',
@@ -697,7 +456,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2500 x 1000 x 1650 mm',
         weight: '1450 kg'
     },
-    {
+{
         id: 'yunnei-77kw',
         name: 'Yunnei 77kW Generator',
         brand: 'Yunnei',
@@ -712,7 +471,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2200 x 950 x 1450 mm',
         weight: '1150 kg'
     },
-    {
+{
         id: 'yunnei-55kw',
         name: 'Yunnei 55kW Generator',
         brand: 'Yunnei',
@@ -727,7 +486,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2000 x 900 x 1300 mm',
         weight: '1020 kg'
     },
-    {
+{
         id: 'yunnei-38kw',
         name: 'Yunnei 38kW Generator',
         brand: 'Yunnei',
@@ -742,7 +501,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1800 x 850 x 1200 mm',
         weight: '880 kg'
     },
-    {
+{
         id: 'yunnei-25kw',
         name: 'Yunnei 25kW Generator',
         brand: 'Yunnei',
@@ -757,7 +516,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1700 x 800 x 1100 mm',
         weight: '750 kg'
     },
-    {
+{
         id: 'yunnei-23.1kw',
         name: 'Yunnei 23.1kW Generator',
         brand: 'Yunnei',
@@ -772,7 +531,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1600 x 750 x 1050 mm',
         weight: '680 kg'
     },
-    {
+{
         id: 'yunnei-20kw',
         name: 'Yunnei 20kW Generator',
         brand: 'Yunnei',
@@ -787,7 +546,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1550 x 700 x 1000 mm',
         weight: '620 kg'
     },
-    {
+{
         id: 'weichai-353kw',
         name: 'Weichai 353kW Generator',
         brand: 'Weichai',
@@ -802,7 +561,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3600 x 1500 x 2050 mm',
         weight: '3900 kg'
     },
-    {
+{
         id: 'weichai-330kw',
         name: 'Weichai 330kW Generator',
         brand: 'Weichai',
@@ -817,7 +576,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3500 x 1450 x 2000 mm',
         weight: '3700 kg'
     },
-    {
+{
         id: 'weichai-275kw',
         name: 'Weichai 275kW Generator',
         brand: 'Weichai',
@@ -832,7 +591,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3200 x 1300 x 1900 mm',
         weight: '3200 kg'
     },
-    {
+{
         id: 'last-160kw',
         name: 'Last 160kW Generator',
         brand: 'Last',
@@ -847,7 +606,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2800 x 1150 x 1750 mm',
         weight: '2100 kg'
     },
-    {
+{
         id: 'last-100kw',
         name: 'Last 100kW Generator',
         brand: 'Last',
@@ -862,7 +621,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2400 x 1000 x 1600 mm',
         weight: '1450 kg'
     },
-    {
+{
         id: 'last-75kw',
         name: 'Last 75kW Generator',
         brand: 'Last',
@@ -877,7 +636,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2200 x 950 x 1450 mm',
         weight: '1180 kg'
     },
-    {
+{
         id: 'last-40kw',
         name: 'Last 40kW Generator',
         brand: 'Last',
@@ -892,7 +651,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1900 x 850 x 1250 mm',
         weight: '900 kg'
     },
-    {
+{
         id: 'last-25kw',
         name: 'Last 25kW Generator',
         brand: 'Last',
@@ -907,7 +666,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1750 x 800 x 1150 mm',
         weight: '760 kg'
     },
-    {
+{
         id: 'kefo-180kw',
         name: 'Kefo 180kW Generator',
         brand: 'Kefo',
@@ -922,7 +681,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '3000 x 1200 x 1800 mm',
         weight: '2400 kg'
     },
-    {
+{
         id: 'kefo-120kw',
         name: 'Kefo 120kW Generator',
         brand: 'Kefo',
@@ -937,7 +696,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2600 x 1050 x 1650 mm',
         weight: '1650 kg'
     },
-    {
+{
         id: 'kefo-150kw',
         name: 'Kefo 150kW Generator',
         brand: 'Kefo',
@@ -952,7 +711,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2800 x 1100 x 1750 mm',
         weight: '2100 kg'
     },
-    {
+{
         id: 'yuchai-120kw-new',
         name: 'Yuchai 120kW Generator',
         brand: 'Yuchai',
@@ -967,7 +726,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2600 x 1000 x 1650 mm',
         weight: '1580 kg'
     },
-    {
+{
         id: 'yuchai-92kw',
         name: 'Yuchai 92kW Generator',
         brand: 'Yuchai',
@@ -982,7 +741,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '2350 x 950 x 1500 mm',
         weight: '1280 kg'
     },
-    {
+{
         id: 'united-8kw',
         name: 'United Power 8kW Generator',
         brand: 'United Power',
@@ -997,7 +756,7 @@ export const GENERATORS: Generator[] = [
         dimensions: '1100 x 650 x 950 mm',
         weight: '240 kg'
     },
-    {
+{
         id: 'united-7kw',
         name: 'United Power 7kW Generator',
         brand: 'United Power',
@@ -1015,19 +774,7 @@ export const GENERATORS: Generator[] = [
 ];
 
 export const PUMPS: WaterPump[] = [
-    {
-        id: 'cep-50p',
-        name: 'CE Power 50HP Water Pump',
-        type: 'Diesel',
-        inletSize: '4-Inch',
-        maxHead: 60,
-        flowRate: 360,
-        image: '/images/cep-50p.png',
-        inStock: true,
-        description: 'High-efficiency CE Power water pump for agricultural and industrial irrigation.',
-        specs: { suction: '8m', fuelTank: '15L', engineModel: 'CE-50HP', startSystem: 'Electric' }
-    },
-    {
+{
         id: 'yc-50p',
         name: 'Yuchai 50HP Diesel Pump',
         type: 'Diesel',
@@ -1039,7 +786,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Reliable Yuchai diesel water pump, designed for heavy-duty dewatering and irrigation.',
         specs: { suction: '8m', fuelTank: '12L', engineModel: 'YC-50HP', startSystem: 'Recoil/Electric' }
     },
-    {
+{
         id: 'cum-pump-100',
         name: 'Cummins 100HP Fire Pump',
         type: 'High Pressure',
@@ -1051,19 +798,7 @@ export const PUMPS: WaterPump[] = [
         description: 'High-performance Cummins diesel fire pump system for emergency response.',
         specs: { suction: '9m', fuelTank: '40L', engineModel: 'Cummins 100', startSystem: 'Dual Electric' }
     },
-    {
-        id: 'perkins-pump-80',
-        name: 'Perkins 80HP Irrigation Pump',
-        type: 'Diesel',
-        inletSize: '4-Inch',
-        maxHead: 80,
-        flowRate: 400,
-        image: '/images/perkins-pump-80.png',
-        inStock: true,
-        description: 'Efficient Perkins powered water pump for large scale irrigation.',
-        specs: { suction: '8m', fuelTank: '25L', engineModel: 'Perkins 80', startSystem: 'Electric' }
-    },
-    {
+{
         id: 'yunnei-pump-100kw',
         name: 'Yunnei 100kW Industrial Pump',
         type: 'Industrial',
@@ -1075,19 +810,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Large capacity Yunnei industrial pump for mining and flood control.',
         specs: { suction: '8m', fuelTank: '50L', engineModel: 'Yunnei-100kW', startSystem: 'Electric' }
     },
-    {
-        id: 'gold-slurry-pump-50',
-        name: 'Gold Refinement Slurry Pump',
-        type: 'Industrial',
-        inletSize: '4-Inch',
-        maxHead: 90,
-        flowRate: 300,
-        image: '/images/cep-50p.png',
-        inStock: true,
-        description: 'High-head water pump designed specifically for gold washing and refinement processes.',
-        specs: { suction: '9m', fuelTank: '20L', engineModel: 'Slurry-Pro 50', startSystem: 'Electric' }
-    },
-    {
+{
         id: 'yunnei-pump-40',
         name: 'Yunnei 40HP Water Pump',
         type: 'Diesel',
@@ -1099,7 +822,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Portable Yunnei diesel water pump for agriculture.',
         specs: { suction: '7m', fuelTank: '10L', engineModel: 'YN-40HP', startSystem: 'Recoil' }
     },
-    {
+{
         id: 'kefo-pump-30',
         name: 'Kefo 30HP Water Pump',
         type: 'Diesel',
@@ -1111,8 +834,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Small Kefo water pump for domestic and light agricultural use.',
         specs: { suction: '7m', fuelTank: '8L', engineModel: 'KF-30HP', startSystem: 'Recoil' }
     },
-    // Adding more pumps from constants.ts
-    {
+{
         id: 'yunnei-600kw-pump',
         name: 'Yunnei 600kW Industrial Pump',
         brand: 'Yunnei',
@@ -1125,7 +847,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Ultra-high power industrial pump powered by Yunnei marine engine. Designed for large-scale mining operations or flood emergency response.',
         specs: { suction: '9m', fuelTank: '100L', engineModel: 'YN-600M', startSystem: 'Electric' }
     },
-    {
+{
         id: 'yunnei-400kw-pump',
         name: 'Yunnei 400kW Industrial Pump',
         brand: 'Yunnei',
@@ -1138,7 +860,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Heavy duty industrial pump for sustained dewatering and large scale irrigation.',
         specs: { suction: '8m', fuelTank: '80L', engineModel: 'YN-400L', startSystem: 'Electric' }
     },
-    {
+{
         id: 'yunnei-334kw-pump',
         name: 'Yunnei 334kW Industrial Pump',
         brand: 'Yunnei',
@@ -1151,7 +873,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Reliable industrial pump solution with high flow rate capacity.',
         specs: { suction: '8m', fuelTank: '60L', engineModel: 'YN-334L', startSystem: 'Electric' }
     },
-    {
+{
         id: 'yunnei-120kw-pump-new',
         name: 'Yunnei 120kW Industrial Pump',
         brand: 'Yunnei',
@@ -1164,7 +886,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Efficient medium-sized industrial pump for agricultural workshops.',
         specs: { suction: '8m', fuelTank: '50L', engineModel: 'YN-120M', startSystem: 'Electric' }
     },
-    {
+{
         id: 'weichai-400kw-pump',
         name: 'Weichai 400kW High-Flow Pump',
         brand: 'Weichai',
@@ -1177,7 +899,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Premium Weichai powered pump. Renowned for low fuel consumption and extreme durability.',
         specs: { suction: '9m', fuelTank: '100L', engineModel: 'WC-400X', startSystem: 'Electric' }
     },
-    {
+{
         id: 'last-200kw-pump',
         name: 'Last 200kW Industrial Pump',
         brand: 'Last',
@@ -1190,7 +912,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Last brand multipurpose industrial pump for various fluids.',
         specs: { suction: '8m', fuelTank: '40L', engineModel: 'L-200G', startSystem: 'Electric' }
     },
-    {
+{
         id: 'kefo-180kw-pump',
         name: 'Kefo 180kW Industrial Pump',
         brand: 'Kefo',
@@ -1203,7 +925,7 @@ export const PUMPS: WaterPump[] = [
         description: 'Kefo industrial grade pump for heavy debris handling.',
         specs: { suction: '8m', fuelTank: '40L', engineModel: 'KF-180D', startSystem: 'Electric' }
     },
-    {
+{
         id: 'united-11kw-pump',
         name: 'United Power 11kW Diesel Pump',
         brand: 'United Power',

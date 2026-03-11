@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(getHashPath());
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  const { user, loading } = useAuth();
+  const { loading } = useAuth();
 
   useEffect(() => {
     const onHashChange = () => {

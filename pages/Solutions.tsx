@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Search, Filter, Droplets, Zap, Check, X, ArrowRight, Gauge, Activity, Ruler, ChevronDown, ArrowUpDown, ShoppingCart } from 'lucide-react';
+import { Search, Droplets, X, ArrowRight, Activity, Ruler, ArrowUpDown, ShoppingCart } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 
@@ -10,7 +10,7 @@ interface PageProps {
   onNavigate: (path: string) => void;
 }
 
-const Solutions: React.FC<PageProps> = ({ onNavigate }) => {
+const Solutions: React.FC<PageProps> = () => {
   const { language } = useLanguage();
   const t = translations[language].products;
   const [searchQuery, setSearchQuery] = useState('');

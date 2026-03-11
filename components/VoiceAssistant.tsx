@@ -1,8 +1,8 @@
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import type { LiveServerMessage } from "@google/genai";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Lock, Minimize2, Pause, Play } from 'lucide-react';
+import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Minimize2, Pause, Play } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { useLanguage } from '../lib/LanguageContext';
 import { GENERATORS, PUMPS } from '../lib/productData';
@@ -16,7 +16,7 @@ const VoiceAssistant: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [activeGlimpse, setActiveGlimpse] = useState<{ id: string; name: string; image: string } | null>(null);
 
-    const { user, loading } = useAuth();
+    const { loading } = useAuth();
     const { language } = useLanguage();
 
     // Audio Refs
@@ -529,38 +529,43 @@ const VoiceAssistant: React.FC = () => {
                 </div>
             )}
 
-            {/* Floating Glimpse Overlay */}
+            {/* Full-Screen Centered Glimpse Overlay */}
             <AnimatePresence>
                 {activeGlimpse && (
                     <motion.div
-                        key={activeGlimpse.id}
-                        initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        className="absolute bottom-24 right-0 w-72 z-[120]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-12 pointer-events-none"
                     >
-                        <div className="relative group overflow-hidden rounded-2xl bg-slate-900/80 backdrop-blur-2xl border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+                        <motion.div
+                            key={activeGlimpse.id}
+                            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                            className="relative w-full max-w-5xl max-h-full flex flex-col overflow-hidden rounded-3xl bg-slate-900/90 backdrop-blur-3xl border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto"
+                        >
                             {/* Shimmer sweep */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_ease-in-out_infinite] pointer-events-none z-10" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_ease-in-out_infinite] pointer-events-none z-10" />
 
-                            <div className="p-1.5">
+                            <div className="p-4 md:p-8 flex-1 flex items-center justify-center bg-slate-800/20">
                                 <img
                                     src={activeGlimpse.image}
                                     alt={activeGlimpse.name}
-                                    className="w-full h-44 object-contain rounded-xl bg-slate-800/50"
+                                    className="w-full h-auto max-h-[65vh] object-contain drop-shadow-2xl"
                                 />
                             </div>
 
-                            <div className="px-4 pt-3 pb-4 bg-gradient-to-t from-emerald-700/90 to-emerald-600/80 text-white">
-                                <p className="text-[9px] font-extrabold uppercase tracking-[0.2em] text-emerald-200/70 mb-1">⚡ Live Glimpse</p>
-                                <h4 className="font-bold text-sm leading-tight">{activeGlimpse.name}</h4>
+                            <div className="px-6 py-6 md:py-8 bg-gradient-to-t from-emerald-900/90 to-emerald-800/80 text-white flex flex-col items-center text-center">
+                                <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.3em] text-emerald-300/80 mb-2 md:mb-3">⚡ Live Product Glimpse</p>
+                                <h4 className="font-bold text-2xl md:text-4xl leading-tight mb-5 md:mb-6">{activeGlimpse.name}</h4>
 
-                                <div className="mt-3 h-1 w-full bg-white/20 rounded-full overflow-hidden">
-                                    <div className="h-full bg-white rounded-full animate-progress" />
+                                <div className="h-1.5 w-full max-w-lg bg-black/40 rounded-full overflow-hidden">
+                                    <div className="h-full bg-emerald-400 rounded-full animate-progress" />
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>

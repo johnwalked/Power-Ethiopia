@@ -23,7 +23,7 @@ interface PageProps {
   onNavigate: (path: string) => void;
 }
 
-const Product: React.FC<PageProps> = ({ onNavigate }) => {
+const Product: React.FC<PageProps> = () => {
   const { language } = useLanguage();
   const t = translations[language].products;
 
@@ -215,7 +215,7 @@ const Product: React.FC<PageProps> = ({ onNavigate }) => {
           {/* Brand Filter */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.brand}</h4>
-            {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins', 'Perkins', 'Volvo', 'MTU', 'Kohler', 'Jichai'].map(brand => (
+            {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins'].map(brand => (
               <label key={brand} className="flex items-center gap-3 group cursor-pointer">
                 <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.brands.includes(brand) ? 'bg-emerald-600 border-emerald-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
                   {filters.brands.includes(brand) && <Check size={14} className="text-white" />}
@@ -282,7 +282,7 @@ const Product: React.FC<PageProps> = ({ onNavigate }) => {
 
                 <div className="space-y-3">
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.brand}</h4>
-                  {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins', 'Perkins', 'Volvo', 'MTU', 'Kohler', 'Jichai'].map(brand => (
+                  {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins'].map(brand => (
                     <label key={brand} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl border border-white/5 active:bg-slate-800">
                       <input type="checkbox" checked={filters.brands.includes(brand)} onChange={() => toggleFilter('brands', brand)} className="w-5 h-5 rounded accent-emerald-500" />
                       <span className="text-slate-200 text-sm font-medium">{brand}</span>
@@ -331,7 +331,7 @@ const Product: React.FC<PageProps> = ({ onNavigate }) => {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {filteredProducts.map((product, idx) => (
+              {filteredProducts.map((product) => (
                 <div
                   key={product.id}
                   onClick={() => setSelectedProduct(product)}

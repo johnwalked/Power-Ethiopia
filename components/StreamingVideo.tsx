@@ -24,6 +24,11 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
         const video = videoRef.current;
         if (!video) return;
 
+        if (video.readyState >= 3) {
+            setIsLoaded(true);
+            setIsBuffering(false);
+        }
+
         const handleLoadStart = () => setIsBuffering(true);
         const handleCanPlay = () => {
             setIsBuffering(false);
@@ -57,7 +62,10 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
             }
         } else {
             // Fallback to standard MP4
-            video.src = src;
+            if (!video.src.includes(src)) {
+                video.src = src;
+            }
+            video.play().catch(() => { /* silently fail */ });
         }
 
         // Force play on interaction for restrictive browsers
@@ -119,6 +127,7 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
             {/* Video Element */}
             <motion.video
                 ref={videoRef}
+                src={!src.endsWith('.m3u8') ? src : undefined}
                 autoPlay
                 loop
                 muted
@@ -130,7 +139,7 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
                     filter: isLoaded ? 'blur(0px)' : 'blur(10px)',
                     scale: isLoaded ? 1 : 1.1
                 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className="absolute top-0 left-0 w-full h-full object-cover"
             />
 

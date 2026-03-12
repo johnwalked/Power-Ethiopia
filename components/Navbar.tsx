@@ -141,7 +141,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
                         setLanguage(lang);
                         setIsLangMenuOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-emerald-500/10 flex items-center justify-between group"
+                      className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-red-500/10 flex items-center justify-between group"
                     >
                       {lang}
                       {language === lang && <Check size={14} className="text-red-500" />}

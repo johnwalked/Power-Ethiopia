@@ -60,14 +60,14 @@ const App: React.FC = () => {
           animate={{ opacity: 1 }}
           className="flex flex-col items-center gap-4"
         >
-          <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+          <Loader2 className="w-8 h-8 text-red-500 animate-spin" />
         </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-200 text-slate-100 bg-slate-950">
+    <div className="relative min-h-screen overflow-x-hidden selection:bg-red-500/30 selection:text-red-200 text-slate-100 bg-slate-950">
       <BackgroundEffects />
 
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -84,7 +84,7 @@ const App: React.FC = () => {
             >
               <Suspense fallback={
                 <div className="min-h-[60vh] flex items-center justify-center">
-                  <Loader2 className="w-8 h-8 text-emerald-500/50 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-red-500/50 animate-spin" />
                 </div>
               }>
                 {renderContent()}
@@ -96,7 +96,7 @@ const App: React.FC = () => {
         <footer className="relative z-10 py-12 px-6 border-t border-white/5 bg-slate-950/50 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2 group cursor-default">
-              <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:rotate-12 transition-transform">
+              <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:rotate-12 transition-transform">
                 <Zap className="w-5 h-5 text-white" />
               </div>
               <span className="font-bold text-lg text-slate-200 tracking-tight">CE Power</span>

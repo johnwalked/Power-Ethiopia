@@ -124,7 +124,7 @@ const Product: React.FC<PageProps> = () => {
       {/* Page Header */}
       <div className="mb-6 md:mb-10 text-center animate-in slide-in-from-bottom-4 duration-700 flex flex-col items-center">
         <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight mb-2 md:mb-3">
-          {t.generatorTitle} <span className="text-emerald-500">{t.inventory}</span>
+          {t.generatorTitle} <span className="text-red-500">{t.inventory}</span>
         </h1>
         <p className="text-slate-400 max-w-2xl text-sm md:text-base mx-auto">
           {t.genDescription}
@@ -162,7 +162,7 @@ const Product: React.FC<PageProps> = () => {
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as SortOption)}
-              className="w-full md:w-48 appearance-none bg-slate-800/50 border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-9 pr-8 text-sm text-slate-200 focus:border-emerald-500 outline-none cursor-pointer hover:bg-slate-800 transition-colors"
+              className="w-full md:w-48 appearance-none bg-slate-800/50 border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-9 pr-8 text-sm text-slate-200 focus:border-red-500 outline-none cursor-pointer hover:bg-slate-800 transition-colors"
             >
               <option value="power-asc">{t.powerOutput} (Low to High)</option>
               <option value="power-desc">{t.powerOutput} (High to Low)</option>
@@ -274,7 +274,7 @@ const Product: React.FC<PageProps> = () => {
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.powerOutput}</h4>
                   {['0-50', '50-150', '150-400', '400+'].map(range => (
                     <label key={range} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl border border-white/5 active:bg-slate-800">
-                      <input type="checkbox" checked={filters.powerRanges.includes(range)} onChange={() => toggleFilter('powerRanges', range)} className="w-5 h-5 rounded accent-emerald-500" />
+                      <input type="checkbox" checked={filters.powerRanges.includes(range)} onChange={() => toggleFilter('powerRanges', range)} className="w-5 h-5 rounded accent-red-500" />
                       <span className="text-slate-200 text-sm font-medium">{range === '400+' ? '400kW +' : `${range} kW`}</span>
                     </label>
                   ))}
@@ -284,7 +284,7 @@ const Product: React.FC<PageProps> = () => {
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.brand}</h4>
                   {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins'].map(brand => (
                     <label key={brand} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl border border-white/5 active:bg-slate-800">
-                      <input type="checkbox" checked={filters.brands.includes(brand)} onChange={() => toggleFilter('brands', brand)} className="w-5 h-5 rounded accent-emerald-500" />
+                      <input type="checkbox" checked={filters.brands.includes(brand)} onChange={() => toggleFilter('brands', brand)} className="w-5 h-5 rounded accent-red-500" />
                       <span className="text-slate-200 text-sm font-medium">{brand}</span>
                     </label>
                   ))}
@@ -294,7 +294,7 @@ const Product: React.FC<PageProps> = () => {
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.type}</h4>
                   {['Silent', 'Open', 'Portable'].map(type => (
                     <label key={type} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl border border-white/5 active:bg-slate-800">
-                      <input type="checkbox" checked={filters.types.includes(type)} onChange={() => toggleFilter('types', type)} className="w-5 h-5 rounded accent-emerald-500" />
+                      <input type="checkbox" checked={filters.types.includes(type)} onChange={() => toggleFilter('types', type)} className="w-5 h-5 rounded accent-red-500" />
                       <span className="text-slate-200 text-sm font-medium">{type}</span>
                     </label>
                   ))}
@@ -325,7 +325,7 @@ const Product: React.FC<PageProps> = () => {
                 <Search size={32} />
               </div>
               <h3 className="text-white font-bold text-lg">{t.noResults}</h3>
-              <button onClick={clearFilters} className="mt-6 text-emerald-500 font-bold hover:underline">
+              <button onClick={clearFilters} className="mt-6 text-red-500 font-bold hover:underline">
                 {t.clearFilters}
               </button>
             </div>
@@ -404,7 +404,7 @@ const Product: React.FC<PageProps> = () => {
                           {product.inStock ? t.inStock : t.outStock}
                         </span>
                       </div>
-                      <ArrowRight size={12} className="text-slate-600 group-hover:text-emerald-500 transition-colors" />
+                      <ArrowRight size={12} className="text-slate-600 group-hover:text-red-500 transition-colors" />
                     </div>
                   </div>
                 </div>
@@ -449,7 +449,7 @@ const Product: React.FC<PageProps> = () => {
           <div className="relative bg-slate-900 border border-white/10 w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
               <h2 className="text-white font-bold text-lg flex items-center gap-2">
-                <ArrowLeftRight className="text-emerald-500" /> {t.compareModels}
+                <ArrowLeftRight className="text-red-500" /> {t.compareModels}
               </h2>
               <button onClick={() => setIsCompareModalOpen(false)} className="text-slate-400 hover:text-white"><X size={20} /></button>
             </div>
@@ -464,7 +464,7 @@ const Product: React.FC<PageProps> = () => {
                         <div className="flex flex-col items-center text-center gap-3">
                           <img src={p.image} loading="lazy" className="w-24 h-24 object-cover rounded-lg border border-white/10" alt={p.name} />
                           <div>
-                            <div className="text-emerald-500 text-xs font-bold uppercase mb-1">{p.brand}</div>
+                            <div className="text-red-500 text-xs font-bold uppercase mb-1">{p.brand}</div>
                             <div className="text-white font-bold text-sm leading-tight">{p.name}</div>
                           </div>
                           <button
@@ -568,27 +568,27 @@ const Product: React.FC<PageProps> = () => {
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.powerOutput}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.powerKW} KW</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Activity className="w-5 h-5 text-blue-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.engineModel}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.engineModel}</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Gauge className="w-5 h-5 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.voltage}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.voltage}</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Battery className="w-5 h-5 text-purple-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.fuelCons}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.fuelConsumption}</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Box className="w-5 h-5 text-pink-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.dimensions}</div>
                   <div className="text-sm md:text-base font-bold text-white truncate">{selectedProduct.dimensions}</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Scale className="w-5 h-5 text-yellow-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.weight}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.weight}</div>

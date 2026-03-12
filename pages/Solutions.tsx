@@ -197,17 +197,17 @@ const Solutions: React.FC<PageProps> = () => {
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.inlet}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.inletSize}</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <ArrowUpDown className="w-5 h-5 text-blue-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.maxHead}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.maxHead}m</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Activity className="w-5 h-5 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.flowRate}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.flowRate} m³/h</div>
                 </div>
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Ruler className="w-5 h-5 text-purple-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.suction}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.specs.suction}</div>

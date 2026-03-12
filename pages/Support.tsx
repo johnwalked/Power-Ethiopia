@@ -37,29 +37,29 @@ const Support: React.FC<PageProps> = ({ onNavigate }) => {
           <input 
             type="text" 
             placeholder="Search for answers..." 
-            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all"
+            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 shadow-sm focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
         </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6 mb-20">
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-emerald-200 hover:shadow-md transition-all cursor-pointer group">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-red-200 hover:shadow-md transition-all cursor-pointer group">
           <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
             <Book size={20} />
           </div>
           <h3 className="font-bold text-slate-900 mb-2">Documentation</h3>
           <p className="text-sm text-slate-500">Guides on getting started, API references, and security whitepapers.</p>
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-emerald-200 hover:shadow-md transition-all cursor-pointer group">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-red-200 hover:shadow-md transition-all cursor-pointer group">
           <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
             <MessageCircle size={20} />
           </div>
           <h3 className="font-bold text-slate-900 mb-2">Community Forum</h3>
           <p className="text-sm text-slate-500">Connect with other developers and share best practices.</p>
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-emerald-200 hover:shadow-md transition-all cursor-pointer group">
-          <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-red-200 hover:shadow-md transition-all cursor-pointer group">
+          <div className="w-10 h-10 bg-red-50 text-red-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
             <Mail size={20} />
           </div>
           <h3 className="font-bold text-slate-900 mb-2">Contact Support</h3>
@@ -69,7 +69,7 @@ const Support: React.FC<PageProps> = ({ onNavigate }) => {
 
       <div className="max-w-3xl mx-auto">
         <h2 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2">
-            <FileQuestion className="text-emerald-600" />
+            <FileQuestion className="text-red-600" />
             Frequently Asked Questions
         </h2>
         <div className="space-y-4">
@@ -85,7 +85,7 @@ const Support: React.FC<PageProps> = ({ onNavigate }) => {
       <div className="mt-16 text-center">
         <button 
             onClick={() => onNavigate('/')}
-            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors mx-auto"
+            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-red-600 transition-colors mx-auto"
         >
             <ArrowLeft className="w-4 h-4" />
             Back to Home

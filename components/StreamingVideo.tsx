@@ -117,7 +117,7 @@ const StreamingVideo: React.FC<StreamingVideoProps> = ({
                             <motion.div
                                 animate={{ rotate: 360 }}
                                 transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                                className="w-full h-full border-2 border-emerald-500/20 border-t-emerald-500 rounded-full"
+                                className="w-full h-full border-2 border-red-500/20 border-t-red-500 rounded-full"
                             />
                         </div>
                     </motion.div>

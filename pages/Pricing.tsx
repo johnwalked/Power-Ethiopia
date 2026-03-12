@@ -63,12 +63,12 @@ const Pricing: React.FC<PageProps> = ({ onNavigate, onOpenAuth }) => {
             key={index} 
             className={`flex flex-col p-6 rounded-2xl border ${
               plan.highlight 
-                ? 'bg-emerald-50/50 border-emerald-200 shadow-xl shadow-emerald-100 relative' 
+                ? 'bg-red-50/50 border-red-200 shadow-xl shadow-red-100 relative' 
                 : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
             } transition-all duration-300`}
           >
             {plan.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                     Most Popular
                 </div>
             )}
@@ -83,7 +83,7 @@ const Pricing: React.FC<PageProps> = ({ onNavigate, onOpenAuth }) => {
             <div className="flex-1 space-y-3 mb-8">
               {plan.features.map((feature, i) => (
                 <div key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                  <Check className={`w-4 h-4 mt-0.5 ${plan.highlight ? 'text-emerald-600' : 'text-slate-400'}`} />
+                  <Check className={`w-4 h-4 mt-0.5 ${plan.highlight ? 'text-red-600' : 'text-slate-400'}`} />
                   <span>{feature}</span>
                 </div>
               ))}
@@ -93,7 +93,7 @@ const Pricing: React.FC<PageProps> = ({ onNavigate, onOpenAuth }) => {
               onClick={onOpenAuth}
               className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all ${
                 plan.highlight 
-                  ? 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-200' 
+                  ? 'bg-red-600 text-white hover:bg-red-500 shadow-lg shadow-red-200' 
                   : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'
               }`}
             >
@@ -108,7 +108,7 @@ const Pricing: React.FC<PageProps> = ({ onNavigate, onOpenAuth }) => {
         <p className="text-slate-600 text-sm mb-4">
             We offer custom Data Processing Agreements (DPA) and invoicing for enterprise teams.
         </p>
-        <button onClick={() => onNavigate('/support')} className="text-emerald-600 font-bold text-sm hover:underline">
+        <button onClick={() => onNavigate('/support')} className="text-red-600 font-bold text-sm hover:underline">
             Contact Support Team &rarr;
         </button>
       </div>
@@ -116,7 +116,7 @@ const Pricing: React.FC<PageProps> = ({ onNavigate, onOpenAuth }) => {
       <div className="mt-12 text-center">
         <button 
             onClick={() => onNavigate('/')}
-            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors mx-auto"
+            className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-red-600 transition-colors mx-auto"
         >
             <ArrowLeft className="w-4 h-4" />
             Back to Home

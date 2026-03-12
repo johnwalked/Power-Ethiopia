@@ -13,7 +13,7 @@ const DemoDashboard: React.FC<DemoDashboardProps> = ({ onNavigate }) => {
         <p className="text-slate-400">This demo dashboard is currently in maintenance mode while we upgrade our database.</p>
         <button 
           onClick={() => onNavigate('/')} 
-          className="mt-6 px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors"
+          className="mt-6 px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg transition-colors"
         >
           Return Home
         </button>

@@ -141,9 +141,9 @@ const Product: React.FC<PageProps> = () => {
             placeholder={t.searchGen}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-800/50 border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-emerald-500/50 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all"
+            className="w-full bg-slate-800/50 border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
           />
-          <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
+          <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-red-500 transition-colors" />
         </div>
 
         {/* Actions Right */}
@@ -180,7 +180,7 @@ const Product: React.FC<PageProps> = () => {
 
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-bold text-white flex items-center gap-2">
-              <SlidersHorizontal size={18} className="text-emerald-500" /> {t.filters}
+              <SlidersHorizontal size={18} className="text-red-500" /> {t.filters}
             </h3>
             {(filters.brands.length > 0 || filters.types.length > 0 || filters.powerRanges.length > 0) && (
               <button onClick={clearFilters} className="text-xs text-slate-400 hover:text-white hover:underline">
@@ -194,7 +194,7 @@ const Product: React.FC<PageProps> = () => {
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.powerOutput} (kW)</h4>
             {['0-50', '50-150', '150-400', '400+'].map(range => (
               <label key={range} className="flex items-center gap-3 group cursor-pointer">
-                <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.powerRanges.includes(range) ? 'bg-emerald-600 border-emerald-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
+                <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.powerRanges.includes(range) ? 'bg-red-600 border-red-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
                   {filters.powerRanges.includes(range) && <Check size={14} className="text-white" />}
                 </div>
                 <input
@@ -217,7 +217,7 @@ const Product: React.FC<PageProps> = () => {
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.brand}</h4>
             {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins'].map(brand => (
               <label key={brand} className="flex items-center gap-3 group cursor-pointer">
-                <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.brands.includes(brand) ? 'bg-emerald-600 border-emerald-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
+                <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.brands.includes(brand) ? 'bg-red-600 border-red-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
                   {filters.brands.includes(brand) && <Check size={14} className="text-white" />}
                 </div>
                 <input
@@ -240,7 +240,7 @@ const Product: React.FC<PageProps> = () => {
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.type}</h4>
             {['Silent', 'Open', 'Portable'].map(type => (
               <label key={type} className="flex items-center gap-3 group cursor-pointer">
-                <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.types.includes(type) ? 'bg-emerald-600 border-emerald-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
+                <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.types.includes(type) ? 'bg-red-600 border-red-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
                   {filters.types.includes(type) && <Check size={14} className="text-white" />}
                 </div>
                 <input
@@ -304,7 +304,7 @@ const Product: React.FC<PageProps> = () => {
               <div className="sticky bottom-0 pt-6 mt-6 border-t border-white/10 bg-slate-900">
                 <button
                   onClick={() => setIsMobileFiltersOpen(false)}
-                  className="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl shadow-lg"
+                  className="w-full py-3 bg-red-600 text-white font-bold rounded-xl shadow-lg"
                 >
                   Show Results
                 </button>
@@ -337,9 +337,9 @@ const Product: React.FC<PageProps> = () => {
                   onClick={() => setSelectedProduct(product)}
                   className={`
                     group bg-slate-900/40 border border-white/10 rounded-xl overflow-hidden cursor-pointer
-                    hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-900/10 
+                    hover:border-red-500/30 hover:shadow-lg hover:shadow-red-900/10 
                     transition-all duration-300 flex flex-col relative
-                    ${compareList.includes(product.id) ? 'ring-1 ring-emerald-500 bg-emerald-900/10' : ''}
+                    ${compareList.includes(product.id) ? 'ring-1 ring-red-500 bg-red-900/10' : ''}
                   `}
                 >
                   {/* Image & Compare Checkbox Overlay */}
@@ -363,7 +363,7 @@ const Product: React.FC<PageProps> = () => {
                       className="absolute top-2 left-2 z-10 p-1 -m-1" // Increase hit area
                       onClick={(e) => toggleCompare(e, product.id)}
                     >
-                      <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shadow-sm ${compareList.includes(product.id) ? 'bg-emerald-500 border-emerald-500' : 'bg-black/40 border-white/30 hover:bg-black/60'}`}>
+                      <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shadow-sm ${compareList.includes(product.id) ? 'bg-red-500 border-red-500' : 'bg-black/40 border-white/30 hover:bg-black/60'}`}>
                         {compareList.includes(product.id) && <Check size={12} className="text-white" />}
                       </div>
                     </div>
@@ -380,7 +380,7 @@ const Product: React.FC<PageProps> = () => {
                       {/* Power */}
                       <div className="flex items-center justify-between text-[10px] md:text-xs">
                         <span className="text-slate-500 flex items-center gap-1.5">
-                          <Zap size={10} className="text-emerald-500" /> {t.powerOutput}
+                          <Zap size={10} className="text-red-500" /> {t.powerOutput}
                         </span>
                         <span className="text-slate-200 font-mono font-bold">{product.powerKW} kW</span>
                       </div>
@@ -399,8 +399,8 @@ const Product: React.FC<PageProps> = () => {
                     {/* Footer: Status */}
                     <div className="mt-auto pt-2 border-t border-white/5 flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
-                        <div className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-emerald-500' : 'bg-red-500 animate-pulse'}`} />
-                        <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wide ${product.inStock ? 'text-emerald-500' : 'text-red-500'}`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-red-500' : 'bg-slate-500 animate-pulse'}`} />
+                        <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wide ${product.inStock ? 'text-red-500' : 'text-slate-500'}`}>
                           {product.inStock ? t.inStock : t.outStock}
                         </span>
                       </div>
@@ -416,11 +416,11 @@ const Product: React.FC<PageProps> = () => {
 
       {/* Comparison Floating Bar */}
       {compareList.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900 border border-emerald-500/50 rounded-full shadow-[0_0_30px_rgba(0,0,0,0.5)] py-3 px-6 flex items-center gap-4 animate-in slide-in-from-bottom-10 fade-in w-[90%] md:w-auto justify-between md:justify-start">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900 border border-red-500/50 rounded-full shadow-[0_0_30px_rgba(0,0,0,0.5)] py-3 px-6 flex items-center gap-4 animate-in slide-in-from-bottom-10 fade-in w-[90%] md:w-auto justify-between md:justify-start">
           <span className="text-white text-sm font-bold whitespace-nowrap hidden md:inline">
             {compareList.length} {t.selected}
           </span>
-          <span className="text-white text-xs font-bold whitespace-nowrap md:hidden bg-emerald-500/20 px-2 py-0.5 rounded-full">
+          <span className="text-white text-xs font-bold whitespace-nowrap md:hidden bg-red-500/20 px-2 py-0.5 rounded-full">
             {compareList.length}
           </span>
 
@@ -428,7 +428,7 @@ const Product: React.FC<PageProps> = () => {
 
           <button
             onClick={() => setIsCompareModalOpen(true)}
-            className="text-emerald-400 hover:text-white font-bold text-sm flex items-center gap-2"
+            className="text-red-400 hover:text-white font-bold text-sm flex items-center gap-2"
           >
             <ArrowLeftRight size={16} /> {t.compare} <span className="hidden md:inline">Now</span>
           </button>
@@ -530,7 +530,7 @@ const Product: React.FC<PageProps> = () => {
 
             {/* Left: Image Side */}
             <div className="md:w-1/2 relative bg-gradient-to-br from-slate-800 to-slate-950 min-h-[300px] md:min-h-full">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/20 via-transparent to-transparent opacity-50" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-500/20 via-transparent to-transparent opacity-50" />
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.name}
@@ -543,7 +543,7 @@ const Product: React.FC<PageProps> = () => {
               />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex justify-between items-center">
-                  <span className="text-xs font-bold text-emerald-300 uppercase tracking-widest">{t.inStock}</span>
+                  <span className="text-xs font-bold text-red-300 uppercase tracking-widest">{t.inStock}</span>
                   <span className="text-white font-mono font-bold">{t.brand}: {selectedProduct.brand}</span>
                 </div>
               </div>
@@ -552,7 +552,7 @@ const Product: React.FC<PageProps> = () => {
             {/* Right: Details Side */}
             <div className="md:w-1/2 p-6 md:p-10 overflow-y-auto">
               <div className="mb-1">
-                <span className="text-emerald-500 font-bold tracking-widest text-xs uppercase">{selectedProduct.type} Series</span>
+                <span className="text-red-500 font-bold tracking-widest text-xs uppercase">{selectedProduct.type} Series</span>
               </div>
               <h2 className="text-2xl md:text-3xl font-black text-white mb-4 leading-tight">
                 {selectedProduct.name}
@@ -563,8 +563,8 @@ const Product: React.FC<PageProps> = () => {
 
               {/* Specifications Grid */}
               <div className="grid grid-cols-2 gap-3 md:gap-4 mb-8">
-                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group">
-                  <Zap className="w-5 h-5 text-emerald-500 mb-2 group-hover:scale-110 transition-transform" />
+                <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
+                  <Zap className="w-5 h-5 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.powerOutput}</div>
                   <div className="text-base md:text-lg font-bold text-white">{selectedProduct.powerKW} KW</div>
                 </div>
@@ -597,7 +597,7 @@ const Product: React.FC<PageProps> = () => {
 
               {/* Footer Actions */}
               <div className="flex items-center justify-end gap-4 mt-auto">
-                <button className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold shadow-lg shadow-emerald-900/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                <button className="w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-900/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
                   <ShoppingCart size={18} />
                   {t.orderNow}
                 </button>

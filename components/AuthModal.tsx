@@ -183,7 +183,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   setActiveTab('signin');
                   setPassword('');
                 }}
-                className="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-500 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-red-600 text-white font-bold text-sm hover:bg-red-500 transition-all flex items-center justify-center gap-2"
               >
                 {t.signInBtn}
               </button>
@@ -254,7 +254,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <>
             {/* Header Section */}
             <div className="px-8 pt-8 pb-6 text-center">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mx-auto mb-4 text-emerald-400 border border-emerald-500/20">
+              <div className="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mx-auto mb-4 text-red-400 border border-red-500/20">
                 <Lock size={24} />
               </div>
               <h2 className="text-2xl font-bold text-white">
@@ -270,23 +270,23 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={() => setActiveTab('signin')}
                 className={`flex-1 pb-3 text-sm font-semibold transition-all relative ${
-                  activeTab === 'signin' ? 'text-emerald-400' : 'text-slate-500 hover:text-slate-300'
+                  activeTab === 'signin' ? 'text-red-400' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
                 {t.signInBtn}
                 {activeTab === 'signin' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400 rounded-t-full shadow-[0_-2px_8px_rgba(16,185,129,0.5)]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-400 rounded-t-full shadow-[0_-2px_8px_rgba(239,68,68,0.5)]" />
                 )}
               </button>
               <button
                 onClick={() => setActiveTab('signup')}
                 className={`flex-1 pb-3 text-sm font-semibold transition-all relative ${
-                  activeTab === 'signup' ? 'text-emerald-400' : 'text-slate-500 hover:text-slate-300'
+                  activeTab === 'signup' ? 'text-red-400' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
                 {t.signUpBtn}
                 {activeTab === 'signup' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400 rounded-t-full shadow-[0_-2px_8px_rgba(16,185,129,0.5)]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-400 rounded-t-full shadow-[0_-2px_8px_rgba(239,68,68,0.5)]" />
                 )}
               </button>
             </div>
@@ -312,11 +312,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         type="text" 
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full px-4 py-2.5 rounded-xl border border-white/10 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-300 pl-10 bg-white/5 text-white placeholder:text-slate-500"
+                        className="w-full px-4 py-2.5 rounded-xl border border-white/10 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-none transition-all duration-300 pl-10 bg-white/5 text-white placeholder:text-slate-500"
                         placeholder="John Doe"
                         required
                       />
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-red-400 transition-colors" />
                     </div>
                   </div>
                 )}
@@ -328,11 +328,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       type="email" 
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-white/10 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-300 pl-10 bg-white/5 text-white placeholder:text-slate-500"
+                      className="w-full px-4 py-2.5 rounded-xl border border-white/10 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-none transition-all duration-300 pl-10 bg-white/5 text-white placeholder:text-slate-500"
                       placeholder="name@company.com"
                       required
                     />
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-red-400 transition-colors" />
                   </div>
                 </div>
 
@@ -343,7 +343,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       <button 
                         type="button"
                         onClick={() => setMode('forgot-password')}
-                        className="text-xs font-medium text-emerald-400 hover:text-emerald-300 hover:underline transition-all"
+                        className="text-xs font-medium text-red-400 hover:text-red-300 hover:underline transition-all"
                       >
                         {t.forgotPass}
                       </button>
@@ -354,18 +354,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       type="password" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-white/10 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-300 pl-10 bg-white/5 text-white placeholder:text-slate-500"
+                      className="w-full px-4 py-2.5 rounded-xl border border-white/10 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-none transition-all duration-300 pl-10 bg-white/5 text-white placeholder:text-slate-500"
                       placeholder="••••••••"
                       required
                     />
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-red-400 transition-colors" />
                   </div>
                 </div>
 
                 <button 
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-500 hover:shadow-lg hover:shadow-emerald-900/40 transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-xl bg-red-600 text-white font-bold text-sm hover:bg-red-500 hover:shadow-lg hover:shadow-red-900/40 transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <>

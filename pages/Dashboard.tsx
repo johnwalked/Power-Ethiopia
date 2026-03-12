@@ -55,19 +55,19 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
          <div>
             <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-2">
-                <LayoutGrid className="text-emerald-500" />
+                <LayoutGrid className="text-red-500" />
                 {t.title}
             </h1>
             <p className="text-slate-400">{t.subtitle}</p>
          </div>
          <div className="flex items-center gap-4">
              <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-md">
-                <div className="w-8 h-8 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center font-bold text-xs border border-emerald-500/30">
+                <div className="w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center font-bold text-xs border border-red-500/30">
                     {(user?.email || 'U').substring(0,2).toUpperCase()}
                 </div>
                 <div className="text-sm">
                     <p className="font-bold text-slate-200 leading-none">{user?.displayName || t.partner}</p>
-                    <p className="text-[10px] text-emerald-400 font-medium">{t.dealer}</p>
+                    <p className="text-[10px] text-red-400 font-medium">{t.dealer}</p>
                 </div>
              </div>
              <button 
@@ -84,10 +84,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-white/5 p-6 rounded-2xl border border-white/10 shadow-sm backdrop-blur-md">
             <div className="flex items-start justify-between mb-4">
-                <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/10">
+                <div className="p-2 bg-red-500/10 text-red-400 rounded-lg border border-red-500/10">
                     <Shield size={20} />
                 </div>
-                <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/10">Active</span>
+                <span className="text-xs font-bold text-red-400 bg-red-500/10 px-2 py-1 rounded border border-red-500/10">Active</span>
             </div>
             <h3 className="text-slate-400 text-sm font-medium mb-1">{t.status}</h3>
             <p className="text-2xl font-bold text-white">{t.verified}</p>
@@ -123,7 +123,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     placeholder={t.search}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm focus:border-emerald-500 outline-none text-white placeholder:text-slate-500 backdrop-blur-sm"
+                    className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm focus:border-red-500 outline-none text-white placeholder:text-slate-500 backdrop-blur-sm"
                  />
              </div>
          </div>
@@ -150,7 +150,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                              <tr key={file.id} className="hover:bg-white/5 transition-colors group">
                                  <td className="px-6 py-4">
                                      <div className="flex items-center gap-3">
-                                         <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/10">
+                                         <div className="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center border border-red-500/10">
                                              <FileText size={16} />
                                          </div>
                                          <span className="font-medium text-slate-200 group-hover:text-white transition-colors">{file.name}</span>
@@ -166,7 +166,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                                      <div className="flex items-center justify-end gap-2">
                                         <button 
                                             onClick={() => setPreviewFile(file)}
-                                            className="text-white hover:text-emerald-300 font-medium text-xs bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg transition-all inline-flex items-center gap-2 shadow-lg shadow-emerald-900/40"
+                                            className="text-white hover:text-red-300 font-medium text-xs bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg transition-all inline-flex items-center gap-2 shadow-lg shadow-red-900/40"
                                         >
                                             <Eye size={14} /> {t.table.view || "Preview"}
                                         </button>

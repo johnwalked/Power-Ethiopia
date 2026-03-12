@@ -81,10 +81,10 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth }) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-10 cursor-default shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 mb-10 cursor-default shadow-[0_0_15px_rgba(239,68,68,0.2)]"
           >
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
-            <span className="text-[11px] font-bold text-emerald-400 tracking-widest uppercase">
+            <span className="flex h-2 w-2 rounded-full bg-red-400 animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]" />
+            <span className="text-[11px] font-bold text-red-400 tracking-widest uppercase">
               {t.badge}
             </span>
           </motion.div>
@@ -103,7 +103,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth }) => {
               >
                 <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
                   {t.welcome} <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-200">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-200">
                     {getFirstName()}
                   </span>
                 </h1>
@@ -133,7 +133,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth }) => {
                     key={`span-${headlineIndex}-${i}`}
                     custom={i + currentHeadline.line.split(' ').length}
                     variants={wordVariants}
-                    className="inline-block mr-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-400 pb-2 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                    className="inline-block mr-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-200 to-red-400 pb-2 drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]"
                   >
                     {word}
                   </motion.span>
@@ -168,14 +168,14 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth }) => {
         >
           {loading ? (
             <div className="flex items-center justify-center px-12 py-3">
-              <Loader2 className="w-6 h-6 text-emerald-500 animate-spin opacity-50" />
+              <Loader2 className="w-6 h-6 text-red-500 animate-spin opacity-50" />
             </div>
           ) : !user && (
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={onOpenAuth}
-              className="group px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all duration-500 bg-emerald-600 flex items-center justify-center gap-2 text-base border border-emerald-500/50 overflow-hidden relative"
+              className="group px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.5)] transition-all duration-500 bg-red-600 flex items-center justify-center gap-2 text-base border border-red-500/50 overflow-hidden relative"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <LogIn className="w-5 h-5" />
@@ -198,7 +198,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth }) => {
                 key={i}
                 onClick={() => setHeadlineIndex(i)}
                 className={`rounded-full transition-all duration-500 ${i === headlineIndex
-                  ? 'w-8 h-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
+                  ? 'w-8 h-2 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
                   : 'w-2 h-2 bg-slate-600 hover:bg-slate-500'
                   }`}
               />

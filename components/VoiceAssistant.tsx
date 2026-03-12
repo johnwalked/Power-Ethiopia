@@ -431,7 +431,7 @@ const VoiceAssistant: React.FC = () => {
                 <div className="bg-slate-900/30 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 w-80 overflow-hidden animate-in slide-in-from-bottom-5 duration-200">
                     <div className="bg-white/5 p-4 flex justify-between items-center text-white border-b border-white/10">
                         <h3 className="font-bold flex items-center gap-2">
-                            <MessageSquare size={16} className="text-emerald-400" />
+                            <MessageSquare size={16} className="text-red-400" />
                             Digital John (ዲጂታል ጆን)
                         </h3>
                         <div className="flex items-center gap-1">
@@ -448,22 +448,22 @@ const VoiceAssistant: React.FC = () => {
 
                         {/* Visualizer Circle */}
                         <div className={`relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 ${isConnected
-                            ? (isPaused ? 'bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.2)]' : 'bg-emerald-500/10 shadow-[0_0_30px_rgba(16,185,129,0.2)]')
+                            ? (isPaused ? 'bg-orange-500/10 shadow-[0_0_30px_rgba(249,115,22,0.2)]' : 'bg-red-500/10 shadow-[0_0_30px_rgba(239,68,68,0.2)]')
                             : 'bg-slate-800'
                             }`}>
                             {isConnected && !isPaused && (
                                 <>
-                                    <div className={`absolute inset-0 border-2 border-emerald-500 rounded-full ${isTalking ? 'animate-ping opacity-20' : 'opacity-0'}`} />
-                                    <div className={`absolute inset-0 border-2 border-emerald-500 rounded-full ${isTalking ? 'animate-[ping_1.5s_infinite] opacity-10' : 'opacity-0'}`} />
+                                    <div className={`absolute inset-0 border-2 border-red-500 rounded-full ${isTalking ? 'animate-ping opacity-20' : 'opacity-0'}`} />
+                                    <div className={`absolute inset-0 border-2 border-red-500 rounded-full ${isTalking ? 'animate-[ping_1.5s_infinite] opacity-10' : 'opacity-0'}`} />
                                 </>
                             )}
 
                             {isConnected && isPaused && (
-                                <div className="absolute inset-0 border-2 border-amber-500/50 rounded-full opacity-50" />
+                                <div className="absolute inset-0 border-2 border-orange-500/50 rounded-full opacity-50" />
                             )}
 
                             <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${isConnected
-                                ? (isPaused ? 'bg-amber-600 scale-95' : (isTalking ? 'bg-emerald-500 scale-110' : 'bg-emerald-600'))
+                                ? (isPaused ? 'bg-orange-600 scale-95' : (isTalking ? 'bg-red-500 scale-110' : 'bg-red-600'))
                                 : 'bg-slate-700'
                                 }`}>
                                 {isConnected ? (
@@ -485,7 +485,7 @@ const VoiceAssistant: React.FC = () => {
                                 </div>
                             ) : isConnected ? (
                                 <div className="flex flex-col gap-1">
-                                    <p className={`text-sm font-medium ${isPaused ? 'text-amber-400' : 'text-emerald-400 animate-pulse'}`}>
+                                    <p className={`text-sm font-medium ${isPaused ? 'text-orange-400' : 'text-red-400 animate-pulse'}`}>
                                         {isPaused ? "Session Paused" : (isTalking ? "Speaking..." : "Listening...")}
                                     </p>
                                     <p className="text-slate-500 text-xs flex items-center justify-center gap-1.5">
@@ -496,7 +496,7 @@ const VoiceAssistant: React.FC = () => {
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center gap-2">
-                                    <Loader2 className="w-5 h-5 text-emerald-500 animate-spin" />
+                                    <Loader2 className="w-5 h-5 text-red-500 animate-spin" />
                                     <p className="text-slate-400 text-sm">
                                         Connecting to Digital John...
                                     </p>
@@ -509,8 +509,8 @@ const VoiceAssistant: React.FC = () => {
                                 <button
                                     onClick={togglePause}
                                     className={`flex-1 flex items-center justify-center gap-2 text-xs font-bold border px-3 py-2.5 rounded-xl transition-all ${isPaused
-                                        ? 'bg-amber-500 text-white border-amber-400 hover:bg-amber-400'
-                                        : 'bg-emerald-600 border-emerald-500 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-900/20'
+                                        ? 'bg-orange-500 text-white border-orange-400 hover:bg-orange-400'
+                                        : 'bg-red-600 border-red-500 text-white hover:bg-red-500 shadow-lg shadow-red-900/20'
                                         }`}
                                 >
                                     {isPaused ? <Play size={14} fill="currentColor" /> : <Pause size={14} fill="currentColor" />}
@@ -557,12 +557,12 @@ const VoiceAssistant: React.FC = () => {
                                 />
                             </div>
 
-                            <div className="px-6 py-6 md:py-8 bg-gradient-to-t from-emerald-900/90 to-emerald-800/80 text-white flex flex-col items-center text-center">
-                                <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.3em] text-emerald-300/80 mb-2 md:mb-3">⚡ Live Product Glimpse</p>
+                            <div className="px-6 py-6 md:py-8 bg-gradient-to-t from-red-900/90 to-red-800/80 text-white flex flex-col items-center text-center">
+                                <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.3em] text-red-300/80 mb-2 md:mb-3">⚡ Live Product Glimpse</p>
                                 <h4 className="font-bold text-2xl md:text-4xl leading-tight mb-5 md:mb-6">{activeGlimpse.name}</h4>
 
                                 <div className="h-1.5 w-full max-w-lg bg-black/40 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-400 rounded-full animate-progress" />
+                                    <div className="h-full bg-red-400 rounded-full animate-progress" />
                                 </div>
                             </div>
                         </motion.div>
@@ -578,22 +578,22 @@ const VoiceAssistant: React.FC = () => {
                     onClick={handleActivation}
                     className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 group relative
                         ${isConnected
-                            ? (isPaused ? 'bg-amber-500 hover:bg-amber-400 border border-amber-300/50' : 'bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/50 shadow-[0_0_20px_rgba(16,185,129,0.5)]')
+                            ? (isPaused ? 'bg-orange-500 hover:bg-orange-400 border border-orange-300/50' : 'bg-red-600 hover:bg-red-500 border border-red-400/50 shadow-[0_0_20px_rgba(239,68,68,0.5)]')
                             : 'bg-slate-800 hover:bg-slate-700 border border-white/10'
                         }
             `}
                 >
                     {/* Pulsing effect when connected but minimized */}
                     {isConnected && !isPaused && (
-                        <div className="absolute inset-0 rounded-full border-2 border-emerald-400 animate-ping opacity-30" />
+                        <div className="absolute inset-0 rounded-full border-2 border-red-400 animate-ping opacity-30" />
                     )}
 
-                    <div className={`absolute inset-0 rounded-full opacity-20 animate-ping group-hover:opacity-30 ${isPaused ? 'bg-amber-500' : 'bg-emerald-500'}`} />
+                    <div className={`absolute inset-0 rounded-full opacity-20 animate-ping group-hover:opacity-30 ${isPaused ? 'bg-orange-500' : 'bg-red-500'}`} />
 
                     {isConnected && isPaused ? (
                         <Pause size={24} className="text-white relative z-10" fill="currentColor" />
                     ) : (
-                        <Mic size={24} className={`relative z-10 ${isConnected ? 'text-white' : 'text-emerald-400'}`} />
+                        <Mic size={24} className={`relative z-10 ${isConnected ? 'text-white' : 'text-red-400'}`} />
                     )}
                 </button>
             )}

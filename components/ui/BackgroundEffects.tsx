@@ -7,7 +7,7 @@ const BackgroundEffects: React.FC = () => {
       <div className="absolute inset-0 bg-slate-950" />
 
       {/* Radial Gradient Glow - Top Center */}
-      <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full opacity-40 mix-blend-screen" />
+      <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-red-500/10 blur-[120px] rounded-full opacity-40 mix-blend-screen" />
       
       {/* Radial Gradient Glow - Bottom Left */}
       <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/10 blur-[100px] rounded-full opacity-30 mix-blend-screen" />

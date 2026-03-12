@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --color-emerald-500: #10b981;
+  --color-red-500: #ef4444;
   --color-slate-950: #020617;
 }
 
@@ -21,8 +21,8 @@ body {
 
 /* Custom Selection */
 ::selection {
-  background-color: rgba(16, 185, 129, 0.3);
-  color: #a7f3d0;
+  background-color: rgba(239, 68, 68, 0.3);
+  color: #fecaca;
 }
 
 /* Custom scrollbar */

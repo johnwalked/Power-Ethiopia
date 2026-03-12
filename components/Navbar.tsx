@@ -85,8 +85,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
           className="flex items-center gap-2.5 group cursor-pointer"
         >
           <div className="relative flex items-center justify-center">
-            <Zap className="w-7 h-7 text-emerald-500 fill-emerald-500/10 group-hover:fill-emerald-500/20 transition-all duration-300 transform group-hover:rotate-12" />
-            <div className="absolute inset-0 bg-emerald-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Zap className="w-7 h-7 text-red-500 fill-red-500/10 group-hover:fill-red-500/20 transition-all duration-300 transform group-hover:rotate-12" />
+            <div className="absolute inset-0 bg-red-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           <span className="text-[18px] font-extrabold tracking-tight text-slate-100">
             CE Power
@@ -105,7 +105,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
               {link.name}
               <motion.span
                 layoutId="nav-underline"
-                className="absolute -bottom-1 left-0 w-0 h-[2px] bg-emerald-500 transition-all duration-300 group-hover:w-full rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+                className="absolute -bottom-1 left-0 w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]"
               />
             </a>
           ))}
@@ -144,7 +144,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
                       className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-emerald-500/10 flex items-center justify-between group"
                     >
                       {lang}
-                      {language === lang && <Check size={14} className="text-emerald-500" />}
+                      {language === lang && <Check size={14} className="text-red-500" />}
                     </button>
                   ))}
                 </motion.div>
@@ -155,7 +155,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
           {user ? (
             <div className="flex items-center gap-4 pl-4 border-l border-white/10">
               <div className="flex items-center gap-2 text-slate-300 font-bold text-sm">
-                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-emerald-500">
+                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-red-500">
                   <User size={16} />
                 </div>
                 <span>{getFirstName()}</span>
@@ -173,7 +173,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               onClick={onOpenAuth}
-              className="relative overflow-hidden rounded-xl bg-emerald-600 px-6 py-2.5 text-[13px] font-bold text-white transition-all duration-300 hover:bg-emerald-500 hover:shadow-[0_4px_12px_rgba(16,185,129,0.4)] ml-2 border border-emerald-500/30"
+              className="relative overflow-hidden rounded-xl bg-red-600 px-6 py-2.5 text-[13px] font-bold text-white transition-all duration-300 hover:bg-red-500 hover:shadow-[0_4px_12px_rgba(239,68,68,0.4)] ml-2 border border-red-500/30"
             >
               {t.login}
             </motion.button>
@@ -204,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
               <a
                 key={link.name}
                 href={`#${link.path}`}
-                className="text-slate-300 hover:text-emerald-400 font-bold py-3 text-lg transition-colors border-b border-white/5 last:border-0 text-center"
+                className="text-slate-300 hover:text-red-400 font-bold py-3 text-lg transition-colors border-b border-white/5 last:border-0 text-center"
                 onClick={(e) => handleNavClick(e, link.path)}
               >
                 {link.name}
@@ -219,7 +219,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
-                    className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${language === lang ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400' : 'border-white/10 text-slate-400 hover:bg-white/5'}`}
+                    className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${language === lang ? 'bg-red-500/10 border-red-500 text-red-400' : 'border-white/10 text-slate-400 hover:bg-white/5'}`}
                   >
                     {lang}
                   </button>
@@ -247,7 +247,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
                   setIsMobileMenuOpen(false);
                   onOpenAuth();
                 }}
-                className="w-full mt-2 rounded-xl bg-emerald-600 px-6 py-5 text-sm font-bold text-white hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-900/50"
+                className="w-full mt-2 rounded-xl bg-red-600 px-6 py-5 text-sm font-bold text-white hover:bg-red-500 transition-colors shadow-lg shadow-red-900/50"
               >
                 {t.login}
               </motion.button>

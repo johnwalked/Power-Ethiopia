@@ -1,6 +1,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { Filter, ChevronDown, Search, Zap, Check, SlidersHorizontal, X, ShoppingCart, ArrowUpDown, ArrowRight, Gauge, Battery, Activity, Scale, Box, Info, ArrowLeftRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 
@@ -132,7 +133,7 @@ const Product: React.FC<PageProps> = () => {
       </div>
 
       {/* Controls Bar */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8 items-center justify-between bg-slate-900/50 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/5 backdrop-blur-sm sticky top-20 md:top-24 z-30 shadow-lg">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8 items-center justify-between glass p-3 md:p-4 rounded-xl md:rounded-2xl sticky top-20 md:top-24 z-30 shadow-lg">
 
         {/* Search */}
         <div className="relative w-full md:w-96 group">
@@ -141,7 +142,7 @@ const Product: React.FC<PageProps> = () => {
             placeholder={t.searchGen}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-800/50 border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
+            className="w-full bg-white/4 backdrop-blur-md border border-white/8 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
           />
           <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-red-500 transition-colors" />
         </div>
@@ -320,7 +321,11 @@ const Product: React.FC<PageProps> = () => {
           </div>
 
           {filteredProducts.length === 0 ? (
-            <div className="h-96 flex flex-col items-center justify-center bg-slate-900/30 rounded-3xl border border-white/5 border-dashed">
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="h-96 flex flex-col items-center justify-center bg-slate-900/30 rounded-3xl border border-white/5 border-dashed"
+            >
               <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4 text-slate-500">
                 <Search size={32} />
               </div>
@@ -328,20 +333,25 @@ const Product: React.FC<PageProps> = () => {
               <button onClick={clearFilters} className="mt-6 text-red-500 font-bold hover:underline">
                 {t.clearFilters}
               </button>
-            </div>
+            </motion.div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  onClick={() => setSelectedProduct(product)}
-                  className={`
-                    group bg-slate-900/40 border border-white/10 rounded-xl overflow-hidden cursor-pointer
-                    hover:border-red-500/30 hover:shadow-lg hover:shadow-red-900/10 
-                    transition-all duration-300 flex flex-col relative
-                    ${compareList.includes(product.id) ? 'ring-1 ring-red-500 bg-red-900/10' : ''}
-                  `}
-                >
+            <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              <AnimatePresence mode='popLayout'>
+                {filteredProducts.map((product, idx) => (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
+                    transition={{ duration: 0.4, delay: idx > 15 ? 0 : idx * 0.04 }}
+                    key={product.id}
+                    onClick={() => setSelectedProduct(product)}
+                    className={`
+                      group glass-card rounded-xl overflow-hidden cursor-pointer
+                      transition-all duration-300 flex flex-col relative
+                      ${compareList.includes(product.id) ? 'ring-1 ring-red-500 !bg-red-900/15' : ''}
+                    `}
+                  >
                   {/* Image & Compare Checkbox Overlay */}
                   <div className="relative h-28 md:h-40 bg-slate-800/50 overflow-hidden">
                     <img
@@ -407,16 +417,23 @@ const Product: React.FC<PageProps> = () => {
                       <ArrowRight size={12} className="text-slate-600 group-hover:text-red-500 transition-colors" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          )}
-        </div>
+            </AnimatePresence>
+          </motion.div>
+        )}
       </div>
+    </div>
 
       {/* Comparison Floating Bar */}
+      <AnimatePresence>
       {compareList.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900 border border-red-500/50 rounded-full shadow-[0_0_30px_rgba(0,0,0,0.5)] py-3 px-6 flex items-center gap-4 animate-in slide-in-from-bottom-10 fade-in w-[90%] md:w-auto justify-between md:justify-start">
+        <motion.div 
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 50, opacity: 0 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900 border border-red-500/50 rounded-full shadow-[0_0_30px_rgba(0,0,0,0.5)] py-3 px-6 flex items-center gap-4 w-[90%] md:w-auto justify-between md:justify-start"
+        >
           <span className="text-white text-sm font-bold whitespace-nowrap hidden md:inline">
             {compareList.length} {t.selected}
           </span>
@@ -439,14 +456,26 @@ const Product: React.FC<PageProps> = () => {
           >
             <X size={16} />
           </button>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* COMPARISON MODAL */}
+      <AnimatePresence>
       {isCompareModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 md:p-6">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsCompareModalOpen(false)} />
-          <div className="relative bg-slate-900 border border-white/10 w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm" 
+            onClick={() => setIsCompareModalOpen(false)} 
+          />
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative bg-slate-900 border border-white/10 w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+          >
             <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
               <h2 className="text-white font-bold text-lg flex items-center gap-2">
                 <ArrowLeftRight className="text-red-500" /> {t.compareModels}
@@ -504,22 +533,32 @@ const Product: React.FC<PageProps> = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
+      </AnimatePresence>
 
       {/* LIQUID GLASS MODAL (Product Details) */}
+      <AnimatePresence>
       {selectedProduct && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
           {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-slate-950/60 backdrop-blur-xl"
             onClick={() => setSelectedProduct(null)}
           />
 
           {/* Modal Content */}
-          <div className="relative w-full max-w-4xl bg-slate-900/80 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col md:flex-row max-h-[90vh]">
-
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-4xl bg-slate-900/40 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] inner-glow"
+          >
             {/* Close Button */}
             <button
               onClick={() => setSelectedProduct(null)}
@@ -604,9 +643,10 @@ const Product: React.FC<PageProps> = () => {
               </div>
 
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
+      </AnimatePresence>
 
     </div>
   );

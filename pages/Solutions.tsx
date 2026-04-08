@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Search, Droplets, X, ArrowRight, Activity, Ruler, ArrowUpDown, ShoppingCart } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 
@@ -38,14 +39,14 @@ const Solutions: React.FC<PageProps> = () => {
       </div>
 
       {/* Controls */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8 items-center justify-between bg-slate-900/50 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/5 backdrop-blur-sm sticky top-20 md:top-24 z-30 shadow-lg">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8 items-center justify-between glass p-3 md:p-4 rounded-xl md:rounded-2xl sticky top-20 md:top-24 z-30 shadow-lg">
         <div className="relative w-full md:w-96 group">
           <input
             type="text"
             placeholder={t.searchPump}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-800/50 border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
+            className="w-full bg-white/4 backdrop-blur-md border border-white/8 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
           />
           <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-red-500 transition-colors" />
         </div>
@@ -67,87 +68,101 @@ const Solutions: React.FC<PageProps> = () => {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-        {filteredPumps.map((pump, idx) => (
-          <div
-            key={pump.id}
-            onClick={() => setSelectedProduct(pump)}
-            className={`
-              group bg-slate-900/40 border border-white/10 rounded-xl overflow-hidden cursor-pointer
-              hover:border-red-500/30 hover:shadow-lg hover:shadow-red-900/10 
-              transition-all duration-300 flex flex-col relative
-              animate-in fade-in slide-in-from-bottom-8 fill-mode-backwards
-            `}
-            style={{ animationDelay: `${idx * 50}ms` }}
-          >
-            {/* Image Area */}
-            <div className="relative h-28 md:h-40 bg-slate-800/50 overflow-hidden">
-              <img
-                src={pump.image}
-                alt={pump.name}
-                loading="lazy"
-                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 will-change-transform"
-              />
+      <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+        <AnimatePresence mode="popLayout">
+          {filteredPumps.map((pump, idx) => (
+            <motion.div
+              layout
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
+              transition={{ duration: 0.4, delay: idx > 15 ? 0 : idx * 0.04 }}
+              key={pump.id}
+              onClick={() => setSelectedProduct(pump)}
+              className={`
+                group glass-card rounded-xl overflow-hidden cursor-pointer
+                transition-all duration-300 flex flex-col relative
+              `}
+            >
+              {/* Image Area */}
+              <div className="relative h-28 md:h-40 bg-slate-800/50 overflow-hidden">
+                <img
+                  src={pump.image}
+                  alt={pump.name}
+                  loading="lazy"
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 will-change-transform"
+                />
 
-              {/* Type Badge */}
-              <div className="absolute top-2 right-2">
-                <span className="bg-black/60 backdrop-blur-md text-white text-[9px] font-bold px-1.5 py-0.5 rounded border border-white/10 shadow-sm truncate max-w-[80px]">
-                  {pump.type}
-                </span>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-2.5 md:p-4 flex-1 flex flex-col gap-2">
-              <h3 className="text-slate-100 font-bold text-xs md:text-sm leading-snug line-clamp-2 h-[2.5em]">
-                {pump.name}
-              </h3>
-
-              {/* Key Specs */}
-              <div className="space-y-1.5">
-                {/* Inlet */}
-                <div className="flex items-center justify-between text-[10px] md:text-xs">
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <Ruler size={10} className="text-red-500" /> {t.inlet}
+                {/* Type Badge */}
+                <div className="absolute top-2 right-2">
+                  <span className="bg-black/60 backdrop-blur-md text-white text-[9px] font-bold px-1.5 py-0.5 rounded border border-white/10 shadow-sm truncate max-w-[80px]">
+                    {pump.type}
                   </span>
-                  <span className="text-slate-200 font-mono font-bold">{pump.inletSize}</span>
-                </div>
-
-                {/* Flow Rate */}
-                <div className="flex items-center justify-between text-[10px] md:text-xs">
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <Droplets size={10} className="text-blue-500" /> {t.flowRate}
-                  </span>
-                  <span className="text-slate-200 font-mono font-bold">{pump.flowRate} m³/h</span>
                 </div>
               </div>
 
-              {/* Footer: Status */}
-              <div className="mt-auto pt-2 border-t border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <div className={`w-1.5 h-1.5 rounded-full ${pump.inStock ? 'bg-red-500' : 'bg-slate-500 animate-pulse'}`} />
-                  <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wide ${pump.inStock ? 'text-red-500' : 'text-slate-500'}`}>
-                    {pump.inStock ? t.inStock : t.outStock}
-                  </span>
+              {/* Content */}
+              <div className="p-2.5 md:p-4 flex-1 flex flex-col gap-2">
+                <h3 className="text-slate-100 font-bold text-xs md:text-sm leading-snug line-clamp-2 h-[2.5em]">
+                  {pump.name}
+                </h3>
+
+                {/* Key Specs */}
+                <div className="space-y-1.5">
+                  {/* Inlet */}
+                  <div className="flex items-center justify-between text-[10px] md:text-xs">
+                    <span className="text-slate-500 flex items-center gap-1.5">
+                      <Ruler size={10} className="text-red-500" /> {t.inlet}
+                    </span>
+                    <span className="text-slate-200 font-mono font-bold">{pump.inletSize}</span>
+                  </div>
+
+                  {/* Flow Rate */}
+                  <div className="flex items-center justify-between text-[10px] md:text-xs">
+                    <span className="text-slate-500 flex items-center gap-1.5">
+                      <Droplets size={10} className="text-blue-500" /> {t.flowRate}
+                    </span>
+                    <span className="text-slate-200 font-mono font-bold">{pump.flowRate} m³/h</span>
+                  </div>
                 </div>
-                <ArrowRight size={12} className="text-slate-600 group-hover:text-red-500 transition-colors" />
+
+                {/* Footer: Status */}
+                <div className="mt-auto pt-2 border-t border-white/5 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <div className={`w-1.5 h-1.5 rounded-full ${pump.inStock ? 'bg-red-500' : 'bg-slate-500 animate-pulse'}`} />
+                    <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wide ${pump.inStock ? 'text-red-500' : 'text-slate-500'}`}>
+                      {pump.inStock ? t.inStock : t.outStock}
+                    </span>
+                  </div>
+                  <ArrowRight size={12} className="text-slate-600 group-hover:text-red-500 transition-colors" />
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
 
       {/* LIQUID GLASS MODAL */}
+      <AnimatePresence>
       {selectedProduct && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
           {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-slate-950/60 backdrop-blur-xl"
             onClick={() => setSelectedProduct(null)}
           />
 
           {/* Modal Content */}
-          <div className="relative w-full max-w-4xl bg-slate-900/80 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col md:flex-row max-h-[90vh]">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-4xl bg-slate-900/40 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] inner-glow"
+          >
 
             {/* Close Button */}
             <button
@@ -241,9 +256,10 @@ const Solutions: React.FC<PageProps> = () => {
               </div>
 
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
+      </AnimatePresence>
 
     </div>
   );

@@ -152,12 +152,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity"
+        className="absolute inset-0 bg-black/50 backdrop-blur-xl transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-slate-900/40 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 inner-glow">
         
         {/* Close Button */}
         <button 
@@ -424,7 +424,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         )}
         
         {mode !== 'reset-sent' && mode !== 'forgot-password' && (
-            <div className="px-8 py-4 bg-white/5 border-t border-white/10 text-center">
+            <div className="px-8 py-4 bg-white/3 backdrop-blur-sm border-t border-white/5 text-center">
                 <p className="text-xs text-slate-500">
                     {t.agreement}
                 </p>

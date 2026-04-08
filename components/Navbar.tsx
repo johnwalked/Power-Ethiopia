@@ -44,6 +44,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
   const navLinks = [
     { name: t.generators, path: '/product' },
     { name: t.waterPumps, path: '/solutions' },
+    { name: t.support || 'Support', path: '/support' },
+    { name: t.pricing || 'Pricing', path: '/pricing' },
   ];
 
   const languages: Language[] = ['Amharic', 'English', 'Chinese', 'Tigregna', 'Affan Oromo'];
@@ -71,8 +73,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
       animate={{ y: 0, x: "-50%", opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-6 left-1/2 z-50 w-[calc(100%-3rem)] max-w-6xl rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] border ring-1 ring-inset ${isScrolled
-        ? 'bg-slate-900/40 backdrop-blur-xl border-white/20 ring-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)] py-3'
-        : 'bg-white/0 backdrop-blur-md border-white/10 ring-white/5 shadow-none py-4'
+        ? 'bg-slate-900/30 backdrop-blur-2xl border-white/15 ring-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.4)] py-3'
+        : 'bg-white/0 backdrop-blur-xl border-white/8 ring-white/5 shadow-none py-4'
         }`}
     >
       <div className="px-8 flex items-center justify-between">
@@ -132,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute top-full right-0 mt-2 w-40 bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-[60]"
+                  className="absolute top-full right-0 mt-2 w-40 bg-slate-900/50 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-[60]"
                 >
                   {languages.map((lang) => (
                     <button
@@ -198,7 +200,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-[calc(100%+1rem)] left-0 right-0 bg-slate-900/90 backdrop-blur-3xl border border-white/10 p-6 md:hidden flex flex-col gap-4 shadow-2xl rounded-3xl z-40 overflow-hidden"
+            className="absolute top-[calc(100%+1rem)] left-0 right-0 bg-slate-900/50 backdrop-blur-3xl border border-white/10 p-6 md:hidden flex flex-col gap-4 shadow-2xl rounded-3xl z-40 overflow-hidden"
           >
             {navLinks.map((link) => (
               <a

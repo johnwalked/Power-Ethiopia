@@ -138,6 +138,82 @@ export const translations: Record<Language, any> = {
       continueGoogle: "Continue with Google",
       signUpGoogle: "Sign up with Google",
       agreement: "By continuing, you agree to CE Power's Terms of Service and Privacy Policy."
+    },
+    hero3d: {
+      playDemo: "Play 3D Demo",
+      initializing: "Initializing Engine...",
+      hint: "Drag to rotate. Scroll to zoom."
+    },
+    pricing: {
+      badge: "Pricing & Packages",
+      title: "Power Solutions for",
+      titleSpan: "Every Scale",
+      subtitle: "From small home backup to mega-industrial power plants. Contact us for exact pricing — we offer the most competitive rates in Ethiopia.",
+      popular: "Most Popular",
+      range: "range",
+      included: "What's Included",
+      ctaBannerTitle: "Need a Custom Quote?",
+      ctaBannerDesc: "Call us directly or visit our factory in Kality Gabriel. We offer custom solutions, bulk orders, and trade-in programs.",
+      callUs: "Call 09 66 33 03 09",
+      contactSupport: "Contact Support →",
+      plans: [
+        { name: "Residential", tagline: "Home & Small Business", power: "7-25 kW", cta: "View Generators", features: ["United Power / Yunnei Brands", "Silent Type Enclosure", "Single & 3-Phase Options", "1 Year Engine Warranty", "Free Delivery in Addis Ababa", "Installation Support"] },
+        { name: "Commercial", tagline: "Factories & Hotels", power: "50-250 kW", cta: "View Generators", features: ["Yuchai / Weichai / Kefo Brands", "Heavy-Duty Silent Canopy", "400V 3-Phase Output", "2 Year Comprehensive Warranty", "Free Delivery Nationwide", "24/7 Technical Support", "Spare Parts Package"] },
+        { name: "Industrial", tagline: "Mining & Infrastructure", power: "300-3000 kW", cta: "Contact Sales", features: ["Cummins / Weichai / Yuchai", "Containerized Available", "10kV High Voltage Options", "Custom SLA Agreement", "On-Site Installation Team", "Dedicated Account Manager", "Bulk Order Discounts"] }
+      ],
+      services: [
+        { title: "Free Delivery", desc: "Free delivery within Addis Ababa for all generator purchases." },
+        { title: "Installation", desc: "Professional installation with ATS and load bank testing." },
+        { title: "Warranty", desc: "Factory warranty with genuine spare parts from our Kality facility." },
+        { title: "24/7 Support", desc: "Call 09 66 33 03 09 for emergency service at any hour." }
+      ]
+    },
+    support: {
+      badge: "Support Center",
+      title: "How Can We",
+      titleSpan: "Help?",
+      search: "Search FAQs...",
+      servicesTitle: "Our",
+      servicesTitleSpan: "Services",
+      faqTitle: "Frequently Asked",
+      faqTitleSpan: "Questions",
+      noQuestions: "No matching questions found.",
+      visitFactory: "Visit Our Factory",
+      factoryAddress: "Kality Gabriel (ቃሊቲ ገብርኤል), Addis Ababa, Ethiopia",
+      factoryHours: "Open Mon-Sat, 8:00 AM - 6:00 PM",
+      callUs: "Call Us",
+      whatsapp: "WhatsApp",
+      email: "Email",
+      faqs: [
+        { q: "Do you offer warranty on generators?", a: "Yes. All generators come with a minimum 1-year factory warranty covering engine and alternator defects." },
+        { q: "Is delivery free within Addis Ababa?", a: "Yes, we provide free delivery for all generator purchases within Addis Ababa city limits." },
+        { q: "Do you provide installation services?", a: "Absolutely. Our team provides professional installation including ATS setup." },
+        { q: "Can I get spare parts for my generator?", a: "We maintain a full inventory of genuine spare parts for all brands we carry." },
+        { q: "What payment methods do you accept?", a: "We accept bank transfer, cash payment, and LC for bulk orders." },
+        { q: "How do I choose the right generator size?", a: "Our AI assistant can help you calculate your power needs. You can also call us." }
+      ],
+      supportCards: [
+        { title: "Call Us", desc: "Direct line to our sales and support team." },
+        { title: "WhatsApp", desc: "Quick chat for inquiries and quotes." },
+        { title: "Email", desc: "For formal inquiries and documentation." }
+      ],
+      servicesData: [
+        { title: "Maintenance", desc: "Scheduled and emergency maintenance for all brands." },
+        { title: "Delivery", desc: "Free delivery in Addis. Nationwide logistics available." },
+        { title: "Warranty", desc: "1-2 year factory warranty with genuine parts." },
+        { title: "24/7 Emergency", desc: "Round-the-clock support for critical systems." }
+      ]
+    },
+    footer: {
+      desc: "Premium power solutions for Ethiopia. Over 60 years of engineering excellence. ISO 9001 & CE certified.",
+      products: "Products",
+      company: "Company",
+      contact: "Contact",
+      time: "Mon-Sat, 8AM - 6PM",
+      address: "Kality Gabriel (ቃሊቲ ገብርኤል)",
+      city: "Addis Ababa, Ethiopia",
+      copyright: "© {year} CE Power Systems (Guangdong MINDONG Electric Co., Ltd). All rights reserved.",
+      est: "Est. 1958 · ISO 9001 · CE · TUV Rheinland · IEC Certified"
     }
   },
   Amharic: {
@@ -276,6 +352,82 @@ export const translations: Record<Language, any> = {
       continueGoogle: "በGoogle ይቀጥሉ",
       signUpGoogle: "በGoogle ይመዝገቡ",
       agreement: "በመቀጠልዎ፣ በCE Power የአገልግሎት ውል እና የግላዊነት ፖሊሲ ይስማማሉ።"
+    },
+    hero3d: {
+      playDemo: "የ3D ዴሞ ይመልከቱ",
+      initializing: "ሞተሩን በማዘጋጀት ላይ...",
+      hint: "ለማዞር ይጎትቱ። ለማሳነስ/ማሳደግ ስክሮል ያድርጉ።"
+    },
+    pricing: {
+      badge: "ዋጋ እና ፓኬጆች",
+      title: "የኃይል መፍትሄዎች ለ",
+      titleSpan: "ሁሉም ደረጃ",
+      subtitle: "ከአነስተኛ የቤት ውስጥ መብራት እስከ ትላልቅ የኢንዱስትሪ ማመንጫዎች። ለትክክለኛ ዋጋ ያነጋግሩን — በኢትዮጵያ በጣም ተመጣጣኝ ዋጋ እናቀርባለን።",
+      popular: "በጣም ተፈላጊ",
+      range: "መጠን",
+      included: "ምን ያካትታል",
+      ctaBannerTitle: "ብጁ የዋጋ ትመና ይፈልጋሉ?",
+      ctaBannerDesc: "በቀጥታ ይደውሉልን ወይም ቃሊቲ ገብርኤል ወደሚገኘው ፋብሪካችን ይምጡ። የጅምላ ትዕዛዞችን እናስተናግዳለን።",
+      callUs: "በ09 66 33 03 09 ይደውሉ",
+      contactSupport: "ድጋፍ ሰጪ ያነጋግሩ →",
+      plans: [
+        { name: "መኖሪያ ቤት", tagline: "ለቤት እና ለአነስተኛ ንግድ", power: "7-25 kW", cta: "ጄኔሬተሮችን ይመልከቱ", features: ["የ United Power / Yunnei ብራንዶች", "ድምፅ አልባ ሽፋን", "ባለ 1 እና ባለ 3 ፌዝ", "የ1 ዓመት የሞተር ዋስትና", "በአዲስ አበባ ውስጥ ነፃ ትራንስፖርት", "የገጠማ ድጋፍ"] },
+        { name: "ንግድ", tagline: "ለፋብሪካዎች እና ሆቴሎች", power: "50-250 kW", cta: "ጄኔሬተሮችን ይመልከቱ", features: ["የ Yuchai / Weichai / Kefo ብራንዶች", "ከባድ ድምፅ አልባ ካኖፒ", "400V 3-ፌዝ", "የ2 ዓመት ሙሉ ዋስትና", "በሀገር አቀፍ ደረጃ ነፃ ጭነት", "የ24/7 የቴክኒክ ድጋፍ", "የመለዋወጫ ፓኬጅ"] },
+        { name: "ኢንዱስትሪ", tagline: "ለማዕድን እና የመሰረተ ልማት ዝርጋታ", power: "300-3000 kW", cta: "የሽያጭ ክፍል ያነጋግሩ", features: ["የ Cummins / Weichai / Yuchai", "የኮንቴይነር ሽፋን ያላቸው", "10kV ከፍተኛ ቮልቴጅ", "ልዩ የጥገና ስምምነት (SLA)", "የገጠማ ባለሙያዎች ቡድን", "ልዩ የደንበኞች አገልጋይ", "ለጠቅላላ ትዕዛዝ ቅናሽ"] }
+      ],
+      services: [
+        { title: "ነፃ ትራንስፖርት", desc: "ለማንኛውም የጄኔሬተር ግዢ በአዲስ አበባ ውስጥ ነፃ ትራንስፖርት።" },
+        { title: "ገጠማ", desc: "ከ ATS እና ከሎድ ባንክ ሙከራ ጋር ሙያዊ የገጠማ አገልግሎት።" },
+        { title: "ዋስትና", desc: "በቃሊቲ ማዕከላችን እውነተኛ መለዋወጫዎች ያለው የፋብሪካ ዋስትና።" },
+        { title: "የ24/7 ድጋፍ", desc: "በማንኛውም ሰዓት ለአስቸኳይ ጊዜ አገልግሎት በ 09 66 33 03 09 ይደውሉ።" }
+      ]
+    },
+    support: {
+      badge: "የድጋፍ ማዕከል",
+      title: "እንዴት",
+      titleSpan: "እንርዳዎት?",
+      search: "ጥያቄዎችን ይፈልጉ...",
+      servicesTitle: "የእኛ",
+      servicesTitleSpan: "አገልግሎቶች",
+      faqTitle: "በብዛት የሚጠየቁ",
+      faqTitleSpan: "ጥያቄዎች",
+      noQuestions: "ምንም የተገኘ ጥያቄ የለም።",
+      visitFactory: "ፋብሪካችንን ይጎብኙ",
+      factoryAddress: "ቃሊቲ ገብርኤል፣ አዲስ አበባ፣ ኢትዮጵያ",
+      factoryHours: "ክፍት ከሰኞ-ቅዳሜ, ከ 2:00 አጥቢያ - 12:00 ምሽት",
+      callUs: "ይደውሉልን",
+      whatsapp: "ዋትስአፕ",
+      email: "ኢሜይል",
+      faqs: [
+        { q: "በጄኔሬተሮች ላይ ዋስትና ይሰጣሉ?", a: "አዎን። ሁሉም ጄኔሬተሮች ሞተር እና አልተርኔተርን ለሚሸፍን ቢያንስ የ1 ዓመት የፋብሪካ ዋስትና አላቸው።" },
+        { q: "አዲስ አበባ ውስጥ ትራንስፖርት ነፃ ነው?", a: "አዎ፣ በአዲስ አበባ ከተማ አስተዳደር ውስጥ ለሚደረጉ የጄኔሬተር ግዢዎች በነፃ እናደርሳለን።" },
+        { q: "የገጠማ አገልግሎት ትሰጣላችሁ?", a: "በፍፁም። የእኛ ቡድን ATSን እና ሙከራዎችን ጨምሮ የጥራት ገጠማ አገልግሎት ይሰጣል።" },
+        { q: "ለጄኔሬተሬ መለዋወጫ ማግኘት እችላለሁ?", a: "ለእያንዳንዱ የምናቀርባቸው ብራንዶች እውን መለዋወጫዎች ሙሉ ክምችት አለን።" },
+        { q: "የክፍያ መንገዶችዎ ምንድናቸው?", a: "በባንክ ዝውውር (ንግድ ባንክ፣ ዳሽን፣ አዋሽ)፣ በጥሬ ገንዘብ፣ እንዲሁም ለጅምላ ትዕዛዞች በ LC እንቀበላለን።" },
+        { q: "ትክክለኛውን የጄኔሬተር መጠን እንዴት ልምረጥ?", a: "የአይአይ ረዳታችን 'ዲጂታል ጆን' ሊያግዝዎት ይችላል። ወይም ቀጥታ በስልክ ያግኙን።" }
+      ],
+      supportCards: [
+        { title: "ይደውሉልን", desc: "ወደ የሽያጭ እና ድጋፍ ሰጪ ቡድናችን ቀጥታ መስመር።" },
+        { title: "ዋትስአፕ", desc: "ለጥያቄዎች እና ለመረጃ ፈጣን ውይይት።" },
+        { title: "ኢሜይል", desc: "ለመደበኛ ጥያቄዎች እና ሰነዶች።" }
+      ],
+      servicesData: [
+        { title: "ጥገና", desc: "ለሁሉም ብራንዶች የታቀደ እና የአስቸኳይ ጊዜ ጥገና።" },
+        { title: "ትራንስፖርት", desc: "አዲስ አበባ ውስጥ ነፃ ትራንስፖርት። እና ሀገር አቀፍ መላኪያ።" },
+        { title: "ዋስትና", desc: "በእውነተኛ መለዋወጫዎች የ1-2 ዓመት የፋብሪካ ዋስትና።" },
+        { title: "የ24/7 ድጋፍ", desc: "ለጠቃሚ ሥርዓቶች የ24 ሰዓት ሙሉ ድጋፍ።" }
+      ]
+    },
+    footer: {
+      desc: "ፕሪሚየም የኃይል መፍትሄዎች ለኢትዮጵያ። ከ60 ዓመታት በላይ የምህንድስና ልምድ።",
+      products: "ምርቶች",
+      company: "ኩባንያ",
+      contact: "አድራሻ",
+      time: "ከሰኞ-ቅዳሜ, 2:00 አጥቢያ - 12:00 ምሽት",
+      address: "ቃሊቲ ገብርኤል",
+      city: "አዲስ አበባ፣ ኢትዮጵያ",
+      copyright: "© {year} CE Power Systems. መብቱ በህግ የተጠበቀ ነው።",
+      est: "በ1958 ተመሰረተ · ISO 9001 · CE · TUV Rheinland"
     }
   },
   Chinese: {
@@ -414,6 +566,82 @@ export const translations: Record<Language, any> = {
       continueGoogle: "继续使用 Google",
       signUpGoogle: "使用 Google 注册",
       agreement: "继续即表示您同意 CE Power 的服务条款和隐私政策。"
+    },
+    hero3d: {
+      playDemo: "播放3D演示",
+      initializing: "正在初始化引擎...",
+      hint: "拖动以旋转。滚动以缩放。"
+    },
+    pricing: {
+      badge: "定价与套餐",
+      title: "针对不同规模的",
+      titleSpan: "电力解决方案",
+      subtitle: "从小型家庭备用到超大型工业发电厂。联系我们获取准确报价—我们提供埃塞俄比亚最具竞争力的价格。",
+      popular: "最受欢迎",
+      range: "范围",
+      included: "包含内容",
+      ctaBannerTitle: "需要定制报价吗？",
+      ctaBannerDesc: "直接致电我们或访问我们在卡利提加布里埃尔的工厂。我们提供定制解决方案、批量订单和以旧换新计划。",
+      callUs: "致电 09 66 33 03 09",
+      contactSupport: "联系支持 →",
+      plans: [
+        { name: "住宅", tagline: "家庭与小型商业", power: "7-25 kW", cta: "查看发电机", features: ["联合动力 / 云内品牌", "静音型外壳", "单相和三相选项", "1年发动机保修", "亚的斯亚贝巴内免费送货", "安装支持"] },
+        { name: "商业", tagline: "工厂与酒店", power: "50-250 kW", cta: "查看发电机", features: ["玉柴 / 潍柴 / 凯佛品牌", "重型静音罩", "400V 三相输出", "2年全面保修", "全国免费送货", "24/7 技术支持", "备件包"] },
+        { name: "工业", tagline: "采矿与基础设施", power: "300-3000 kW", cta: "联系销售", features: ["康明斯 / 潍柴 / 玉柴", "提供集装箱式", "10kV 高压选项", "定制SLA协议", "现场安装团队", "专属客户经理", "批量订单折扣"] }
+      ],
+      services: [
+        { title: "免费送货", desc: "所有发电机在亚的斯亚贝巴内免费送货。" },
+        { title: "安装", desc: "提供ATS及负载组测试的专业安装。" },
+        { title: "保修", desc: "卡利提工厂提供带纯正备件的工厂保修。" },
+        { title: "24/7支持", desc: "请拨打09 66 33 03 09，获取任何时间的紧急服务。" }
+      ]
+    },
+    support: {
+      badge: "支持中心",
+      title: "我们能",
+      titleSpan: "帮您什么？",
+      search: "搜索常见问题...",
+      servicesTitle: "我们的",
+      servicesTitleSpan: "服务",
+      faqTitle: "常见",
+      faqTitleSpan: "问题",
+      noQuestions: "未找到匹配的问题。",
+      visitFactory: "访问我们的工厂",
+      factoryAddress: "卡利提加布里埃尔, 亚的斯亚贝巴, 埃塞俄比亚",
+      factoryHours: "营业时间 周一至周六, 上午 8:00 - 下午 6:00",
+      callUs: "联系我们",
+      whatsapp: "WhatsApp",
+      email: "电子邮件",
+      faqs: [
+        { q: "你们提供发电机保修吗？", a: "是的，所有发电机均提供至少1年的出厂保修，涵盖发动机和发电机组件缺陷。" },
+        { q: "亚的斯亚贝巴送货免费吗？", a: "是的，我们在亚的斯亚贝巴市区内为所有购买的发电机提供免费送货。" },
+        { q: "你们提供安装服务吗？", a: "当然，我们的团队提供专业安装，包含ATS设置。" },
+        { q: "我能获取到我发电机的备件吗？", a: "我们库存充足各品牌纯正备件。" },
+        { q: "你们接受什么支付方式？", a: "我们接受银行转账、现金和批量订单的信用证。" },
+        { q: "我该如何选择正确的发电机规格？", a: "我们的AI助手可以帮您估算，或者直接致电评估。" }
+      ],
+      supportCards: [
+        { title: "致电我们", desc: "直拨我们的销售和支持团队为您服务。" },
+        { title: "WhatsApp", desc: "快速聊天，咨询与报价。" },
+        { title: "电子邮件", desc: "用于正式咨询与文档传递。" }
+      ],
+      servicesData: [
+        { title: "维护", desc: "针对所有品牌的计划和紧急维护。" },
+        { title: "送货", desc: "亚的斯免费送货，全国可物流运送。" },
+        { title: "保修", desc: "提供包含纯正备件的1-2年出厂保修。" },
+        { title: "24/7紧急服务", desc: "全天候保护您的重要系统。" }
+      ]
+    },
+    footer: {
+      desc: "为您提供埃塞俄比亚优质的电力解决方案。60多年的工程卓越经验。",
+      products: "产品",
+      company: "公司",
+      contact: "联系方式",
+      time: "周一至周六, 8AM - 6PM",
+      address: "卡利提加布里埃尔",
+      city: "亚的斯亚贝巴, 埃塞俄比亚",
+      copyright: "© {year} CE Power Systems (Guangdong MINDONG Electric Co., Ltd). 版权所有。",
+      est: "始于 1958 · ISO 9001 · CE · TUV"
     }
   },
   Tigregna: {
@@ -552,6 +780,82 @@ export const translations: Record<Language, any> = {
       continueGoogle: "ብ Google ቀጽል",
       signUpGoogle: "ብ Google ተመዝገብ",
       agreement: "ብምቅጻልኩም፣ ብናይ CE Power ውዕል ኣገልግሎትን ፖሊሲ ግላዊነትን ትሰማምዑ።"
+    },
+    hero3d: {
+      playDemo: "ናይ 3D ቪድዮ ርኣይ",
+      initializing: "ሞተር የዳልው ኣሎ...",
+      hint: "ንምጥዋይ ስሓቦ። ንምግፋሕ/ምጽባብ ስክሮል ግበር።"
+    },
+    pricing: {
+      badge: "ዋጋን ፓኬጃትን",
+      title: "ናይ ሓይሊ መፍትሒ ን",
+      titleSpan: "ኩሉ ደረጃ",
+      subtitle: "ካብ ንእሽቶ ገዛ ክሳብ ዓበይቲ ፋብሪካታት። ንልክዕ ዋጋ ተወከሱና — ኣብ ኢትዮጵያ ኣዝዩ ጽቡቅ ዋጋ ንህብ።",
+      popular: "ብብዝሒ ዝድለ",
+      range: "ደረጃ",
+      included: "እንታይ የጠቓልል",
+      ctaBannerTitle: "ፍሉይ ዋጋ ትደልዩ ዶ?",
+      ctaBannerDesc: "ብቀጥታ ደውሉልና ወይ ቃሊቲ ዝርከብ ፋብሪካና ምጹ።",
+      callUs: "09 66 33 03 09 ደውሉ",
+      contactSupport: "ደገፍ ሓዙ →",
+      plans: [
+        { name: "Residential", tagline: "Home & Small Business", power: "7-25 kW", cta: "View Generators", features: ["United Power / Yunnei Brands", "Silent Type Enclosure", "Single & 3-Phase Options", "1 Year Engine Warranty", "Free Delivery in Addis Ababa", "Installation Support"] },
+        { name: "Commercial", tagline: "Factories & Hotels", power: "50-250 kW", cta: "View Generators", features: ["Yuchai / Weichai / Kefo Brands", "Heavy-Duty Silent Canopy", "400V 3-Phase Output", "2 Year Comprehensive Warranty", "Free Delivery Nationwide", "24/7 Technical Support", "Spare Parts Package"] },
+        { name: "Industrial", tagline: "Mining & Infrastructure", power: "300-3000 kW", cta: "Contact Sales", features: ["Cummins / Weichai / Yuchai", "Containerized Available", "10kV High Voltage Options", "Custom SLA Agreement", "On-Site Installation Team", "Dedicated Account Manager", "Bulk Order Discounts"] }
+      ],
+      services: [
+        { title: "Free Delivery", desc: "Free delivery within Addis Ababa for all generator purchases." },
+        { title: "Installation", desc: "Professional installation with ATS and load bank testing." },
+        { title: "Warranty", desc: "Factory warranty with genuine spare parts from our Kality facility." },
+        { title: "24/7 Support", desc: "Call 09 66 33 03 09 for emergency service at any hour." }
+      ]
+    },
+    support: {
+      badge: "ማእከል ደገፍ",
+      title: "እንታይ",
+      titleSpan: "ክንሕግዝ?",
+      search: "ሕቶታት ድለዩ...",
+      servicesTitle: "ናይ",
+      servicesTitleSpan: "ቅልጡፍ ኣገልግሎት",
+      faqTitle: "ውሱን ዝሕተቱ",
+      faqTitleSpan: "ሕቶታት",
+      noQuestions: "ዝተረኽበ ሕቶ የለን።",
+      visitFactory: "ፋብሪካና ርኣዩ",
+      factoryAddress: "ቃሊቲ ገብርኤል፣ ኣዲስ ኣበባ፣ ኢትዮጵያ",
+      factoryHours: "ክፉት: ሰኑይ-ቀዳም, 8:00 ንጉሆ - 6:00 ምሸት",
+      callUs: "ደውሉልና",
+      whatsapp: "ዋትስኣፕ",
+      email: "ኢሜይል",
+      faqs: [
+        { q: "በጄኔሬተሮች ላይ ዋስትና ይሰጣሉ?", a: "አዎን። ሁሉም ጄኔሬተሮች ሞተር እና አልተርኔተርን ለሚሸፍን ቢያንስ የ1 ዓመት የፋብሪካ ዋስትና አላቸው።" },
+        { q: "አዲስ አበባ ውስጥ ትራንስፖርት ነፃ ነው?", a: "አዎ፣ በአዲስ አበባ ከተማ አስተዳደር ውስጥ ለሚደረጉ የጄኔሬተር ግዢዎች በነፃ እናደርሳለን።" },
+        { q: "የገጠማ አገልግሎት ትሰጣላችሁ?", a: "በፍፁም። የእኛ ቡድን ATSን እና ሙከራዎችን ጨምሮ የጥራት ገጠማ አገልግሎት ይሰጣል።" },
+        { q: "ለጄኔሬተሬ መለዋወጫ ማግኘት እችላለሁ?", a: "ለእያንዳንዱ የምናቀርባቸው ብራንዶች እውን መለዋወጫዎች ሙሉ ክምችት አለን።" },
+        { q: "የክፍያ መንገዶችዎ ምንድናቸው?", a: "በባንክ ዝውውር (ንግድ ባንክ፣ ዳሽን፣ አዋሽ)፣ በጥሬ ገንዘብ፣ እንዲሁም ለጅምላ ትዕዛዞች በ LC እንቀበላለን።" },
+        { q: "ትክክለኛውን የጄኔሬተር መጠን እንዴት ልምረጥ?", a: "የአይአይ ረዳታችን 'ዲጂታል ጆን' ሊያግዝዎት ይችላል። ወይም ቀጥታ በስልክ ያግኙን።" }
+      ],
+      supportCards: [
+        { title: "ይደውሉልን", desc: "ወደ የሽያጭ እና ድጋፍ ሰጪ ቡድናችን ቀጥታ መስመር።" },
+        { title: "ዋትስአፕ", desc: "ለጥያቄዎች እና ለመረጃ ፈጣን ውይይት።" },
+        { title: "ኢሜይል", desc: "ለመደበኛ ጥያቄዎች እና ሰነዶች።" }
+      ],
+      servicesData: [
+        { title: "ጥገና", desc: "ለሁሉም ብራንዶች የታቀደ እና የአስቸኳይ ጊዜ ጥገና።" },
+        { title: "ትራንስፖርት", desc: "አዲስ አበባ ውስጥ ነፃ ትራንስፖርት። እና ሀገር አቀፍ መላኪያ።" },
+        { title: "ዋስትና", desc: "በእውነተኛ መለዋወጫዎች የ1-2 ዓመት የፋብሪካ ዋስትና።" },
+        { title: "የ24/7 ድጋፍ", desc: "ለጠቃሚ ሥርዓቶች የ24 ሰዓት ሙሉ ድጋፍ።" }
+      ]
+    },
+    footer: {
+      desc: "ብሉጽ ሓይሊ ንኢትዮጵያ። 60 ዓመት ልምዲ።",
+      products: "ፍርያታት",
+      company: "ኩባንያ",
+      contact: "ኣድራሻ",
+      time: "ሰኑይ-ቀዳም, 8AM - 6PM",
+      address: "ቃሊቲ ገብርኤል",
+      city: "ኣዲስ ኣበባ፣ ኢትዮጵያ",
+      copyright: "© {year} CE Power Systems. ኩሉ መሰል ዝተሓለወ እዩ።",
+      est: "ኣብ 1958 ተመስሪቱ"
     }
   },
   'Affan Oromo': {
@@ -690,6 +994,82 @@ export const translations: Record<Language, any> = {
       continueGoogle: "Google Wajjin Itti Fufaa",
       signUpGoogle: "Google Wajjin Galmaa'aa",
       agreement: "Itti fufuudhaan, Waliigaltee Tajaajilaa fi Imaammata Dhuunfaa CE Power ni fudhattu."
+    },
+    hero3d: {
+      playDemo: "Demo 3D Ilaali",
+      initializing: "Moootara Qopheessaa jira...",
+      hint: "Naannessuuf harkisi. Guddisuu/xiqqeessuuf scroll godhi."
+    },
+    pricing: {
+      badge: "Gatii fi Paakeejii",
+      title: "Furmaata Humnaa",
+      titleSpan: "Sadarkaa Hundaaf",
+      subtitle: "Manarraa hanga warshaa gurguddooti. Gatii sirrii argachuuf nu quunnamaa.",
+      popular: "Baay'ee Jaalatama",
+      range: "hanga",
+      included: "Maal Of Keessaa Qaba",
+      ctaBannerTitle: "Gatii Addaa Barbaadduu?",
+      ctaBannerDesc: "Kallattiin nuuf bilbilaa ykn warshaa keenya Kaaliitii Gaabri'eel jiru daawwadhaa.",
+      callUs: "09 66 33 03 09 Bilbilaa",
+      contactSupport: "Deeggarsa Quunnami →",
+      plans: [
+        { name: "Residential", tagline: "Home & Small Business", power: "7-25 kW", cta: "View Generators", features: ["United Power / Yunnei Brands", "Silent Type Enclosure", "Single & 3-Phase Options", "1 Year Engine Warranty", "Free Delivery in Addis Ababa", "Installation Support"] },
+        { name: "Commercial", tagline: "Factories & Hotels", power: "50-250 kW", cta: "View Generators", features: ["Yuchai / Weichai / Kefo Brands", "Heavy-Duty Silent Canopy", "400V 3-Phase Output", "2 Year Comprehensive Warranty", "Free Delivery Nationwide", "24/7 Technical Support", "Spare Parts Package"] },
+        { name: "Industrial", tagline: "Mining & Infrastructure", power: "300-3000 kW", cta: "Contact Sales", features: ["Cummins / Weichai / Yuchai", "Containerized Available", "10kV High Voltage Options", "Custom SLA Agreement", "On-Site Installation Team", "Dedicated Account Manager", "Bulk Order Discounts"] }
+      ],
+      services: [
+        { title: "Free Delivery", desc: "Free delivery within Addis Ababa for all generator purchases." },
+        { title: "Installation", desc: "Professional installation with ATS and load bank testing." },
+        { title: "Warranty", desc: "Factory warranty with genuine spare parts from our Kality facility." },
+        { title: "24/7 Support", desc: "Call 09 66 33 03 09 for emergency service at any hour." }
+      ]
+    },
+    support: {
+      badge: "Giddugala Deeggarsaa",
+      title: "Akkamitti Isin",
+      titleSpan: "Gargaarru?",
+      search: "Gaaffilee Barbaadi...",
+      servicesTitle: "Tajaajila",
+      servicesTitleSpan: "Keenya",
+      faqTitle: "Gaaffilee yeroo baay'ee",
+      faqTitleSpan: "Gaafataman",
+      noQuestions: "Gaaffiin wal fakkaatu hin argamne.",
+      visitFactory: "Warshaa Keenya Daawwadhaa",
+      factoryAddress: "Kaaliitii Gaabri'eel, Finfinnee, Itoophiyaa",
+      factoryHours: "Wixinee-Sanbata, 8:00 WB - 6:00 WB",
+      callUs: "Nuuf Bilbilaa",
+      whatsapp: "WhatsApp",
+      email: "Imeelii",
+      faqs: [
+        { q: "Do you offer warranty on generators?", a: "Yes. All generators come with a minimum 1-year factory warranty covering engine and alternator defects." },
+        { q: "Is delivery free within Addis Ababa?", a: "Yes, we provide free delivery for all generator purchases within Addis Ababa city limits." },
+        { q: "Do you provide installation services?", a: "Absolutely. Our team provides professional installation including ATS setup." },
+        { q: "Can I get spare parts for my generator?", a: "We maintain a full inventory of genuine spare parts for all brands we carry." },
+        { q: "What payment methods do you accept?", a: "We accept bank transfer, cash payment, and LC for bulk orders." },
+        { q: "How do I choose the right generator size?", a: "Our AI assistant can help you calculate your power needs. You can also call us." }
+      ],
+      supportCards: [
+        { title: "Call Us", desc: "Direct line to our sales and support team." },
+        { title: "WhatsApp", desc: "Quick chat for inquiries and quotes." },
+        { title: "Email", desc: "For formal inquiries and documentation." }
+      ],
+      servicesData: [
+        { title: "Maintenance", desc: "Scheduled and emergency maintenance for all brands." },
+        { title: "Delivery", desc: "Free delivery in Addis. Nationwide logistics available." },
+        { title: "Warranty", desc: "1-2 year factory warranty with genuine parts." },
+        { title: "24/7 Emergency", desc: "Round-the-clock support for critical systems." }
+      ]
+    },
+    footer: {
+      desc: "Furmaata humnaa qulqulluu Itoophiyaaf. Muuxannoo waggaa 60 olii.",
+      products: "Oomishoota",
+      company: "Dhaabbata",
+      contact: "Quunnamaa",
+      time: "Wixinee-Sanbata, 8:00 WB - 6:00 WB",
+      address: "Kaaliitii Gaabri'eel",
+      city: "Finfinnee, Itoophiyaa",
+      copyright: "© {year} CE Power Systems. Mirgi hundaa eeggamaadha.",
+      est: "Bara 1958 hundeeffame"
     }
   }
 };

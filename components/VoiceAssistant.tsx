@@ -428,8 +428,8 @@ const VoiceAssistant: React.FC = () => {
 
             {/* Expanded Interface */}
             {isOpen && (
-                <div className="bg-slate-900/30 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 w-80 overflow-hidden animate-in slide-in-from-bottom-5 duration-200">
-                    <div className="bg-white/5 p-4 flex justify-between items-center text-white border-b border-white/10">
+                <div className="bg-slate-900/25 backdrop-blur-3xl rounded-2xl shadow-2xl border border-white/8 w-80 overflow-hidden animate-in slide-in-from-bottom-5 duration-200 inner-glow">
+                    <div className="bg-white/3 backdrop-blur-sm p-4 flex justify-between items-center text-white border-b border-white/8">
                         <h3 className="font-bold flex items-center gap-2">
                             <MessageSquare size={16} className="text-red-400" />
                             Digital John (ዲጂታል ጆን)
@@ -536,7 +536,7 @@ const VoiceAssistant: React.FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-12 pointer-events-none"
+                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-xl p-4 md:p-12 pointer-events-none"
                     >
                         <motion.div
                             key={activeGlimpse.id}
@@ -544,7 +544,7 @@ const VoiceAssistant: React.FC = () => {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
                             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className="relative w-full max-w-5xl max-h-full flex flex-col overflow-hidden rounded-3xl bg-slate-900/90 backdrop-blur-3xl border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto"
+                            className="relative w-full max-w-5xl max-h-full flex flex-col overflow-hidden rounded-3xl bg-slate-900/50 backdrop-blur-3xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto inner-glow"
                         >
                             {/* Shimmer sweep */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_ease-in-out_infinite] pointer-events-none z-10" />

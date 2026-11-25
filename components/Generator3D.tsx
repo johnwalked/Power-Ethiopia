@@ -1,3 +1,4 @@
+/// <reference types="@react-three/fiber" />
 import React, { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, RoundedBox, Cylinder, Text, Box, MeshReflectorMaterial } from '@react-three/drei';
@@ -9,6 +10,10 @@ import * as THREE from 'three';
 interface GensetDashboardProps {
     isRunning: boolean;
     onToggle: () => void;
+    isMuted: boolean;
+    onToggleMute: () => void;
+    activeCamera: string;
+    onSelectCamera: (cam: string) => void;
     rpm: number;
     voltage: number;
     frequency: number;
@@ -20,19 +25,59 @@ interface GensetDashboardProps {
 }
 
 const GensetDashboard: React.FC<GensetDashboardProps> = ({
-    isRunning, onToggle, rpm, voltage, frequency, load, coolantTemp, oilPressure, fuelLevel, runHours
+    isRunning, onToggle, isMuted, onToggleMute, activeCamera, onSelectCamera,
+    rpm, voltage, frequency, load, coolantTemp, oilPressure, fuelLevel, runHours
 }) => {
+    const cameras = [
+        { id: 'isometric', label: 'Isometric' },
+        { id: 'panel', label: 'Control Panel' },
+        { id: 'exhaust', label: 'Exhaust View' },
+        { id: 'top', label: 'Top View' },
+    ];
+
     return (
-        <div className="absolute bottom-0 left-0 right-0 z-[105] p-4 md:p-6 pointer-events-none">
-            <div className="max-w-5xl mx-auto pointer-events-auto">
-                <div className="bg-slate-900/30 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden inner-glow">
+        <div className="absolute bottom-0 left-0 right-0 z-[105] p-3 md:p-6 pointer-events-none">
+            <div className="max-w-5xl mx-auto pointer-events-auto space-y-2">
+
+                {/* Camera & Sound Action Bar */}
+                <div className="flex items-center justify-between px-3 py-1.5 rounded-xl bg-slate-900/60 backdrop-blur-xl border border-white/10 text-xs">
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mr-1 hidden sm:inline">Camera:</span>
+                        {cameras.map(cam => (
+                            <button
+                                key={cam.id}
+                                onClick={() => onSelectCamera(cam.id)}
+                                className={`px-2.5 py-1 rounded-lg font-medium transition-all ${activeCamera === cam.id
+                                    ? 'bg-red-600 text-white shadow-md shadow-red-900/30'
+                                    : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white'
+                                }`}
+                            >
+                                {cam.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={onToggleMute}
+                        className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-bold transition-all ${
+                            isMuted
+                                ? 'bg-white/5 text-slate-400 hover:text-white'
+                                : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                        }`}
+                        title={isMuted ? "Unmute engine sound" : "Mute engine sound"}
+                    >
+                        <span>{isMuted ? '🔇 Sound Off' : '🔊 Sound On'}</span>
+                    </button>
+                </div>
+
+                <div className="bg-slate-900/40 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden inner-glow">
 
                     {/* Header Strip */}
-                    <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/5 bg-white/3">
+                    <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/5 bg-white/[0.03]">
                         <div className="flex items-center gap-3">
                             <div className={`w-2.5 h-2.5 rounded-full ${isRunning ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.6)] animate-pulse' : 'bg-slate-600'}`} />
                             <span className="text-xs font-bold text-slate-300 tracking-wider uppercase">
-                                {isRunning ? 'ENGINE RUNNING' : 'ENGINE STANDBY'}
+                                {isRunning ? 'ENGINE RUNNING (AUDIO SIMULATED)' : 'ENGINE STANDBY'}
                             </span>
                         </div>
                         <div className="flex items-center gap-3">
@@ -46,7 +91,7 @@ const GensetDashboard: React.FC<GensetDashboardProps> = ({
                                     : 'bg-green-600 hover:bg-green-500 text-white shadow-lg shadow-green-900/40'
                                     }`}
                             >
-                                {isRunning ? '■ STOP' : '▶ START'}
+                                {isRunning ? '■ STOP ENGINE' : '▶ START ENGINE'}
                             </button>
                         </div>
                     </div>
@@ -188,6 +233,22 @@ const ProceduralGenerator: React.FC<{ isRunning: boolean }> = ({ isRunning }) =>
         emissiveIntensity: isRunning ? 0.5 : 0,
     }), [isRunning]);
 
+    const exhaustHotMat = useMemo(() => new THREE.MeshStandardMaterial({
+        color: '#444444',
+        emissive: '#ff4400',
+        emissiveIntensity: 0.3,
+        metalness: 0.8,
+        roughness: 0.3,
+    }), []);
+
+    const coolantTankMat = useMemo(() => new THREE.MeshStandardMaterial({
+        color: '#1a1a1a',
+        metalness: 0.2,
+        roughness: 0.8,
+        transparent: true,
+        opacity: 0.8,
+    }), []);
+
     const textProps = {
         fontSize: 0.22,
         color: "#ffffff",
@@ -244,7 +305,7 @@ const ProceduralGenerator: React.FC<{ isRunning: boolean }> = ({ isRunning }) =>
             {/* Exhaust vertical pipe */}
             <Cylinder args={[0.1, 0.1, 1.2]} position={[0.9, 2.2, 0.3]} material={steelGray} castShadow />
             {/* Exhaust cap/rain cap */}
-            <Cylinder ref={exhaustRef} args={[0.15, 0.12, 0.1]} position={[0.9, 2.85, 0.3]} material={isRunning ? new THREE.MeshStandardMaterial({ color: '#444', emissive: '#ff4400', emissiveIntensity: 0.3, metalness: 0.8, roughness: 0.3 }) : steelGray} castShadow />
+            <Cylinder ref={exhaustRef} args={[0.15, 0.12, 0.1]} position={[0.9, 2.85, 0.3]} material={isRunning ? exhaustHotMat : steelGray} castShadow />
 
             {/* Starter motor */}
             <Cylinder args={[0.12, 0.12, 0.3]} position={[-0.9, 0.8, -0.3]} rotation={[0, 0, Math.PI / 2]} material={engineBlack} castShadow />
@@ -267,7 +328,7 @@ const ProceduralGenerator: React.FC<{ isRunning: boolean }> = ({ isRunning }) =>
             {/* Radiator core */}
             <RoundedBox args={[1.8, 1.6, 0.3]} radius={0.04} smoothness={4} position={[0, 1.2, -2.5]} material={copperMat} castShadow />
             {/* Coolant expansion tank */}
-            <Cylinder args={[0.1, 0.1, 0.3]} position={[0.8, 2.3, -2.3]} material={new THREE.MeshStandardMaterial({ color: '#1a1a1a', metalness: 0.2, roughness: 0.8, transparent: true, opacity: 0.8 })} />
+            <Cylinder args={[0.1, 0.1, 0.3]} position={[0.8, 2.3, -2.3]} material={coolantTankMat} />
             {/* Coolant hoses */}
             <Cylinder args={[0.05, 0.05, 0.6]} position={[0.3, 1.8, -2.2]} rotation={[0.3, 0, 0]} material={rubberBlack} />
             <Cylinder args={[0.05, 0.05, 0.6]} position={[-0.3, 0.8, -2.2]} rotation={[0.2, 0, 0]} material={rubberBlack} />
@@ -472,14 +533,143 @@ const WarehouseEnvironment = () => {
 
 
 // ============================================================
+// CAMERA CONTROLLER
+// ============================================================
+const CameraController: React.FC<{ activeCamera: string }> = ({ activeCamera }) => {
+    const { camera } = useThree();
+
+    useFrame(() => {
+        let targetX = 9, targetY = 5, targetZ = -10;
+        if (activeCamera === 'panel') {
+            targetX = 0; targetY = 1.8; targetZ = 6.8;
+        } else if (activeCamera === 'exhaust') {
+            targetX = -6; targetY = 4.5; targetZ = -4.5;
+        } else if (activeCamera === 'top') {
+            targetX = 0.1; targetY = 14; targetZ = 0.1;
+        }
+
+        camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.04);
+        camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.04);
+        camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.04);
+    });
+
+    return null;
+};
+
+// ============================================================
+// ENGINE AUDIO SYNTHESIZER
+// ============================================================
+class EngineSoundSynthesizer {
+    private ctx: AudioContext | null = null;
+    private osc1: OscillatorNode | null = null;
+    private osc2: OscillatorNode | null = null;
+    private subOsc: OscillatorNode | null = null;
+    private gainNode: GainNode | null = null;
+    private filter: BiquadFilterNode | null = null;
+    private isMuted: boolean = false;
+
+    start() {
+        if (this.ctx) return;
+        try {
+            const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+            this.ctx = new AudioCtx();
+
+            this.gainNode = this.ctx.createGain();
+            this.gainNode.gain.setValueAtTime(0.0001, this.ctx.currentTime);
+            this.gainNode.gain.exponentialRampToValueAtTime(this.isMuted ? 0.0001 : 0.08, this.ctx.currentTime + 1.2);
+
+            this.filter = this.ctx.createBiquadFilter();
+            this.filter.type = 'lowpass';
+            this.filter.frequency.setValueAtTime(140, this.ctx.currentTime);
+
+            this.osc1 = this.ctx.createOscillator();
+            this.osc1.type = 'sawtooth';
+            this.osc1.frequency.setValueAtTime(32, this.ctx.currentTime);
+
+            this.osc2 = this.ctx.createOscillator();
+            this.osc2.type = 'triangle';
+            this.osc2.frequency.setValueAtTime(64, this.ctx.currentTime);
+
+            this.subOsc = this.ctx.createOscillator();
+            this.subOsc.type = 'sine';
+            this.subOsc.frequency.setValueAtTime(24, this.ctx.currentTime);
+
+            this.osc1.connect(this.filter);
+            this.osc2.connect(this.filter);
+            this.subOsc.connect(this.filter);
+            this.filter.connect(this.gainNode);
+            this.gainNode.connect(this.ctx.destination);
+
+            this.osc1.start();
+            this.osc2.start();
+            this.subOsc.start();
+        } catch {
+            // Audio not allowed or failed
+        }
+    }
+
+    setMuted(muted: boolean) {
+        this.isMuted = muted;
+        if (this.gainNode && this.ctx) {
+            this.gainNode.gain.setTargetAtTime(muted ? 0.0001 : 0.08, this.ctx.currentTime, 0.1);
+        }
+    }
+
+    stop() {
+        if (!this.ctx || !this.gainNode) return;
+        try {
+            this.gainNode.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.4);
+            const currentCtx = this.ctx;
+            const o1 = this.osc1;
+            const o2 = this.osc2;
+            const so = this.subOsc;
+            setTimeout(() => {
+                try {
+                    o1?.stop();
+                    o2?.stop();
+                    so?.stop();
+                    currentCtx?.close();
+                } catch {}
+            }, 500);
+            this.ctx = null;
+        } catch {}
+    }
+}
+
+// ============================================================
 // MAIN EXPORT
 // ============================================================
 export default function Generator3D() {
     const [isRunning, setIsRunning] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
+    const [activeCamera, setActiveCamera] = useState('isometric');
+    const synthRef = useRef<EngineSoundSynthesizer | null>(null);
+
     const [dashData, setDashData] = useState({
         rpm: 1500, voltage: 400, frequency: 50.0, load: 65,
         coolantTemp: 82, oilPressure: 3.8, fuelLevel: 74, runHours: 1247.3
     });
+
+    // Initialize audio synthesizer instance
+    React.useEffect(() => {
+        synthRef.current = new EngineSoundSynthesizer();
+        return () => {
+            synthRef.current?.stop();
+        };
+    }, []);
+
+    // Engine sound sync
+    React.useEffect(() => {
+        if (isRunning) {
+            synthRef.current?.start();
+        } else {
+            synthRef.current?.stop();
+        }
+    }, [isRunning]);
+
+    React.useEffect(() => {
+        synthRef.current?.setMuted(isMuted);
+    }, [isMuted]);
 
     // Simulate live gauge fluctuations
     React.useEffect(() => {
@@ -536,6 +726,7 @@ export default function Generator3D() {
                     <pointLight position={[0, 3, 3.5]} intensity={120} color="#22c55e" distance={8} decay={2} />
                 )}
 
+                <CameraController activeCamera={activeCamera} />
                 <ProceduralGenerator isRunning={isRunning} />
                 <WarehouseEnvironment />
 
@@ -546,11 +737,12 @@ export default function Generator3D() {
                     blur={2.5}
                     far={6}
                     color="#000000"
-                    resolution={1024}
+                    resolution={512}
+                    frames={1}
                 />
 
                 <OrbitControls
-                    autoRotate
+                    autoRotate={activeCamera === 'isometric'}
                     autoRotateSpeed={isRunning ? 0.8 : 0.4}
                     enablePan={false}
                     maxPolarAngle={Math.PI / 2 - 0.05}
@@ -564,6 +756,10 @@ export default function Generator3D() {
             <GensetDashboard
                 isRunning={isRunning}
                 onToggle={() => setIsRunning(!isRunning)}
+                isMuted={isMuted}
+                onToggleMute={() => setIsMuted(!isMuted)}
+                activeCamera={activeCamera}
+                onSelectCamera={setActiveCamera}
                 rpm={dashData.rpm}
                 voltage={dashData.voltage}
                 frequency={dashData.frequency}

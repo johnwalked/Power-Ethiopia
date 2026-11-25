@@ -1,11 +1,14 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { Filter, ChevronDown, Search, Zap, Check, SlidersHorizontal, X, ShoppingCart, ArrowUpDown, ArrowRight, Gauge, Battery, Activity, Scale, Box, Info, ArrowLeftRight } from 'lucide-react';
+import { Filter, ChevronDown, Search, Zap, Check, SlidersHorizontal, X, ShoppingCart, ArrowUpDown, ArrowRight, Gauge, Battery, Activity, Scale, Box, Info, ArrowLeftRight, Calculator, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 
 import { GENERATORS, Generator } from '../lib/productData.ts';
+import { assetUrl } from '../lib/assetUtils';
+import SizingCalculator from '../components/SizingCalculator';
+import QuotationModal from '../components/QuotationModal';
 
 // --- Types ---
 // Interface moved to lib/productData.ts or kept for local use if needed, 
@@ -40,9 +43,11 @@ const Product: React.FC<PageProps> = () => {
   const [visibleCount, setVisibleCount] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Comparison State
+  // Comparison & Modal States
   const [compareList, setCompareList] = useState<string[]>([]);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [quotationProduct, setQuotationProduct] = useState<Product | null>(null);
 
   // Derived Data
   const filteredProducts = useMemo(() => {
@@ -52,8 +57,16 @@ const Product: React.FC<PageProps> = () => {
         product.brand.toLowerCase().includes(searchQuery.toLowerCase());
       if (!matchesSearch) return false;
 
-      // Brand Filter
-      if (filters.brands.length > 0 && !filters.brands.includes(product.brand)) return false;
+      // Brand Filter (with KOFO/Kefo equivalence)
+      if (filters.brands.length > 0) {
+        const matchesBrand = filters.brands.some(b => {
+          if (b.toLowerCase() === 'kofo' || b.toLowerCase() === 'kefo') {
+            return product.brand.toLowerCase() === 'kofo' || product.brand.toLowerCase() === 'kefo';
+          }
+          return product.brand.toLowerCase() === b.toLowerCase();
+        });
+        if (!matchesBrand) return false;
+      }
 
       // Type Filter
       if (filters.types.length > 0 && !filters.types.includes(product.type)) return false;
@@ -133,7 +146,7 @@ const Product: React.FC<PageProps> = () => {
       </div>
 
       {/* Controls Bar */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8 items-center justify-between glass p-3 md:p-4 rounded-xl md:rounded-2xl sticky top-20 md:top-24 z-30 shadow-lg">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8 items-center justify-between glass p-3 md:p-4 rounded-xl md:rounded-2xl sticky top-[76px] md:top-24 z-30 shadow-lg">
 
         {/* Search */}
         <div className="relative w-full md:w-96 group">
@@ -142,13 +155,21 @@ const Product: React.FC<PageProps> = () => {
             placeholder={t.searchGen}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/4 backdrop-blur-md border border-white/8 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
+            className="w-full bg-slate-900/70 backdrop-blur-md border border-white/10 rounded-lg md:rounded-xl py-2.5 md:py-3 pl-10 md:pl-11 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 outline-none transition-all"
           />
           <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-red-500 transition-colors" />
         </div>
 
         {/* Actions Right */}
-        <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto">
+          <button
+            onClick={() => setIsCalculatorOpen(true)}
+            className="flex items-center gap-1.5 px-3 md:px-4 py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-bold bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 transition-all shadow-md active:scale-95"
+            title="Calculate required power kW"
+          >
+            <Calculator size={16} /> Sizing Calculator
+          </button>
+
           <button
             onClick={() => setIsMobileFiltersOpen(true)}
             className="md:hidden flex-1 flex items-center justify-center gap-2 bg-slate-800 text-slate-200 px-4 py-2.5 rounded-lg font-medium text-sm border border-white/10 active:scale-95 transition-transform"
@@ -216,7 +237,7 @@ const Product: React.FC<PageProps> = () => {
           {/* Brand Filter */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.brand}</h4>
-            {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins'].map(brand => (
+            {['Weichai', 'Yuchai', 'Yunnei', 'KOFO', 'Weifang', 'United Power', 'Cummins', 'Last'].map(brand => (
               <label key={brand} className="flex items-center gap-3 group cursor-pointer">
                 <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${filters.brands.includes(brand) ? 'bg-red-600 border-red-600' : 'border-slate-700 bg-slate-800/50 group-hover:border-slate-600'}`}>
                   {filters.brands.includes(brand) && <Check size={14} className="text-white" />}
@@ -283,7 +304,7 @@ const Product: React.FC<PageProps> = () => {
 
                 <div className="space-y-3">
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.brand}</h4>
-                  {['Yunnei', 'Weichai', 'Yuchai', 'United Power', 'Last', 'Kefo', 'Cummins'].map(brand => (
+                  {['Weichai', 'Yuchai', 'Yunnei', 'KOFO', 'Weifang', 'United Power', 'Cummins', 'Last'].map(brand => (
                     <label key={brand} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-xl border border-white/5 active:bg-slate-800">
                       <input type="checkbox" checked={filters.brands.includes(brand)} onChange={() => toggleFilter('brands', brand)} className="w-5 h-5 rounded accent-red-500" />
                       <span className="text-slate-200 text-sm font-medium">{brand}</span>
@@ -353,27 +374,29 @@ const Product: React.FC<PageProps> = () => {
                     `}
                   >
                   {/* Image & Compare Checkbox Overlay */}
-                  <div className="relative h-28 md:h-40 bg-slate-800/50 overflow-hidden">
+                  <div className="relative h-32 md:h-40 studio-stage flex items-center justify-center p-2.5 overflow-hidden">
                     <img
-                      src={product.image}
+                      src={assetUrl(product.image)}
                       alt={product.name}
                       loading="lazy"
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 will-change-transform"
+                      className="max-w-full max-h-full object-contain drop-shadow-[0_6px_14px_rgba(2,6,23,0.18)] group-hover:scale-105 transition-transform duration-500 will-change-transform"
                     />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-slate-900/20 to-transparent" />
 
                     {/* Brand Badge */}
                     <div className="absolute top-2 right-2">
-                      <span className="bg-black/60 backdrop-blur-md text-white text-[9px] font-bold px-1.5 py-0.5 rounded border border-white/10 shadow-sm">
+                      <span className="bg-slate-950/80 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded border border-white/15 shadow-sm">
                         {product.brand}
                       </span>
                     </div>
 
                     {/* Compare Checkbox */}
                     <div
-                      className="absolute top-2 left-2 z-10 p-1 -m-1" // Increase hit area
+                      className="absolute top-2 left-2 z-10 p-1 -m-1"
                       onClick={(e) => toggleCompare(e, product.id)}
+                      title={t.compare}
                     >
-                      <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shadow-sm ${compareList.includes(product.id) ? 'bg-red-500 border-red-500' : 'bg-black/40 border-white/30 hover:bg-black/60'}`}>
+                      <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shadow-sm ${compareList.includes(product.id) ? 'bg-red-600 border-red-500' : 'bg-slate-950/70 border-white/40 hover:bg-slate-950/90'}`}>
                         {compareList.includes(product.id) && <Check size={12} className="text-white" />}
                       </div>
                     </div>
@@ -400,8 +423,8 @@ const Product: React.FC<PageProps> = () => {
                         <span className="text-slate-500 flex items-center gap-1.5">
                           <Activity size={10} className="text-blue-500" /> {t.engineModel}
                         </span>
-                        <span className="text-slate-200 font-mono truncate max-w-[80px] text-right" title={product.engineModel}>
-                          {product.engineModel}
+                        <span className="text-slate-200 font-mono truncate max-w-[95px] text-right" title={product.engineModel}>
+                          {product.engineModel || 'Industrial'}
                         </span>
                       </div>
                     </div>
@@ -409,8 +432,8 @@ const Product: React.FC<PageProps> = () => {
                     {/* Footer: Status */}
                     <div className="mt-auto pt-2 border-t border-white/5 flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
-                        <div className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-red-500' : 'bg-slate-500 animate-pulse'}`} />
-                        <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wide ${product.inStock ? 'text-red-500' : 'text-slate-500'}`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${product.inStock ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-red-500 animate-pulse'}`} />
+                        <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wide ${product.inStock ? 'text-green-400' : 'text-red-400'}`}>
                           {product.inStock ? t.inStock : t.outStock}
                         </span>
                       </div>
@@ -432,29 +455,30 @@ const Product: React.FC<PageProps> = () => {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 50, opacity: 0 }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900 border border-red-500/50 rounded-full shadow-[0_0_30px_rgba(0,0,0,0.5)] py-3 px-6 flex items-center gap-4 w-[90%] md:w-auto justify-between md:justify-start"
+          className="fixed bottom-24 sm:bottom-6 left-4 right-24 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-[85] bg-slate-900/95 backdrop-blur-xl border border-red-500/50 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.65)] py-2.5 px-4 sm:py-3 sm:px-6 flex items-center gap-3 sm:gap-4 sm:w-auto sm:max-w-[calc(100vw-13rem)] justify-between sm:justify-start"
         >
           <span className="text-white text-sm font-bold whitespace-nowrap hidden md:inline">
             {compareList.length} {t.selected}
           </span>
-          <span className="text-white text-xs font-bold whitespace-nowrap md:hidden bg-red-500/20 px-2 py-0.5 rounded-full">
+          <span className="text-white text-xs font-bold whitespace-nowrap md:hidden bg-red-500/20 px-2.5 py-0.5 rounded-full border border-red-500/30">
             {compareList.length}
           </span>
 
-          <div className="h-6 w-px bg-white/10 hidden md:block" />
+          <div className="h-5 w-px bg-white/10 hidden md:block" />
 
           <button
             onClick={() => setIsCompareModalOpen(true)}
-            className="text-red-400 hover:text-white font-bold text-sm flex items-center gap-2"
+            className="text-red-400 hover:text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
           >
-            <ArrowLeftRight size={16} /> {t.compare} <span className="hidden md:inline">Now</span>
+            <ArrowLeftRight size={15} /> {t.compare} <span className="hidden md:inline">Now</span>
           </button>
 
           <button
             onClick={() => setCompareList([])}
-            className="ml-2 text-slate-500 hover:text-red-400 p-1 rounded-full hover:bg-white/5"
+            aria-label="Clear comparison"
+            className="ml-1 text-slate-400 hover:text-red-400 p-1 rounded-full hover:bg-white/5"
           >
-            <X size={16} />
+            <X size={15} />
           </button>
         </motion.div>
       )}
@@ -477,57 +501,79 @@ const Product: React.FC<PageProps> = () => {
             className="relative bg-slate-900 border border-white/10 w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
           >
             <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
-              <h2 className="text-white font-bold text-lg flex items-center gap-2">
-                <ArrowLeftRight className="text-red-500" /> {t.compareModels}
-              </h2>
-              <button onClick={() => setIsCompareModalOpen(false)} className="text-slate-400 hover:text-white"><X size={20} /></button>
+              <div>
+                <h2 className="text-white font-bold text-base md:text-lg flex items-center gap-2">
+                  <ArrowLeftRight className="text-red-500" size={18} /> {t.compareModels}
+                </h2>
+                {getCompareProducts().length > 1 && (
+                  <p className="text-[11px] text-slate-400 md:hidden mt-0.5">← Swipe horizontally to compare →</p>
+                )}
+              </div>
+              <button onClick={() => setIsCompareModalOpen(false)} className="text-slate-400 hover:text-white p-1"><X size={20} /></button>
             </div>
 
             <div className="overflow-auto flex-1">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr>
-                    <th className="sticky left-0 bg-slate-900 z-10 p-4 border-b border-r border-white/10 text-slate-400 font-medium min-w-[140px]">{t.spec}</th>
+                    <th className="sticky left-0 bg-slate-900 z-10 p-2.5 md:p-4 border-b border-r border-white/10 text-slate-400 font-medium text-xs md:text-sm min-w-[104px] md:min-w-[150px]">{t.spec}</th>
                     {getCompareProducts().map(p => (
-                      <th key={p.id} className="p-4 border-b border-white/10 min-w-[200px] md:min-w-[250px] bg-slate-900/50">
-                        <div className="flex flex-col items-center text-center gap-3">
-                          <img src={p.image} loading="lazy" className="w-24 h-24 object-cover rounded-lg border border-white/10" alt={p.name} />
-                          <div>
-                            <div className="text-red-500 text-xs font-bold uppercase mb-1">{p.brand}</div>
-                            <div className="text-white font-bold text-sm leading-tight">{p.name}</div>
+                      <th key={p.id} className="p-2.5 md:p-4 border-b border-white/10 min-w-[155px] md:min-w-[230px] bg-slate-900/50">
+                        <div className="flex flex-col items-center text-center gap-2 md:gap-3">
+                          <div className="w-20 h-20 md:w-24 md:h-24 studio-stage rounded-lg border border-white/10 p-1.5 flex items-center justify-center">
+                            <img src={assetUrl(p.image)} loading="lazy" className="max-w-full max-h-full object-contain" alt={p.name} />
                           </div>
-                          <button
-                            onClick={() => toggleCompare({ stopPropagation: () => { } } as any, p.id)}
-                            className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1 mt-1"
-                          >
-                            <X size={12} /> {t.remove}
-                          </button>
+                          <div>
+                            <div className="text-red-500 text-[10px] md:text-xs font-bold uppercase mb-0.5">{p.brand}</div>
+                            <div className="text-white font-bold text-xs md:text-sm leading-tight">{p.name}</div>
+                          </div>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <button
+                              onClick={() => {
+                                setIsCompareModalOpen(false);
+                                setQuotationProduct(p);
+                              }}
+                              className="px-2.5 py-1 bg-red-600/30 hover:bg-red-600 text-red-300 hover:text-white rounded-lg text-[11px] font-bold transition-all border border-red-500/30 flex items-center gap-1"
+                            >
+                              <FileText size={11} /> Quote
+                            </button>
+                            <button
+                              onClick={() => toggleCompare({ stopPropagation: () => { } } as any, p.id)}
+                              className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1 p-1"
+                              title="Remove from comparison"
+                            >
+                              <X size={12} />
+                            </button>
+                          </div>
                         </div>
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="text-sm md:text-base">
+                <tbody className="text-xs md:text-sm">
                   {[
-                    { label: t.powerOutput, key: 'powerKW', suffix: ' kW', icon: <Zap size={16} /> },
-                    { label: t.engineModel, key: 'engineModel', icon: <Activity size={16} /> },
-                    { label: t.voltage, key: 'voltage', icon: <Gauge size={16} /> },
-                    { label: t.frequency, key: 'frequency', icon: <Activity size={16} /> },
-                    { label: t.phase, key: 'phase', icon: <Zap size={16} /> },
-                    { label: t.fuelCons, key: 'fuelConsumption', icon: <Battery size={16} /> },
-                    { label: t.dimensions, key: 'dimensions', suffix: ' mm', icon: <Box size={16} /> },
-                    { label: t.weight, key: 'weight', icon: <Scale size={16} /> },
-                    { label: t.type, key: 'type', icon: <Info size={16} /> },
+                    { label: t.powerOutput, key: 'powerKW', suffix: ' kW', icon: <Zap size={14} /> },
+                    { label: t.engineModel, key: 'engineModel', icon: <Activity size={14} /> },
+                    { label: t.voltage, key: 'voltage', icon: <Gauge size={14} /> },
+                    { label: t.frequency, key: 'frequency', icon: <Activity size={14} /> },
+                    { label: t.phase, key: 'phase', icon: <Zap size={14} /> },
+                    { label: t.fuelCons, key: 'fuelConsumption', icon: <Battery size={14} /> },
+                    { label: t.dimensions, key: 'dimensions', icon: <Box size={14} /> },
+                    { label: t.weight, key: 'weight', icon: <Scale size={14} /> },
+                    { label: t.type, key: 'type', icon: <Info size={14} /> },
                   ].map((row) => (
                     <tr key={row.label} className="hover:bg-white/5 transition-colors">
-                      <td className="sticky left-0 bg-slate-900 p-4 border-b border-r border-white/10 text-slate-400 font-medium flex items-center gap-2">
-                        {row.icon} {row.label}
+                      <td className="sticky left-0 bg-slate-900 p-2.5 md:p-4 border-b border-r border-white/10 text-slate-400 font-medium flex items-center gap-1.5 md:gap-2">
+                        {row.icon} <span className="truncate">{row.label}</span>
                       </td>
-                      {getCompareProducts().map(p => (
-                        <td key={p.id} className="p-4 border-b border-white/10 text-center text-white font-mono">
-                          {(p as any)[row.key]} {row.suffix || ''}
-                        </td>
-                      ))}
+                      {getCompareProducts().map(p => {
+                        const rawVal = (p as any)[row.key];
+                        return (
+                          <td key={p.id} className="p-2.5 md:p-4 border-b border-white/10 text-center text-white font-mono">
+                            {rawVal ? `${rawVal}${row.suffix || ''}` : '—'}
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>
@@ -568,22 +614,20 @@ const Product: React.FC<PageProps> = () => {
             </button>
 
             {/* Left: Image Side */}
-            <div className="md:w-1/2 relative bg-gradient-to-br from-slate-800 to-slate-950 min-h-[300px] md:min-h-full">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-500/20 via-transparent to-transparent opacity-50" />
+            <div className="md:w-1/2 relative studio-stage min-h-[260px] md:min-h-full">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(239,68,68,0.08),transparent_70%)] pointer-events-none" />
               <img
-                src={selectedProduct.image}
+                src={assetUrl(selectedProduct.image)}
                 alt={selectedProduct.name}
-                className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50"
+                className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-[0_20px_40px_rgba(2,6,23,0.22)] transform hover:scale-105 transition-transform duration-700"
               />
-              <img
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-                className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex justify-between items-center">
-                  <span className="text-xs font-bold text-red-300 uppercase tracking-widest">{t.inStock}</span>
-                  <span className="text-white font-mono font-bold">{t.brand}: {selectedProduct.brand}</span>
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="bg-slate-950/85 backdrop-blur-md border border-white/15 rounded-2xl p-3.5 flex justify-between items-center shadow-lg">
+                  <span className={`text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 ${selectedProduct.inStock ? 'text-green-400' : 'text-red-400'}`}>
+                    <span className={`w-2 h-2 rounded-full ${selectedProduct.inStock ? 'bg-green-500' : 'bg-red-500 animate-pulse'}`} />
+                    {selectedProduct.inStock ? t.inStock : t.outStock}
+                  </span>
+                  <span className="text-white font-mono text-xs md:text-sm font-bold">{t.brand}: {selectedProduct.brand}</span>
                 </div>
               </div>
             </div>
@@ -610,7 +654,7 @@ const Product: React.FC<PageProps> = () => {
                 <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Activity className="w-5 h-5 text-blue-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.engineModel}</div>
-                  <div className="text-base md:text-lg font-bold text-white">{selectedProduct.engineModel}</div>
+                  <div className="text-base md:text-lg font-bold text-white">{selectedProduct.engineModel || 'Industrial'}</div>
                 </div>
                 <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Gauge className="w-5 h-5 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
@@ -635,8 +679,22 @@ const Product: React.FC<PageProps> = () => {
               </div>
 
               {/* Footer Actions */}
-              <div className="flex items-center justify-end gap-4 mt-auto">
-                <button className="w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-900/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+              <div className="flex flex-col sm:flex-row items-center gap-3 mt-auto">
+                <button
+                  onClick={() => setQuotationProduct(selectedProduct)}
+                  className="w-full sm:w-1/2 py-3.5 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2 border border-white/15 active:scale-98"
+                >
+                  <FileText size={18} className="text-red-400" />
+                  Official Quote (PDF)
+                </button>
+                <button
+                  onClick={() => {
+                    const phone = "251966330309";
+                    const msg = encodeURIComponent(`Hello CE Power, I would like to inquire about: ${selectedProduct.name} (${selectedProduct.powerKW} kW, ${selectedProduct.type} frame). Please provide current stock availability and pro-forma invoice.`);
+                    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+                  }}
+                  className="w-full sm:w-1/2 py-3.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-900/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 active:scale-98"
+                >
                   <ShoppingCart size={18} />
                   {t.orderNow}
                 </button>
@@ -647,6 +705,19 @@ const Product: React.FC<PageProps> = () => {
         </div>
       )}
       </AnimatePresence>
+
+      {/* Sizing Calculator Modal */}
+      <SizingCalculator
+        isOpen={isCalculatorOpen}
+        onClose={() => setIsCalculatorOpen(false)}
+      />
+
+      {/* Quotation Generator Modal */}
+      <QuotationModal
+        isOpen={!!quotationProduct}
+        onClose={() => setQuotationProduct(null)}
+        generator={quotationProduct}
+      />
 
     </div>
   );

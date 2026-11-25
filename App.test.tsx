@@ -47,3 +47,18 @@ describe('App Smoke Test', () => {
         expect(screen.getByRole('navigation')).toBeInTheDocument();
     });
 });
+
+import { assetUrl } from './lib/assetUtils';
+
+describe('Deployment assetUrl resolution', () => {
+    it('resolves local paths for both root (Vercel) and subpath (GitHub Pages)', () => {
+        expect(assetUrl('/images/weichai-500kw.webp', '/')).toBe('/images/weichai-500kw.webp');
+        expect(assetUrl('/images/weichai-500kw.webp', '/Power-Ethiopia/')).toBe('/Power-Ethiopia/images/weichai-500kw.webp');
+        expect(assetUrl('/Power-Ethiopia/images/weichai-500kw.webp', '/Power-Ethiopia/')).toBe('/Power-Ethiopia/images/weichai-500kw.webp');
+        expect(assetUrl('videos/hero-bg.mp4', '/Power-Ethiopia/')).toBe('/Power-Ethiopia/videos/hero-bg.mp4');
+    });
+
+    it('preserves external HTTPS and data URLs unchanged', () => {
+        expect(assetUrl('https://cepower.et/logo.webp', '/Power-Ethiopia/')).toBe('https://cepower.et/logo.webp');
+    });
+});

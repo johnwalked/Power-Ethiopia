@@ -91,17 +91,17 @@ const App: React.FC = () => {
     <div className="relative min-h-screen overflow-x-hidden selection:bg-red-500/30 selection:text-red-200 text-slate-100 bg-slate-950">
       <BackgroundEffects />
 
-      <div className="relative z-10 flex flex-col min-h-screen">
-        <Navbar onNavigate={navigate} onOpenAuth={openAuthModal} />
+      <div className="relative flex flex-col min-h-screen">
+        <Navbar currentPath={currentPath} onNavigate={navigate} onOpenAuth={openAuthModal} />
 
         <main className="flex-grow">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentPath}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
             >
               <Suspense fallback={
                 <div className="min-h-[60vh] flex items-center justify-center">
@@ -132,15 +132,32 @@ const App: React.FC = () => {
                   {t.footer.desc}
                 </p>
                 <div className="flex items-center gap-3">
-                  {['facebook', 'telegram', 'youtube'].map((social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white hover:border-red-500/30 transition-all text-xs font-bold uppercase"
-                    >
-                      {social[0].toUpperCase()}
-                    </a>
-                  ))}
+                  <a
+                    href="https://wa.me/251966330309"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                    title="WhatsApp (+251 966 33 03 09)"
+                    className="w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-green-400 hover:border-green-500/30 transition-all"
+                  >
+                    <MessageCircle size={16} />
+                  </a>
+                  <a
+                    href="tel:+251966330309"
+                    aria-label="Call CE Power"
+                    title="Call 09 66 33 03 09"
+                    className="w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-red-400 hover:border-red-500/30 transition-all"
+                  >
+                    <Phone size={16} />
+                  </a>
+                  <a
+                    href="mailto:info@cepower.et"
+                    aria-label="Email CE Power"
+                    title="info@cepower.et"
+                    className="w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all"
+                  >
+                    <Mail size={16} />
+                  </a>
                 </div>
               </div>
 
@@ -173,6 +190,7 @@ const App: React.FC = () => {
                 <ul className="space-y-3">
                   {[
                     { name: t.nav.dashboard, path: '/dashboard' },
+                    { name: t.support.badge, path: '/support' },
                   ].map(link => (
                     <li key={link.path}>
                       <a
@@ -217,7 +235,7 @@ const App: React.FC = () => {
             {/* Bottom Bar */}
             <div className="pt-4 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-2">
               <p className="text-xs text-slate-500">
-                {t.footer.copyright.replace('{year}', new Date().getFullYear())}
+                {t.footer.copyright.replace('{year}', String(new Date().getFullYear()))}
               </p>
               <p className="text-xs text-slate-600">
                 {t.footer.est}
@@ -235,7 +253,8 @@ const App: React.FC = () => {
         href="https://wa.me/251966330309"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-24 right-6 z-[90] w-14 h-14 rounded-full bg-green-600 hover:bg-green-500 flex items-center justify-center shadow-lg shadow-green-900/40 hover:scale-110 active:scale-95 transition-all group"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-24 right-6 z-[80] w-14 h-14 rounded-full bg-green-600 hover:bg-green-500 flex items-center justify-center shadow-lg shadow-green-900/40 hover:scale-110 active:scale-95 transition-all group"
         title="Chat on WhatsApp"
       >
         <MessageCircle className="w-6 h-6 text-white" fill="currentColor" />
@@ -250,7 +269,8 @@ const App: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-6 left-6 z-[90] w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+            aria-label="Back to top"
+            className="fixed bottom-6 left-6 z-[80] w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white transition-colors"
           >
             <ArrowUp size={18} />
           </motion.button>

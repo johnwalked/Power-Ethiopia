@@ -17,6 +17,10 @@ const Support: React.FC<PageProps> = ({ onNavigate }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const faqs = t.support.faqs;
+  const filteredFaqs = faqs.filter((faq: any) =>
+    faq.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    faq.a.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   const supportCards = [
     {
       icon: <Phone size={22} />,

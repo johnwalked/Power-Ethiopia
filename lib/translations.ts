@@ -148,18 +148,19 @@ export const translations: Record<Language, any> = {
       badge: "Pricing & Packages",
       title: "Power Solutions for",
       titleSpan: "Every Scale",
-      subtitle: "From small home backup to mega-industrial power plants. Contact us for exact pricing — we offer the most competitive rates in Ethiopia.",
+      subtitle: "From small home backup to mega-industrial power plants and 80–250kW pumping stations. Contact us for exact factory pricing.",
       popular: "Most Popular",
       range: "range",
       included: "What's Included",
+      includedSpan: "With Every Unit",
       ctaBannerTitle: "Need a Custom Quote?",
       ctaBannerDesc: "Call us directly or visit our factory in Kality Gabriel. We offer custom solutions, bulk orders, and trade-in programs.",
       callUs: "Call 09 66 33 03 09",
       contactSupport: "Contact Support →",
       plans: [
-        { name: "Residential", tagline: "Home & Small Business", power: "7-25 kW", cta: "View Generators", features: ["United Power / Yunnei Brands", "Silent Type Enclosure", "Single & 3-Phase Options", "1 Year Engine Warranty", "Free Delivery in Addis Ababa", "Installation Support"] },
-        { name: "Commercial", tagline: "Factories & Hotels", power: "50-250 kW", cta: "View Generators", features: ["Yuchai / Weichai / Kefo Brands", "Heavy-Duty Silent Canopy", "400V 3-Phase Output", "2 Year Comprehensive Warranty", "Free Delivery Nationwide", "24/7 Technical Support", "Spare Parts Package"] },
-        { name: "Industrial", tagline: "Mining & Infrastructure", power: "300-3000 kW", cta: "Contact Sales", features: ["Cummins / Weichai / Yuchai", "Containerized Available", "10kV High Voltage Options", "Custom SLA Agreement", "On-Site Installation Team", "Dedicated Account Manager", "Bulk Order Discounts"] }
+        { name: "Residential & Small Biz", tagline: "Homes, Clinics & Shops", power: "2.2-15 kW", cta: "View Generators", features: ["United Power / Yunnei Brands", "Silent & Portable Options", "Single & 3-Phase Output", "1 Year Engine Warranty", "Free Delivery in Addis Ababa", "Installation Support"] },
+        { name: "Commercial & Irrigation", tagline: "Factories, Hotels & Farms", power: "30-250 kW", cta: "View Equipment", features: ["Yuchai / Weichai / Weifang / KOFO", "80–250kW Heavy Water Pumps", "400V 3-Phase & ATS Ready", "1–2 Year Comprehensive Warranty", "Free Delivery in Addis Ababa", "24/7 Technical Support", "Spare Parts Stocked in Kality"] },
+        { name: "Mega Industrial", tagline: "Mining & Infrastructure", power: "300-3000 kW", cta: "Contact Sales", features: ["Weichai / Cummins / Yuchai", "Containerized Available", "10kV High Voltage Options", "Custom SLA Agreement", "On-Site Installation Team", "Dedicated Account Manager", "Bulk Order Discounts"] }
       ],
       services: [
         { title: "Free Delivery", desc: "Free delivery within Addis Ababa for all generator purchases." },
@@ -184,6 +185,7 @@ export const translations: Record<Language, any> = {
       callUs: "Call Us",
       whatsapp: "WhatsApp",
       email: "Email",
+      action: "Chat on WhatsApp",
       faqs: [
         { q: "Do you offer warranty on generators?", a: "Yes. All generators come with a minimum 1-year factory warranty covering engine and alternator defects." },
         { q: "Is delivery free within Addis Ababa?", a: "Yes, we provide free delivery for all generator purchases within Addis Ababa city limits." },
@@ -362,18 +364,19 @@ export const translations: Record<Language, any> = {
       badge: "ዋጋ እና ፓኬጆች",
       title: "የኃይል መፍትሄዎች ለ",
       titleSpan: "ሁሉም ደረጃ",
-      subtitle: "ከአነስተኛ የቤት ውስጥ መብራት እስከ ትላልቅ የኢንዱስትሪ ማመንጫዎች። ለትክክለኛ ዋጋ ያነጋግሩን — በኢትዮጵያ በጣም ተመጣጣኝ ዋጋ እናቀርባለን።",
+      subtitle: "ከአነስተኛ የቤት ውስጥ መብራት እስከ ትላልቅ የኢንዱስትሪ ማመንጫዎች እና ከ80-250 kW የውሃ ፓምፖች። ለትክክለኛ የፋብሪካ ዋጋ ያነጋግሩን።",
       popular: "በጣም ተፈላጊ",
       range: "መጠን",
       included: "ምን ያካትታል",
+      includedSpan: "በሁሉም ግዢ",
       ctaBannerTitle: "ብጁ የዋጋ ትመና ይፈልጋሉ?",
       ctaBannerDesc: "በቀጥታ ይደውሉልን ወይም ቃሊቲ ገብርኤል ወደሚገኘው ፋብሪካችን ይምጡ። የጅምላ ትዕዛዞችን እናስተናግዳለን።",
       callUs: "በ09 66 33 03 09 ይደውሉ",
       contactSupport: "ድጋፍ ሰጪ ያነጋግሩ →",
       plans: [
-        { name: "መኖሪያ ቤት", tagline: "ለቤት እና ለአነስተኛ ንግድ", power: "7-25 kW", cta: "ጄኔሬተሮችን ይመልከቱ", features: ["የ United Power / Yunnei ብራንዶች", "ድምፅ አልባ ሽፋን", "ባለ 1 እና ባለ 3 ፌዝ", "የ1 ዓመት የሞተር ዋስትና", "በአዲስ አበባ ውስጥ ነፃ ትራንስፖርት", "የገጠማ ድጋፍ"] },
-        { name: "ንግድ", tagline: "ለፋብሪካዎች እና ሆቴሎች", power: "50-250 kW", cta: "ጄኔሬተሮችን ይመልከቱ", features: ["የ Yuchai / Weichai / Kefo ብራንዶች", "ከባድ ድምፅ አልባ ካኖፒ", "400V 3-ፌዝ", "የ2 ዓመት ሙሉ ዋስትና", "በሀገር አቀፍ ደረጃ ነፃ ጭነት", "የ24/7 የቴክኒክ ድጋፍ", "የመለዋወጫ ፓኬጅ"] },
-        { name: "ኢንዱስትሪ", tagline: "ለማዕድን እና የመሰረተ ልማት ዝርጋታ", power: "300-3000 kW", cta: "የሽያጭ ክፍል ያነጋግሩ", features: ["የ Cummins / Weichai / Yuchai", "የኮንቴይነር ሽፋን ያላቸው", "10kV ከፍተኛ ቮልቴጅ", "ልዩ የጥገና ስምምነት (SLA)", "የገጠማ ባለሙያዎች ቡድን", "ልዩ የደንበኞች አገልጋይ", "ለጠቅላላ ትዕዛዝ ቅናሽ"] }
+        { name: "መኖሪያ ቤት እና ንግድ", tagline: "ለቤት እና ለአነስተኛ ንግድ", power: "2.2-15 kW", cta: "ጄኔሬተሮችን ይመልከቱ", features: ["የ United Power / Yunnei ብራንዶች", "ድምፅ አልባ እና ተንቀሳቃሽ", "ባለ 1 እና ባለ 3 ፌዝ", "የ1 ዓመት የሞተር ዋስትና", "በአዲስ አበባ ውስጥ ነፃ ትራንስፖርት", "የገጠማ ድጋፍ"] },
+        { name: "ንግድ እና እርሻ", tagline: "ለፋብሪካዎች፣ ሆቴሎች እና እርሻ", power: "30-250 kW", cta: "መሳሪያዎችን ይመልከቱ", features: ["የ Yuchai / Weichai / Weifang / KOFO ብራንዶች", "ከ80-250 kW የውሃ ፓምፖች", "400V 3-ፌዝ እና ATS ዝግጁ", "የ1-2 ዓመት ሙሉ ዋስትና", "በአዲስ አበባ ውስጥ ነፃ ትራንስፖርት", "የ24/7 የቴክኒክ ድጋፍ", "መለዋወጫ ቃሊቲ ውስጥ ይገኛል"] },
+        { name: "ከፍተኛ ኢንዱስትሪ", tagline: "ለማዕድን እና የመሰረተ ልማት ዝርጋታ", power: "300-3000 kW", cta: "የሽያጭ ክፍል ያነጋግሩ", features: ["የ Weichai / Cummins / Yuchai", "የኮንቴይነር ሽፋን ያላቸው", "10kV ከፍተኛ ቮልቴጅ", "ልዩ የጥገና ስምምነት (SLA)", "የገጠማ ባለሙያዎች ቡድን", "ልዩ የደንበኞች አገልጋይ", "ለጠቅላላ ትዕዛዝ ቅናሽ"] }
       ],
       services: [
         { title: "ነፃ ትራንስፖርት", desc: "ለማንኛውም የጄኔሬተር ግዢ በአዲስ አበባ ውስጥ ነፃ ትራንስፖርት።" },
@@ -398,13 +401,14 @@ export const translations: Record<Language, any> = {
       callUs: "ይደውሉልን",
       whatsapp: "ዋትስአፕ",
       email: "ኢሜይል",
+      action: "በዋትስአፕ ያውሩ",
       faqs: [
         { q: "በጄኔሬተሮች ላይ ዋስትና ይሰጣሉ?", a: "አዎን። ሁሉም ጄኔሬተሮች ሞተር እና አልተርኔተርን ለሚሸፍን ቢያንስ የ1 ዓመት የፋብሪካ ዋስትና አላቸው።" },
         { q: "አዲስ አበባ ውስጥ ትራንስፖርት ነፃ ነው?", a: "አዎ፣ በአዲስ አበባ ከተማ አስተዳደር ውስጥ ለሚደረጉ የጄኔሬተር ግዢዎች በነፃ እናደርሳለን።" },
         { q: "የገጠማ አገልግሎት ትሰጣላችሁ?", a: "በፍፁም። የእኛ ቡድን ATSን እና ሙከራዎችን ጨምሮ የጥራት ገጠማ አገልግሎት ይሰጣል።" },
         { q: "ለጄኔሬተሬ መለዋወጫ ማግኘት እችላለሁ?", a: "ለእያንዳንዱ የምናቀርባቸው ብራንዶች እውን መለዋወጫዎች ሙሉ ክምችት አለን።" },
         { q: "የክፍያ መንገዶችዎ ምንድናቸው?", a: "በባንክ ዝውውር (ንግድ ባንክ፣ ዳሽን፣ አዋሽ)፣ በጥሬ ገንዘብ፣ እንዲሁም ለጅምላ ትዕዛዞች በ LC እንቀበላለን።" },
-        { q: "ትክክለኛውን የጄኔሬተር መጠን እንዴት ልምረጥ?", a: "የአይአይ ረዳታችን 'ዲጂታል ጆን' ሊያግዝዎት ይችላል። ወይም ቀጥታ በስልክ ያግኙን።" }
+        { q: "ትክክለኛውን የጄኔሬተር መጠን እንዴት ልምረጥ?", a: "የአይአይ ረዳታችን 'ሲኢ ረዳት (CE Assistant)' ሊያግዝዎት ይችላል። ወይም ቀጥታ በስልክ ያግኙን።" }
       ],
       supportCards: [
         { title: "ይደውሉልን", desc: "ወደ የሽያጭ እና ድጋፍ ሰጪ ቡድናችን ቀጥታ መስመር።" },
@@ -580,6 +584,7 @@ export const translations: Record<Language, any> = {
       popular: "最受欢迎",
       range: "范围",
       included: "包含内容",
+      includedSpan: "每台设备标配",
       ctaBannerTitle: "需要定制报价吗？",
       ctaBannerDesc: "直接致电我们或访问我们在卡利提加布里埃尔的工厂。我们提供定制解决方案、批量订单和以旧换新计划。",
       callUs: "致电 09 66 33 03 09",
@@ -612,6 +617,7 @@ export const translations: Record<Language, any> = {
       callUs: "联系我们",
       whatsapp: "WhatsApp",
       email: "电子邮件",
+      action: "WhatsApp 聊天",
       faqs: [
         { q: "你们提供发电机保修吗？", a: "是的，所有发电机均提供至少1年的出厂保修，涵盖发动机和发电机组件缺陷。" },
         { q: "亚的斯亚贝巴送货免费吗？", a: "是的，我们在亚的斯亚贝巴市区内为所有购买的发电机提供免费送货。" },
@@ -794,6 +800,7 @@ export const translations: Record<Language, any> = {
       popular: "ብብዝሒ ዝድለ",
       range: "ደረጃ",
       included: "እንታይ የጠቓልል",
+      includedSpan: "ኣብ ነፍሲ ወከፍ",
       ctaBannerTitle: "ፍሉይ ዋጋ ትደልዩ ዶ?",
       ctaBannerDesc: "ብቀጥታ ደውሉልና ወይ ቃሊቲ ዝርከብ ፋብሪካና ምጹ።",
       callUs: "09 66 33 03 09 ደውሉ",
@@ -826,13 +833,14 @@ export const translations: Record<Language, any> = {
       callUs: "ደውሉልና",
       whatsapp: "ዋትስኣፕ",
       email: "ኢሜይል",
+      action: "ብዋትስኣፕ ተዛረብ",
       faqs: [
         { q: "በጄኔሬተሮች ላይ ዋስትና ይሰጣሉ?", a: "አዎን። ሁሉም ጄኔሬተሮች ሞተር እና አልተርኔተርን ለሚሸፍን ቢያንስ የ1 ዓመት የፋብሪካ ዋስትና አላቸው።" },
         { q: "አዲስ አበባ ውስጥ ትራንስፖርት ነፃ ነው?", a: "አዎ፣ በአዲስ አበባ ከተማ አስተዳደር ውስጥ ለሚደረጉ የጄኔሬተር ግዢዎች በነፃ እናደርሳለን።" },
         { q: "የገጠማ አገልግሎት ትሰጣላችሁ?", a: "በፍፁም። የእኛ ቡድን ATSን እና ሙከራዎችን ጨምሮ የጥራት ገጠማ አገልግሎት ይሰጣል።" },
         { q: "ለጄኔሬተሬ መለዋወጫ ማግኘት እችላለሁ?", a: "ለእያንዳንዱ የምናቀርባቸው ብራንዶች እውን መለዋወጫዎች ሙሉ ክምችት አለን።" },
         { q: "የክፍያ መንገዶችዎ ምንድናቸው?", a: "በባንክ ዝውውር (ንግድ ባንክ፣ ዳሽን፣ አዋሽ)፣ በጥሬ ገንዘብ፣ እንዲሁም ለጅምላ ትዕዛዞች በ LC እንቀበላለን።" },
-        { q: "ትክክለኛውን የጄኔሬተር መጠን እንዴት ልምረጥ?", a: "የአይአይ ረዳታችን 'ዲጂታል ጆን' ሊያግዝዎት ይችላል። ወይም ቀጥታ በስልክ ያግኙን።" }
+        { q: "ትክክለኛውን የጄኔሬተር መጠን እንዴት ልምረጥ?", a: "የአይአይ ረዳታችን 'ሲኢ ረዳት (CE Assistant)' ሊያግዝዎት ይችላል። ወይም ቀጥታ በስልክ ያግኙን።" }
       ],
       supportCards: [
         { title: "ይደውሉልን", desc: "ወደ የሽያጭ እና ድጋፍ ሰጪ ቡድናችን ቀጥታ መስመር።" },
@@ -1008,6 +1016,7 @@ export const translations: Record<Language, any> = {
       popular: "Baay'ee Jaalatama",
       range: "hanga",
       included: "Maal Of Keessaa Qaba",
+      includedSpan: "Bittaa Hundaa Waliin",
       ctaBannerTitle: "Gatii Addaa Barbaadduu?",
       ctaBannerDesc: "Kallattiin nuuf bilbilaa ykn warshaa keenya Kaaliitii Gaabri'eel jiru daawwadhaa.",
       callUs: "09 66 33 03 09 Bilbilaa",
@@ -1040,6 +1049,7 @@ export const translations: Record<Language, any> = {
       callUs: "Nuuf Bilbilaa",
       whatsapp: "WhatsApp",
       email: "Imeelii",
+      action: "WhatsApp irratti Dubbadhu",
       faqs: [
         { q: "Do you offer warranty on generators?", a: "Yes. All generators come with a minimum 1-year factory warranty covering engine and alternator defects." },
         { q: "Is delivery free within Addis Ababa?", a: "Yes, we provide free delivery for all generator purchases within Addis Ababa city limits." },

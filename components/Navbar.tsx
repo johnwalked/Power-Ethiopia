@@ -7,11 +7,12 @@ import { useLanguage, Language } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 
 interface NavbarProps {
+  currentPath?: string;
   onNavigate: (path: string) => void;
   onOpenAuth: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate, onOpenAuth }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -72,12 +73,12 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
       initial={{ y: -100, x: "-50%", opacity: 0 }}
       animate={{ y: 0, x: "-50%", opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-6 left-1/2 z-50 w-[calc(100%-3rem)] max-w-6xl rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] border ring-1 ring-inset ${isScrolled
-        ? 'bg-slate-900/30 backdrop-blur-2xl border-white/15 ring-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.4)] py-3'
-        : 'bg-white/0 backdrop-blur-xl border-white/8 ring-white/5 shadow-none py-4'
+      className={`fixed top-4 md:top-6 left-1/2 z-50 w-[calc(100%-1.5rem)] md:w-[calc(100%-3rem)] max-w-6xl rounded-2xl transition-all duration-300 border ring-1 ring-inset ${isScrolled
+        ? 'bg-slate-950/85 backdrop-blur-2xl border-white/15 ring-white/10 shadow-[0_12px_36px_rgba(0,0,0,0.65)] py-2.5 md:py-3'
+        : 'bg-slate-950/35 backdrop-blur-xl border-white/10 ring-white/5 shadow-none py-3 md:py-4'
         }`}
     >
-      <div className="px-8 flex items-center justify-between">
+      <div className="px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
         <motion.a
           whileHover={{ scale: 1.02 }}
@@ -96,21 +97,29 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
         </motion.a>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={`#${link.path}`}
-              onClick={(e) => handleNavClick(e, link.path)}
-              className="relative text-[14px] font-bold text-slate-300 hover:text-white transition-colors duration-300 group tracking-tight"
-            >
-              {link.name}
-              <motion.span
-                layoutId="nav-underline"
-                className="absolute -bottom-1 left-0 w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]"
-              />
-            </a>
-          ))}
+        <div className="hidden md:flex items-center gap-8 lg:gap-10">
+          {navLinks.map((link) => {
+            const isActive = currentPath === link.path;
+            return (
+              <a
+                key={link.path}
+                href={`#${link.path}`}
+                onClick={(e) => handleNavClick(e, link.path)}
+                className={`relative text-[14px] font-bold transition-colors duration-200 group tracking-tight py-1 ${isActive ? 'text-white' : 'text-slate-300 hover:text-white'}`}
+              >
+                {link.name}
+                {isActive ? (
+                  <motion.span
+                    layoutId="nav-underline"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    className="absolute -bottom-1 left-0 w-full h-[2px] bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.6)]"
+                  />
+                ) : (
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-red-500/70 transition-all duration-300 group-hover:w-full rounded-full" />
+                )}
+              </a>
+            );
+          })}
         </div>
 
         {/* CTA Button & Language */}
@@ -155,19 +164,23 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
           </div>
 
           {user ? (
-            <div className="flex items-center gap-4 pl-4 border-l border-white/10">
-              <div className="flex items-center gap-2 text-slate-300 font-bold text-sm">
-                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-red-500">
-                  <User size={16} />
+            <div className="flex items-center gap-3 pl-4 border-l border-white/10">
+              <button
+                onClick={() => onNavigate('/dashboard')}
+                className="flex items-center gap-2 text-slate-200 hover:text-white font-bold text-sm px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-all"
+                title={t.dashboard}
+              >
+                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400">
+                  <User size={14} />
                 </div>
                 <span>{getFirstName()}</span>
-              </div>
+              </button>
               <button
                 onClick={handleSignOut}
-                className="p-2.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all rounded-xl"
+                className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all rounded-xl"
                 title={t.signOut}
               >
-                <LogOut size={18} />
+                <LogOut size={17} />
               </button>
             </div>
           ) : (
@@ -204,14 +217,23 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenAuth }) => {
           >
             {navLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.path}
                 href={`#${link.path}`}
-                className="text-slate-300 hover:text-red-400 font-bold py-3 text-lg transition-colors border-b border-white/5 last:border-0 text-center"
+                className={`font-bold py-3 text-lg transition-colors border-b border-white/5 last:border-0 text-center ${currentPath === link.path ? 'text-red-400' : 'text-slate-300 hover:text-red-400'}`}
                 onClick={(e) => handleNavClick(e, link.path)}
               >
                 {link.name}
               </a>
             ))}
+            {user && (
+              <a
+                href="#/dashboard"
+                className={`font-bold py-3 text-lg transition-colors border-b border-white/5 text-center ${currentPath === '/dashboard' ? 'text-red-400' : 'text-slate-300 hover:text-red-400'}`}
+                onClick={(e) => handleNavClick(e, '/dashboard')}
+              >
+                {t.dashboard}
+              </a>
+            )}
 
             {/* Mobile Language Selector */}
             <div className="py-2 border-b border-white/5">

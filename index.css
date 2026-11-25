@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,41 +6,28 @@
   :root {
     --color-red-500: #ef4444;
     --color-slate-950: #020617;
-    --glass-bg: rgba(15, 23, 42, 0.4);
-    --glass-bg-light: rgba(15, 23, 42, 0.25);
-    --glass-bg-heavy: rgba(15, 23, 42, 0.65);
+    --glass-bg: rgba(15, 23, 42, 0.45);
+    --glass-bg-light: rgba(15, 23, 42, 0.28);
+    --glass-bg-heavy: rgba(15, 23, 42, 0.72);
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-border-hover: rgba(239, 68, 68, 0.2);
+    --glass-border-hover: rgba(239, 68, 68, 0.25);
     --glass-blur: 20px;
   }
 
   html {
     scroll-behavior: smooth;
     background-color: var(--color-slate-950);
+    color-scheme: dark;
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Noto Sans Ethiopic', sans-serif;
     background-color: var(--color-slate-950);
     color: #f8fafc;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-}
-
-html {
-  scroll-behavior: smooth;
-  background-color: var(--color-slate-950);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--color-slate-950);
-  color: #f8fafc;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Selection */
@@ -219,13 +204,16 @@ body {
   will-change: opacity;
 }
 
-/* Lazy image fade-in */
-img[loading="lazy"] {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+/* Hide scrollbars cleanly while keeping scrollability */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-img[loading="lazy"].loaded,
-img[loading="lazy"]:not([src=""]) {
-  opacity: 1;
+/* Subtle studio showcase grid background */
+.studio-stage {
+  background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.96) 0%, rgba(226, 232, 240, 0.95) 100%);
 }

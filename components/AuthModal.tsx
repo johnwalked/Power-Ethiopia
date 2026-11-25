@@ -424,7 +424,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         )}
         
         {mode !== 'reset-sent' && mode !== 'forgot-password' && (
-            <div className="px-8 py-4 bg-white/3 backdrop-blur-sm border-t border-white/5 text-center">
+            <div className="px-8 py-4 bg-white/[0.03] backdrop-blur-sm border-t border-white/5 text-center">
                 <p className="text-xs text-slate-500">
                     {t.agreement}
                 </p>

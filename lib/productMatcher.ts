@@ -143,7 +143,7 @@ export function findCatalogProduct(
         else if (unit === 'hp') targetKWs.push(Math.round(val * 0.746));
     }
     if (targetKWs.length === 0) {
-        for (const m of normalized.matchAll(/\b(\d{2,4}(?:\.\d+)?)\b/g)) {
+        for (const m of normalized.matchAll(/\b(\d{1,4}(?:\.\d+)?)\b/g)) {
             const val = parseFloat(m[1]);
             if (Number.isFinite(val) && val >= 2 && val <= 3000) {
                 targetKWs.push(val);
@@ -166,9 +166,11 @@ export function findCatalogProduct(
             score += item.category === categoryHint ? 40 : -35;
         }
 
-        // Exact substring inclusion on id/name
+        // Substring inclusion on id (or name when no explicit kW clash)
         if (primaryLower && primaryLower.length >= 4) {
-            if (entry.idLower.includes(primaryLower) || entry.nameLower.includes(primaryLower)) {
+            if (entry.idLower.includes(primaryLower)) {
+                score += 45;
+            } else if (entry.nameLower.includes(primaryLower) && (targetKWs.length === 0 || (item.powerKW && targetKWs.includes(item.powerKW)))) {
                 score += 45;
             }
         }
@@ -181,11 +183,11 @@ export function findCatalogProduct(
             }
         }
 
-        // Power rating match
+        // Power rating match (prioritize exact kW over kVA approximation in name)
         if (item.powerKW && targetKWs.length > 0) {
             for (const target of targetKWs) {
                 if (item.powerKW === target) {
-                    score += 55;
+                    score += 85;
                 } else {
                     const diffRatio = Math.abs(item.powerKW - target) / Math.max(target, 1);
                     if (diffRatio <= 0.12) score += 28;

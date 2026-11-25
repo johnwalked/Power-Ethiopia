@@ -88,6 +88,10 @@ describe('CE Assistant Product Glimpse Matcher', () => {
         const gen200 = findCatalogProduct('200kw yuchai generator');
         expect(gen200?.id).toBe('yuchai-200kw-md200');
         expect(gen200?.image).toBe('/images/yuchai-200kw-md200.webp');
+
+        expect(findCatalogProduct('Yuchai 450', null, 'generator')?.id).toBe('yuchai-450kw');
+        expect(findCatalogProduct('Weifang 150', null, 'generator')?.id).toBe('weifang-150kw');
+        expect(findCatalogProduct('United Power 2.2', null, 'generator')?.id).toBe('united-2.2kw');
     });
 
     it('resolves Amharic product photo queries and category fallbacks', () => {

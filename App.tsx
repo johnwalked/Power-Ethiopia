@@ -4,19 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BackgroundEffects from './components/ui/BackgroundEffects';
-import AuthModal from './components/AuthModal';
 import VoiceAssistant from './components/VoiceAssistant';
 import { Loader2, Zap, MapPin, Phone, Mail, ArrowUp, MessageCircle } from 'lucide-react';
 
-// Auth
-import { useAuth } from './lib/AuthContext';
 import { useLanguage } from './lib/LanguageContext';
 import { translations } from './lib/translations';
 
 // Lazy Load Pages for Performance
 const Product = React.lazy(() => import('./pages/Product'));
 const Solutions = React.lazy(() => import('./pages/Solutions'));
-const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 const Support = React.lazy(() => import('./pages/Support'));
 
@@ -24,10 +20,8 @@ const App: React.FC = () => {
   const getHashPath = () => window.location.hash.slice(1) || '/';
 
   const [currentPath, setCurrentPath] = useState(getHashPath());
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
-  const { loading } = useAuth();
   const { language } = useLanguage();
   const t = translations[language];
 
@@ -51,48 +45,28 @@ const App: React.FC = () => {
     window.location.hash = path;
   };
 
-  const openAuthModal = () => {
-    setIsAuthModalOpen(true);
-  };
-
   const renderContent = () => {
     switch (currentPath) {
       case '/product':
         return <Product onNavigate={navigate} />;
       case '/solutions':
         return <Solutions onNavigate={navigate} />;
-      case '/dashboard':
-        return <Dashboard onNavigate={navigate} />;
       case '/pricing':
         return <Pricing onNavigate={navigate} />;
       case '/support':
         return <Support onNavigate={navigate} />;
       case '/':
       default:
-        return <Hero onOpenAuth={openAuthModal} onNavigate={navigate} />;
+        return <Hero onNavigate={navigate} />;
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex flex-col items-center gap-4"
-        >
-          <Loader2 className="w-8 h-8 text-red-500 animate-spin" />
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <div className="relative min-h-screen overflow-x-hidden selection:bg-red-500/30 selection:text-red-200 text-slate-100 bg-slate-950">
       <BackgroundEffects />
 
       <div className="relative flex flex-col min-h-screen">
-        <Navbar currentPath={currentPath} onNavigate={navigate} onOpenAuth={openAuthModal} />
+        <Navbar currentPath={currentPath} onNavigate={navigate} />
 
         <main className="flex-grow">
           <AnimatePresence mode="wait">
@@ -189,8 +163,8 @@ const App: React.FC = () => {
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-5">{t.footer.company}</h4>
                 <ul className="space-y-3">
                   {[
-                    { name: t.nav.dashboard, path: '/dashboard' },
                     { name: t.support.badge, path: '/support' },
+                    { name: t.pricing.badge, path: '/pricing' },
                   ].map(link => (
                     <li key={link.path}>
                       <a
@@ -276,8 +250,6 @@ const App: React.FC = () => {
           </motion.button>
         )}
       </AnimatePresence>
-
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </div>
   );
 };

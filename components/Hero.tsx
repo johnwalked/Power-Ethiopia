@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, LogIn, ArrowRight, Zap, Droplets, ShieldCheck, Factory, Gauge } from 'lucide-react';
-import { useAuth } from '../lib/AuthContext';
+import { ArrowRight, Zap, Droplets, ShieldCheck, Factory, Gauge } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 import { GENERATORS, PUMPS } from '../lib/productData';
@@ -11,12 +10,10 @@ import StreamingVideo from './StreamingVideo';
 const Generator3D = React.lazy(() => import('./Generator3D'));
 
 interface HeroProps {
-  onOpenAuth: () => void;
   onNavigate: (path: string) => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
-  const { user, loading } = useAuth();
+const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const { language } = useLanguage();
   const fullT = translations[language];
   const t = fullT.hero;
@@ -30,17 +27,11 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
 
   // Rotate headlines every 8 seconds (slower for better readability)
   useEffect(() => {
-    if (user) return;
     const interval = setInterval(() => {
       setHeadlineIndex(prev => (prev + 1) % headlines.length);
     }, 8000);
     return () => clearInterval(interval);
-  }, [user, headlines.length]);
-
-  const getFirstName = () => {
-    if (user?.displayName) return user.displayName;
-    return user?.email?.split('@')[0] || 'Partner';
-  };
+  }, [headlines.length]);
 
   // Stagger entrance animation
   const containerVariants = {
@@ -94,70 +85,51 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
           className="relative z-10 pt-36 md:pt-44 pb-16 px-6 flex flex-col items-center justify-center text-center max-w-7xl mx-auto w-full"
         >
         {/* Badge */}
-        {!user && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 backdrop-blur-xl border border-red-500/20 mb-10 cursor-default shadow-[0_0_15px_rgba(239,68,68,0.15)]"
-          >
-            <span className="flex h-2 w-2 rounded-full bg-red-400 animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]" />
-            <span className="text-[11px] font-bold text-red-400 tracking-widest uppercase">
-              {t.badge}
-            </span>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 backdrop-blur-xl border border-red-500/20 mb-10 cursor-default shadow-[0_0_15px_rgba(239,68,68,0.15)]"
+        >
+          <span className="flex h-2 w-2 rounded-full bg-red-400 animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]" />
+          <span className="text-[11px] font-bold text-red-400 tracking-widest uppercase">
+            {t.badge}
+          </span>
+        </motion.div>
 
         {/* Main Headline — Rotating */}
         <div className="min-h-[180px] md:min-h-[220px] flex items-center justify-center mb-12">
           <AnimatePresence mode="wait">
-            {user ? (
-              <motion.div
-                key="welcome-user"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <h1 className="max-w-5xl text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1.1]">
-                  {t.welcome} <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-200">
-                    {getFirstName()}
-                  </span>
-                </h1>
-              </motion.div>
-            ) : (
-              <motion.h1
-                key={`headline-${headlineIndex}`}
-                className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.15]"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                {/* Animate each word separately for a staggered reveal */}
-                {currentHeadline.line.split(' ').map((word, i) => (
-                  <motion.span
-                    key={`line-${headlineIndex}-${i}`}
-                    custom={i}
-                    variants={wordVariants}
-                    className="inline-block mr-[0.3em]"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-                <br />
-                {currentHeadline.span.split(' ').map((word, i) => (
-                  <motion.span
-                    key={`span-${headlineIndex}-${i}`}
-                    custom={i + currentHeadline.line.split(' ').length}
-                    variants={wordVariants}
-                    className="inline-block mr-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-200 to-red-400 pb-2 drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.h1>
-            )}
+            <motion.h1
+              key={`headline-${headlineIndex}`}
+              className="max-w-5xl text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.15]"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              {/* Animate each word separately for a staggered reveal */}
+              {currentHeadline.line.split(' ').map((word, i) => (
+                <motion.span
+                  key={`line-${headlineIndex}-${i}`}
+                  custom={i}
+                  variants={wordVariants}
+                  className="inline-block mr-[0.3em]"
+                >
+                  {word}
+                </motion.span>
+              ))}
+              <br />
+              {currentHeadline.span.split(' ').map((word, i) => (
+                <motion.span
+                  key={`span-${headlineIndex}-${i}`}
+                  custom={i + currentHeadline.line.split(' ').length}
+                  variants={wordVariants}
+                  className="inline-block mr-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-200 to-red-400 pb-2 drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </motion.h1>
           </AnimatePresence>
         </div>
 
@@ -172,7 +144,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
               transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
               className="max-w-2xl text-lg md:text-xl text-slate-400 leading-relaxed font-medium"
             >
-              {user ? t.subheadline : currentSubtext}
+              {currentSubtext}
             </motion.p>
           </AnimatePresence>
         </div>
@@ -184,60 +156,48 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="w-full flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 min-h-[56px] relative z-20"
         >
-          {loading ? (
-            <div className="flex items-center justify-center px-12 py-3">
-              <Loader2 className="w-6 h-6 text-red-500 animate-spin opacity-50" />
-            </div>
-          ) : (
-            <>
-              {!user && (
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={onOpenAuth}
-                  className="group px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.5)] transition-all duration-500 bg-red-600 flex items-center justify-center gap-2 text-base border border-red-500/50 overflow-hidden relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  <LogIn className="w-5 h-5" />
-                  {t.cta}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </motion.button>
-              )}
-              
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setShow3D(true)}
-                className="group px-8 py-4 rounded-full text-white font-medium shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] transition-all duration-500 bg-slate-800/30 backdrop-blur-xl flex items-center justify-center gap-2 text-base border border-blue-500/20 overflow-hidden relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                <svg className="w-5 h-5 text-blue-400 group-hover:rotate-12 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                {translations[language].hero3d.playDemo}
-              </motion.button>
-            </>
-          )}
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => onNavigate('/product')}
+            className="group px-10 py-4 rounded-full text-white font-bold shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.5)] transition-all duration-500 bg-red-600 flex items-center justify-center gap-2 text-base border border-red-500/50 overflow-hidden relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <Zap className="w-5 h-5" />
+            {fullT.cta.catalogBtn}
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShow3D(true)}
+            className="group px-8 py-4 rounded-full text-white font-medium shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] transition-all duration-500 bg-slate-800/30 backdrop-blur-xl flex items-center justify-center gap-2 text-base border border-blue-500/20 overflow-hidden relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <svg className="w-5 h-5 text-blue-400 group-hover:rotate-12 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            {translations[language].hero3d.playDemo}
+          </motion.button>
         </motion.div>
 
         {/* Page indicator dots */}
-        {!user && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="flex items-center gap-2"
-          >
-            {headlines.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setHeadlineIndex(i)}
-                className={`rounded-full transition-all duration-500 ${i === headlineIndex
-                  ? 'w-8 h-2 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
-                  : 'w-2 h-2 bg-slate-600 hover:bg-slate-500'
-                  }`}
-              />
-            ))}
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="flex items-center gap-2"
+        >
+          {headlines.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setHeadlineIndex(i)}
+              className={`rounded-full transition-all duration-500 ${i === headlineIndex
+                ? 'w-8 h-2 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
+                : 'w-2 h-2 bg-slate-600 hover:bg-slate-500'
+                }`}
+            />
+          ))}
+        </motion.div>
       </motion.section>
       </div>
 
@@ -411,14 +371,12 @@ const Hero: React.FC<HeroProps> = ({ onOpenAuth, onNavigate }) => {
             >
               {fullT.cta.catalogBtn} <ArrowRight size={16} />
             </button>
-            {!user && (
-              <button
-                onClick={onOpenAuth}
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl glass hover:bg-white/10 text-white font-bold text-sm transition-all"
-              >
-                {fullT.cta.dealerBtn}
-              </button>
-            )}
+            <button
+              onClick={() => onNavigate('/support')}
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl glass hover:bg-white/10 text-white font-bold text-sm transition-all"
+            >
+              {fullT.support.badge}
+            </button>
           </div>
           <p className="text-[11px] text-slate-500 mt-6">{fullT.cta.footer}</p>
         </motion.div>

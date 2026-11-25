@@ -6,18 +6,13 @@ export const translations: Record<Language, any> = {
     nav: {
       generators: "Generators",
       waterPumps: "Water Pumps",
-      dashboard: "Dashboard",
-      login: "Distributor Login",
-      signOut: "Sign Out",
       selectLanguage: "Select Language"
     },
     hero: {
       badge: "Heavy Duty · Industrial Grade",
-      welcome: "Welcome,",
       headline: "Power when you",
       headlineSpan: "need it most",
       subheadline: "Premium generators and high-capacity water pumps engineered for reliability. Powering homes, construction sites, and industries worldwide.",
-      cta: "Distributor Login",
       loading: "Synthesizing Visuals...",
       headlines: [
         { line: "Power when you", span: "need it most" },
@@ -94,50 +89,9 @@ export const translations: Record<Language, any> = {
     },
     cta: {
       title: "Ready to power your next project?",
-      subtitle: "Find a dealer near you or sign up for a wholesale distributor account today.",
-      dealerBtn: "Become a Dealer",
+      subtitle: "Contact our Addis Ababa sales team at Kality Gabriel or browse our full factory catalog.",
       catalogBtn: "View Catalog",
       footer: "Global Shipping · 24/7 Support · Spare Parts Available"
-    },
-    dashboard: {
-      title: "Dealer Portal",
-      subtitle: "Access factory specifications, manuals, and price lists.",
-      status: "Account Status",
-      verified: "Verified",
-      resources: "Resource Library",
-      docs: "Docs",
-      update: "Latest Update",
-      factoryResources: "Factory Resources",
-      search: "Search documents...",
-      table: {
-        name: "Document Name",
-        date: "Date Added",
-        size: "Size",
-        action: "Action",
-        download: "Download",
-        view: "Preview"
-      },
-      dealer: "Authorized Dealer",
-      partner: "Partner"
-    },
-    auth: {
-      welcomeBack: "Welcome Back",
-      createAccount: "Create Account",
-      signInDesc: "Enter your credentials to access your account.",
-      signUpDesc: "Start your secure journey with CE Power today.",
-      signInBtn: "Sign In",
-      signUpBtn: "Sign Up",
-      fullName: "Full Name",
-      email: "Email Address",
-      password: "Password",
-      forgotPass: "Forgot password?",
-      resetPass: "Reset Password",
-      resetDesc: "Enter your email address and we'll send you a link to reset your password.",
-      getLink: "Get Reset Link",
-      backToSignIn: "Back to Sign In",
-      continueGoogle: "Continue with Google",
-      signUpGoogle: "Sign up with Google",
-      agreement: "By continuing, you agree to CE Power's Terms of Service and Privacy Policy."
     },
     hero3d: {
       playDemo: "Play 3D Demo",
@@ -222,18 +176,13 @@ export const translations: Record<Language, any> = {
     nav: {
       generators: "ጄኔሬተሮች",
       waterPumps: "የውሃ ፓምፖች",
-      dashboard: "ዳሽቦርድ",
-      login: "የአከፋፋይ መግቢያ",
-      signOut: "ውጣ",
       selectLanguage: "ቋንቋ ይምረጡ"
     },
     hero: {
       badge: "ከፍተኛ ጥራት · ለኢንዱስትሪ የሚሆን",
-      welcome: "እንኳን ደህና መጡ,",
       headline: "በጣም በሚፈልጉበት ጊዜ",
       headlineSpan: "የማይጠፋ ኃይል",
       subheadline: "ለአስተማማኝነት የተሰሩ ፕሪሚየም ጄኔሬተሮች እና ከፍተኛ አቅም ያላቸው የውሃ ፓምፖች። ለቤቶች፣ ለግንባታ ቦታዎች እና ለኢንዱስትሪዎች ኃይል ይሰጣል።",
-      cta: "የአከፋፋይ መግቢያ",
       loading: "ምስሎችን በማዘጋጀት ላይ...",
       headlines: [
         { line: "ኃይል በሚፈልጉበት", span: "ጊዜ" },
@@ -310,50 +259,9 @@ export const translations: Record<Language, any> = {
     },
     cta: {
       title: "ቀጣዩን ፕሮጀክትዎን ለማጎልበት ዝግጁ ነዎት?",
-      subtitle: "በአቅራቢያዎ የሚገኝ አከፋፋይ ያግኙ ወይም ዛሬ ለጅምላ አከፋፋይ መለያ ይመዝገቡ።",
-      dealerBtn: "አከፋፋይ ይሁኑ",
+      subtitle: "በአዲስ አበባ ቃሊቲ ገብርኤል የሚገኘውን የሽያጭ ቡድናችንን ያነጋግሩ ወይም ሙሉ የፋብሪካ ካታሎጋችንን ይመልከቱ።",
       catalogBtn: "ካታሎግ ይመልከቱ",
       footer: "ዓለም አቀፍ መላኪያ · 24/7 ድጋፍ · መለዋወጫዎች ይገኛሉ"
-    },
-    dashboard: {
-      title: "የአከፋፋይ ፖርታል",
-      subtitle: "የፋብሪካ ዝርዝሮችን፣ መመሪያዎችን እና የዋጋ ዝርዝሮችን ያግኙ።",
-      status: "የመለያ ሁኔታ",
-      verified: "ተረጋግጧል",
-      resources: "የመረጃ ቤተ-መጽሐፍት",
-      docs: "ሰነዶች",
-      update: "የቅርብ ጊዜ ዝመና",
-      factoryResources: "የፋብሪካ ግብዓቶች",
-      search: "ሰነዶችን ይፈልጉ...",
-      table: {
-        name: "የሰነድ ስም",
-        date: "የታከለበት ቀን",
-        size: "መጠን",
-        action: "ተግባር",
-        download: "አውርድ",
-        view: "ይመልከቱ"
-      },
-      dealer: "ፈቃድ ያለው አከፋፋይ",
-      partner: "አጋር"
-    },
-    auth: {
-      welcomeBack: "እንኳን ደህና ተመለሱ",
-      createAccount: "መለያ ይፍጠሩ",
-      signInDesc: "መለያዎን ለመጠቀም መረጃዎን ያስገቡ።",
-      signUpDesc: "ከ CE Power ጋር ደህንነቱ የተጠበቀ ጉዞዎን ዛሬ ይጀምሩ።",
-      signInBtn: "ግባ",
-      signUpBtn: "ተመዝገብ",
-      fullName: "ሙሉ ስም",
-      email: "ኢሜይል አድራሻ",
-      password: "የይለፍ ቃል",
-      forgotPass: "የይለፍ ቃል ረሱ?",
-      resetPass: "የይለፍ ቃል ዳግም አስጀምር",
-      resetDesc: "ኢሜይልዎን ያስገቡ እና የይለፍ ቃል ዳግም ማስጀመሪያ አገናኝ እንልክልዎታለን።",
-      getLink: "አገናኝ ያግኙ",
-      backToSignIn: "ወደ መግቢያ ይመለሱ",
-      continueGoogle: "በGoogle ይቀጥሉ",
-      signUpGoogle: "በGoogle ይመዝገቡ",
-      agreement: "በመቀጠልዎ፣ በCE Power የአገልግሎት ውል እና የግላዊነት ፖሊሲ ይስማማሉ።"
     },
     hero3d: {
       playDemo: "የ3D ዴሞ ይመልከቱ",
@@ -438,18 +346,13 @@ export const translations: Record<Language, any> = {
     nav: {
       generators: "发电机",
       waterPumps: "水泵",
-      dashboard: "仪表板",
-      login: "分销商登录",
-      signOut: "登出",
       selectLanguage: "选择语言"
     },
     hero: {
       badge: "重型 · 工业级",
-      welcome: "欢迎,",
       headline: "在您最需要时",
       headlineSpan: "提供动力",
       subheadline: "专为可靠性设计的高级发电机和大容量水泵。为全球家庭、建筑工地和工业提供动力。",
-      cta: "分销商登录",
       loading: "正在合成视觉效果...",
       headlines: [
         { line: "在您最需要时", span: "提供动力" },
@@ -526,50 +429,9 @@ export const translations: Record<Language, any> = {
     },
     cta: {
       title: "准备好为您的下一个项目提供动力了吗？",
-      subtitle: "查找附近的经销商或立即注册批发分销商账户。",
-      dealerBtn: "成为经销商",
+      subtitle: "欢迎联系我们位于亚的斯亚贝巴卡利蒂（Kality Gabriel）的销售团队，或浏览完整的工厂产品目录。",
       catalogBtn: "查看目录",
       footer: "全球发货 · 24/7 支持 · 提供备件"
-    },
-    dashboard: {
-      title: "经销商门户",
-      subtitle: "访问工厂规格、手册和价格表。",
-      status: "账户状态",
-      verified: "已验证",
-      resources: "资源库",
-      docs: "文档",
-      update: "最新更新",
-      factoryResources: "工厂资源",
-      search: "搜索文档...",
-      table: {
-        name: "文档名称",
-        date: "添加日期",
-        size: "大小",
-        action: "操作",
-        download: "下载",
-        view: "预览"
-      },
-      dealer: "授权经销商",
-      partner: "合作伙伴"
-    },
-    auth: {
-      welcomeBack: "欢迎回来",
-      createAccount: "创建账户",
-      signInDesc: "输入您的凭据以访问您的账户。",
-      signUpDesc: "立即开始您与 CE Power 的安全之旅。",
-      signInBtn: "登录",
-      signUpBtn: "注册",
-      fullName: "全名",
-      email: "电子邮件地址",
-      password: "密码",
-      forgotPass: "忘记密码？",
-      resetPass: "重置密码",
-      resetDesc: "输入您的电子邮件地址，我们将向您发送重置密码的链接。",
-      getLink: "获取重置链接",
-      backToSignIn: "返回登录",
-      continueGoogle: "继续使用 Google",
-      signUpGoogle: "使用 Google 注册",
-      agreement: "继续即表示您同意 CE Power 的服务条款和隐私政策。"
     },
     hero3d: {
       playDemo: "播放3D演示",
@@ -654,18 +516,13 @@ export const translations: Record<Language, any> = {
     nav: {
       generators: "ጀነሬተራት",
       waterPumps: "ፓምፕ ማይ",
-      dashboard: "ዳሽቦርድ",
-      login: "ናይ አከፋፋይ መእተዊ",
-      signOut: "ውጻእ",
       selectLanguage: "ቋንቋ ምረጽ"
     },
     hero: {
       badge: "ልዑል ብቅዓት · ንኢንዱስትሪ ዝኸውን",
-      welcome: "እንቋዕ ብደሓን መጻእኩም,",
       headline: "ኣብ እትደልይሉ እዋን",
       headlineSpan: "ዘይቋርጽ ሓይሊ",
       subheadline: "ንተኣማንነት ዝተሰርሑ ፕሪምየም ጀነሬተራትን ልዑል ዓቅሚ ዘለዎም ፓምፕ ማይን። ንገዛውቲ፣ ህንጻን ኢንዱስትሪታትን ሓይሊ ይህብ።",
-      cta: "ናይ አከፋፋይ መእተዊ",
       loading: "ስእሊ የዳልው ኣሎ...",
       headlines: [
         { line: "ሓይሊ ኣብ", span: "ዘድልየኩም እዋን" },
@@ -742,50 +599,9 @@ export const translations: Record<Language, any> = {
     },
     cta: {
       title: "ንቀጻሊ ፕሮጀክትኩም ሓይሊ ንምሃብ ድሉዋት ዲኹም?",
-      subtitle: "ኣብ ቀረባኹም ዝርከብ አከፋፋይ ድለዩ ወይ ሎሚ ንጅምላ አከፋፋይ ሕሳብ ተመዝገቡ።",
-      dealerBtn: "አከፋፋይ ኩን",
+      subtitle: "ኣብ ኣዲስ ኣበባ ቃሊቲ ገብርኤል ዝርከብ ናይ መሸጣ ጉጅለና ተወከሱ ወይ ሙሉእ ናይ ፋብሪካ ካታሎግና ተመልከቱ።",
       catalogBtn: "ካታሎግ ርኣይ",
       footer: "ዓለምለኻዊ መጎዓዝያ · 24/7 ደገፍ · መለዋወጢ ኣሎ"
-    },
-    dashboard: {
-      title: "ናይ አከፋፋይ ፖርታል",
-      subtitle: "ናይ ፋብሪካ ዝርዝራት፣ መምርሒታትን ዋጋታትን ረከቡ።",
-      status: "ኩነታት ሕሳብ",
-      verified: "ዝተረጋገጸ",
-      resources: "ቤተ-መጽሓፍቲ ሓበሬታ",
-      docs: "ሰነዳት",
-      update: "ዝተሓደሰ",
-      factoryResources: "ናይ ፋብሪካ ምንጭታት",
-      search: "ሰነዳት ድለ...",
-      table: {
-        name: "ሽም ሰነድ",
-        date: "ዝኣተወሉ ዕለት",
-        size: "ዓቅሚ",
-        action: "ተግባር",
-        download: "ኣውርድ",
-        view: "ርኣይ"
-      },
-      dealer: "ፈቃድ ዘለዎ አከፋፋይ",
-      partner: "መሻርኽቲ"
-    },
-    auth: {
-      welcomeBack: "እንቋዕ ብደሓን ተመለስኩም",
-      createAccount: "ሕሳብ ፍጠር",
-      signInDesc: "ናብ ሕሳብካ ንምእታው ሓበሬታኻ የእቱ።",
-      signUpDesc: "ምስ CE Power ውሕስነት ዘለዎ ጉዕዞኻ ሎሚ ጀምር።",
-      signInBtn: "እቶ",
-      signUpBtn: "ተመዝገብ",
-      fullName: "ምሉእ ስም",
-      email: "ኢሜይል ኣድራሻ",
-      password: "ፓስዎርድ",
-      forgotPass: "ፓስዎርድ ረሲዕካ?",
-      resetPass: "ፓስዎርድ ዳግማይ ጀምር",
-      resetDesc: "ኢሜይልካ የእቱ እሞ ፓስዎርድ ዳግማይ መጀመሪ ሊንክ ክንሰደልካ ኢና።",
-      getLink: "ሊንክ ረከብ",
-      backToSignIn: "ናብ መእተዊ ተመለስ",
-      continueGoogle: "ብ Google ቀጽል",
-      signUpGoogle: "ብ Google ተመዝገብ",
-      agreement: "ብምቅጻልኩም፣ ብናይ CE Power ውዕል ኣገልግሎትን ፖሊሲ ግላዊነትን ትሰማምዑ።"
     },
     hero3d: {
       playDemo: "ናይ 3D ቪድዮ ርኣይ",
@@ -870,18 +686,13 @@ export const translations: Record<Language, any> = {
     nav: {
       generators: "Jenereetara",
       waterPumps: "Pompilii Bishaan",
-      dashboard: "Daashboordii",
-      login: "Seensa Raabsaa",
-      signOut: "Ba'i",
       selectLanguage: "Afaan Filadhu"
     },
     hero: {
       badge: "Cimaa · Sadarkaa Industirii",
-      welcome: "Baga Nagaan Dhuftan,",
       headline: "Humna yeroo",
       headlineSpan: "barbaachisutti",
       subheadline: "Jenereetaroota qulqullina olaanaa fi pompii bishaanii humna guddaa qaban kan amansiisummaa qaban. Manneen, bakka ijaarsaa fi industiriiwwan humneessu.",
-      cta: "Seensa Raabsaa",
       loading: "Fakkii qopheessaa jira...",
       headlines: [
         { line: "Humna yeroo", span: "barbaachisutti" },
@@ -958,50 +769,9 @@ export const translations: Record<Language, any> = {
     },
     cta: {
       title: "Pirojektii itti aanu humneessuuf qophiidhaa?",
-      subtitle: "Raabsaa naannoo keessan jiru barbaadaa ykn har'a herrega raabsaa jumlaatiif galmaa'aa.",
-      dealerBtn: "Raabsaa Ta'aa",
+      subtitle: "Garee gurgurtaa keenya Finfinnee Kaaliitii Gabri'eelitti argamu quunnamaa ykn kaataaloogii warshaa guutuu ilaalaa.",
       catalogBtn: "Kaataaloogii Ilaalaa",
       footer: "Ergii Addunyaa · Deeggarsa 24/7 · Qaamoleen Jijjiirraa ni argamu"
-    },
-    dashboard: {
-      title: "Poortaalii Raabsaa",
-      subtitle: "Ibsa warshaa, qajeelfama fi tarree gatii argadhaa.",
-      status: "Haala Herregaa",
-      verified: "Mirkanaa'aa",
-      resources: "Kuusaa Qabeenyaa",
-      docs: "Sanadoota",
-      update: "Haaraa",
-      factoryResources: "Qabeenya Warshaa",
-      search: "Sanadoota barbaadi...",
-      table: {
-        name: "Maqa Sanadaa",
-        date: "Guyyaa Itti Dabalam",
-        size: "Hamma",
-        action: "Tarkaanfii",
-        download: "Buufadhu",
-        view: "Ilaali"
-      },
-      dealer: "Raabsaa Eeyyamame",
-      partner: "Michuu"
-    },
-    auth: {
-      welcomeBack: "Baga Nagaan Deebitan",
-      createAccount: "Herrega Uumi",
-      signInDesc: "Herrega keessan seenuuf odeeffannoo galchaa.",
-      signUpDesc: "Imala nagummaa CE Power waliin har'a eegalaa.",
-      signInBtn: "Seeni",
-      signUpBtn: "Galmaa'i",
-      fullName: "Maqaa Guutuu",
-      email: "Teessoo Imeelii",
-      password: "Jecha Darbi",
-      forgotPass: "Jecha darbi dagattanii?",
-      resetPass: "Jecha Darbi Haaromsuu",
-      resetDesc: "Imeelii keessan galchaa, hidhaa jecha darbi haaromsuu isiniif ergina.",
-      getLink: "Hidhaa Argadhu",
-      backToSignIn: "Gara Seensaatti Deebi'aa",
-      continueGoogle: "Google Wajjin Itti Fufaa",
-      signUpGoogle: "Google Wajjin Galmaa'aa",
-      agreement: "Itti fufuudhaan, Waliigaltee Tajaajilaa fi Imaammata Dhuunfaa CE Power ni fudhattu."
     },
     hero3d: {
       playDemo: "Demo 3D Ilaali",

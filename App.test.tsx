@@ -4,15 +4,6 @@ import App from './App';
 import React from 'react';
 
 // Mock Modules
-vi.mock('./lib/AuthContext', () => ({
-    useAuth: () => ({
-        user: null,
-        loading: false,
-        signOut: vi.fn()
-    }),
-    AuthProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>
-}));
-
 vi.mock('./lib/LanguageContext', () => ({
     useLanguage: () => ({
         language: 'English',
@@ -27,11 +18,6 @@ vi.mock('./components/ui/BackgroundEffects', () => ({
 
 vi.mock('./components/VoiceAssistant', () => ({
     default: () => <div data-testid="voice-assistant" />
-}));
-
-vi.mock('./lib/firebase', () => ({
-    auth: {},
-    db: {}
 }));
 
 describe('App Smoke Test', () => {

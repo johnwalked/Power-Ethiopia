@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { LiveServerMessage } from "@google/genai";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Minimize2, Pause, Play, Key, Settings, Check, ShieldCheck } from 'lucide-react';
-import { useAuth } from '../lib/AuthContext';
 import { useLanguage } from '../lib/LanguageContext';
 import { findCatalogProduct } from '../lib/productMatcher';
 import { assetUrl } from '../lib/assetUtils';
@@ -48,7 +47,6 @@ const VoiceAssistant: React.FC = () => {
     const [showSettings, setShowSettings] = useState(false);
     const [micAudioLevel, setMicAudioLevel] = useState<number>(0);
 
-    const { loading } = useAuth();
     const { language } = useLanguage();
 
     // Audio & Barge-in Refs
@@ -680,8 +678,6 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
     };
 
     const handleActivation = () => {
-        if (loading) return;
-
         // If connected but minimized, just open UI
         if (isConnected) {
             setIsOpen(true);
@@ -773,8 +769,6 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
         nextStartTimeRef.current = 0;
         audioQueueRef.current = [];
     };
-
-    if (loading) return null;
 
     return (
         <>

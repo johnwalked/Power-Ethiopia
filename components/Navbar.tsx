@@ -1,23 +1,20 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Menu, X, LogOut, User, Globe, ChevronDown, Check } from 'lucide-react';
-import { useAuth } from '../lib/AuthContext';
+import { Zap, Menu, X, Globe, ChevronDown, Check } from 'lucide-react';
 import { useLanguage, Language } from '../lib/LanguageContext';
 import { translations } from '../lib/translations';
 
 interface NavbarProps {
   currentPath?: string;
   onNavigate: (path: string) => void;
-  onOpenAuth: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate, onOpenAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
-  const { user, signOut } = useAuth();
   const { language, setLanguage } = useLanguage();
   const langMenuRef = useRef<HTMLDivElement>(null);
 
@@ -55,17 +52,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate, onOpenAu
     e.preventDefault();
     onNavigate(path);
     setIsMobileMenuOpen(false);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    onNavigate('/');
-    setIsMobileMenuOpen(false);
-  };
-
-  const getFirstName = () => {
-    if (user?.displayName) return user.displayName.split(' ')[0];
-    return 'Partner';
   };
 
   return (
@@ -162,37 +148,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate, onOpenAu
               )}
             </AnimatePresence>
           </div>
-
-          {user ? (
-            <div className="flex items-center gap-3 pl-4 border-l border-white/10">
-              <button
-                onClick={() => onNavigate('/dashboard')}
-                className="flex items-center gap-2 text-slate-200 hover:text-white font-bold text-sm px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-all"
-                title={t.dashboard}
-              >
-                <div className="w-7 h-7 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400">
-                  <User size={14} />
-                </div>
-                <span>{getFirstName()}</span>
-              </button>
-              <button
-                onClick={handleSignOut}
-                className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all rounded-xl"
-                title={t.signOut}
-              >
-                <LogOut size={17} />
-              </button>
-            </div>
-          ) : (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onOpenAuth}
-              className="relative overflow-hidden rounded-xl bg-red-600 px-6 py-2.5 text-[13px] font-bold text-white transition-all duration-300 hover:bg-red-500 hover:shadow-[0_4px_12px_rgba(239,68,68,0.4)] ml-2 border border-red-500/30"
-            >
-              {t.login}
-            </motion.button>
-          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -225,18 +180,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate, onOpenAu
                 {link.name}
               </a>
             ))}
-            {user && (
-              <a
-                href="#/dashboard"
-                className={`font-bold py-3 text-lg transition-colors border-b border-white/5 text-center ${currentPath === '/dashboard' ? 'text-red-400' : 'text-slate-300 hover:text-red-400'}`}
-                onClick={(e) => handleNavClick(e, '/dashboard')}
-              >
-                {t.dashboard}
-              </a>
-            )}
 
             {/* Mobile Language Selector */}
-            <div className="py-2 border-b border-white/5">
+            <div className="py-2">
               <p className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-4">{t.selectLanguage}</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {languages.map(lang => (
@@ -250,32 +196,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentPath = '/', onNavigate, onOpenAu
                 ))}
               </div>
             </div>
-
-            {user ? (
-              <div className="pt-2 flex flex-col items-center gap-3">
-                <div className="flex items-center gap-2 text-slate-200 font-bold mb-2">
-                  Hi, {user.displayName || 'Partner'}
-                </div>
-                <button
-                  onClick={handleSignOut}
-                  className="w-full rounded-xl border border-white/10 px-6 py-4 text-sm font-bold text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors flex items-center justify-center gap-2"
-                >
-                  <LogOut size={16} />
-                  {t.signOut}
-                </button>
-              </div>
-            ) : (
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onOpenAuth();
-                }}
-                className="w-full mt-2 rounded-xl bg-red-600 px-6 py-5 text-sm font-bold text-white hover:bg-red-500 transition-colors shadow-lg shadow-red-900/50"
-              >
-                {t.login}
-              </motion.button>
-            )}
           </motion.div>
         )}
       </AnimatePresence>

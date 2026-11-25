@@ -69,6 +69,7 @@ describe('CE Assistant Product Glimpse Matcher', () => {
 
         expect(findCatalogProduct('yuchai 60kw water pump')?.id).toBe('yuchai-60kw-pump');
         expect(findCatalogProduct('yuchai 120kw pump')?.id).toBe('yuchai-120kw-pump');
+        expect(findCatalogProduct('yuchai 120', null, 'Water Pump')?.id).toBe('yuchai-120kw-pump');
         expect(findCatalogProduct('yuchai 200kw pump')?.id).toBe('yuchai-200kw-pump');
         expect(findCatalogProduct('yuchai 250kw water pump')?.id).toBe('yuchai-250kw-pump');
 

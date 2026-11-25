@@ -121,10 +121,10 @@ export function findCatalogProduct(
     // 2. Category hint
     const catHintRaw = (preferredCategory || '').toLowerCase();
     const mentionsPump =
-        catHintRaw === 'pump' ||
+        catHintRaw.includes('pump') ||
         /\b(pump|water pump|irrigation|submersible|dewatering|borehole|fire pump)\b/.test(normalized);
     const mentionsGen =
-        catHintRaw === 'generator' ||
+        catHintRaw.includes('gen') ||
         /\b(generator|genset|power station|canopy)\b/.test(normalized);
 
     const categoryHint: 'generator' | 'pump' | null =

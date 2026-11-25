@@ -265,11 +265,31 @@ const VoiceAssistant: React.FC = () => {
         try {
             storedKey = localStorage.getItem('gemini_api_key') || '';
         } catch {}
+        if (storedKey) return storedKey;
 
-        return storedKey ||
-               (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
-               (typeof process !== 'undefined' && (process.env?.API_KEY || process.env?.GEMINI_API_KEY)) ||
-               '';
+        // Direct un-chained token reads so Vite statically replaces them in production builds
+        try {
+            const viteKey = import.meta.env.VITE_GEMINI_API_KEY;
+            if (viteKey) return viteKey;
+        } catch {}
+
+        try {
+            const envGeminiKey = process.env.GEMINI_API_KEY;
+            if (envGeminiKey) return envGeminiKey;
+        } catch {}
+
+        try {
+            const envApiKey = process.env.API_KEY;
+            if (envApiKey) return envApiKey;
+        } catch {}
+
+        try {
+            if (typeof __CE_GEMINI_API_KEY__ !== 'undefined' && __CE_GEMINI_API_KEY__) {
+                return __CE_GEMINI_API_KEY__;
+            }
+        } catch {}
+
+        return '';
     };
 
     const handleSaveApiKey = (e?: React.FormEvent) => {
@@ -309,7 +329,7 @@ const VoiceAssistant: React.FC = () => {
     const connect = async () => {
         const apiKey = getApiKey();
         if (!apiKey) {
-            setError("Gemini API Key missing. Please set GEMINI_API_KEY in .env.local");
+            setError("Gemini API Key missing. Paste your key below or set GEMINI_API_KEY in environment variables.");
             return;
         }
 
@@ -348,7 +368,7 @@ const VoiceAssistant: React.FC = () => {
             mediaStreamRef.current = stream;
 
             // Establish Live Connection
-            const liveModel = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_VOICE_MODEL) || 
+            const liveModel = import.meta.env.VITE_GEMINI_VOICE_MODEL ||
                               'gemini-2.5-flash-native-audio-preview-12-2025';
 
             const sessionPromise = ai.live.connect({

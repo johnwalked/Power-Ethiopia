@@ -67,6 +67,11 @@ describe('CE Assistant Product Glimpse Matcher', () => {
         expect(pump80?.id).toBe('yuchai-80kw-pump');
         expect(pump80?.category).toBe('pump');
 
+        expect(findCatalogProduct('yuchai 60kw water pump')?.id).toBe('yuchai-60kw-pump');
+        expect(findCatalogProduct('yuchai 120kw pump')?.id).toBe('yuchai-120kw-pump');
+        expect(findCatalogProduct('yuchai 200kw pump')?.id).toBe('yuchai-200kw-pump');
+        expect(findCatalogProduct('yuchai 250kw water pump')?.id).toBe('yuchai-250kw-pump');
+
         const pump150 = findCatalogProduct('weifang 150kw pump');
         expect(pump150?.id).toBe('weifang-150kw-pump');
         expect(pump150?.image).toBe('/images/volvo-pump-150.webp');

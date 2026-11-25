@@ -428,19 +428,21 @@ EXACT VERIFIED IN-STOCK GENERATORS (KALITY WAREHOUSE):
 • United Power (ዩናይትድ ፓወር): 2.2kW, 3kW, 3.5kW, 5kW, 5.5kW, 6kW, 6.5kW, 7.5kW, 8.5kW, 11kW (Portable single-phase 220V with wheels/handles & compact silent 3-phase 380V models).
 • Mega Power (Custom Order): Cummins KTA50 series up to 1120kW (10kV High Voltage) and 3000kW containerized power stations.
 
-WATER PUMPS CATALOG (SPECIALIZED 80kW TO 250kW RANGE & IRRIGATION):
-• Heavy-Duty Water Pumps (80kW to 250kW Range):
-  - 80kW (Yuchai / Yunnei): 4" to 6" inlet/outlet, 80m max head, ~350 m³/h flow rate. Ideal for commercial agriculture, coffee and tea plantations, sugarcane irrigation, and construction dewatering.
-  - 100kW (Yunnei / Weifang): 6" inlet/outlet, 85m max head, ~450 m³/h flow rate. Robust prime pump for municipal water booster stations, quarry drainage, and large irrigation canals.
-  - 120kW (Yunnei): 4" to 6" inlet/outlet, 85m max head, ~380 m³/h flow rate. Heavy-duty diesel irrigation set for farmer cooperatives and large-scale farming.
-  - 150kW (Weifang / Yuchai): 6" inlet/outlet, 95m max head, ~500 m³/h flow rate. High-head river water lifting, municipal distribution, and flood mitigation.
-  - 180kW (Kefo / Yunnei): 6" inlet/outlet, 85m max head, ~550 m³/h flow rate. Handles heavy slurries, silt, flood control, and emergency dewatering.
-  - 200kW (Weichai / Last): 6" to 8" inlet/outlet, 100m max head, ~650 m³/h flow rate. Extreme reliability for high-lift elevation transfer across Ethiopian highlands and Rift Valley.
-  - 250kW (Weichai / Yuchai): 8" to 10" inlet/outlet, 110m max head, ~750-800 m³/h flow rate. Flagship high-capacity pumping for mega agricultural schemes (Awash River basin, Omo Valley), large dam sites, and industrial flood control.
+WATER PUMPS CATALOG (KALITY IN-STOCK — YUCHAI 60kW TO 250kW & MULTI-BRAND):
+• Yuchai Water Pumps (Full 60kW to 250kW In-Stock Range at Kality Gabriel):
+  - Yuchai 60kW, 80kW, 100kW, 120kW, 150kW, 180kW, 200kW, and 250kW water pumps are ALL IN STOCK (plus Yuchai 50HP / 37kW compact farm pump).
+  - Specs: 4" to 8" inlet/outlet, 75m–110m max head, 300–780 m³/h flow rate. Ideal for commercial agriculture, coffee/tea plantations, sugarcane irrigation, mining dewatering, municipal booster stations, and river lifting.
+• Other In-Stock Water Pumps (60kW to 600kW+):
+  - 100kW (Yuchai / Yunnei): 6" inlet/outlet, 85m max head, ~450 m³/h flow rate.
+  - 120kW (Yuchai / Yunnei): 4" to 6" inlet/outlet, 85–90m max head, 160–480 m³/h flow rate. Heavy-duty diesel irrigation sets ready for immediate dispatch.
+  - 150kW (Yuchai / Weifang): 6" inlet/outlet, 95m max head, ~500–520 m³/h flow rate. High-head river water lifting and municipal transfer.
+  - 180kW (Yuchai / Kefo): 6" inlet/outlet, 85–98m max head, ~550–580 m³/h flow rate. Slurries, silt, flood control, and emergency dewatering.
+  - 200kW (Yuchai / Last): 6" to 8" inlet/outlet, 100–105m max head, ~650–680 m³/h flow rate. High-lift elevation transfer across Ethiopian highlands and Rift Valley.
+  - 250kW (Yuchai / Weichai): 8" inlet/outlet, 110m max head, ~750–780 m³/h flow rate. Flagship high-capacity pumping for mega agricultural schemes (Awash River basin, Omo Valley) and industrial flood defense.
 • Other Available Pump Capacities:
   - Deep-well submersible pumps for boreholes (30m to 200m depth, high head for Ethiopian highlands and Rift Valley).
   - Compact portable & farm irrigation pumps: 2-inch to 4-inch (United Power 11kW, Kefo 30HP, Yunnei 40HP, Yuchai 50HP).
-  - Ultra-high industrial pumps up to 600kW (Yunnei 334kW, 400kW, 600kW).
+  - Ultra-high industrial pumps up to 600kW (Yunnei 334kW, 400kW, 600kW; Weichai 400kW).
 
 TECHNICAL SIZING & ETHIOPIAN LOCAL EXPERTISE:
 • Addis Ababa Altitude Derating: Addis Ababa is at ~2,355 meters elevation. Because of thinner atmospheric air, diesel engines naturally derate by ~10-12%. Always factor in a 20-25% safety margin so the generator never trips or overheats.
@@ -482,7 +484,7 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
 - Pass a concise English query with brand, kW rating, and type (e.g. "weichai 500kw generator", "yuchai 200kw generator", "united power 5kw generator", "yuchai 80kw pump", "yunnei 100kw pump", "weifang 150kw pump", "kefo 180kw pump", "last 200kw pump", "weichai 250kw pump"). Never invent external URLs — the app resolves the real studio photo automatically.
 - Key verified catalog IDs you can pass in productQuery:
   Generators: weichai-500kw, weichai-400kw-new, weichai-80kw, yuchai-200kw-md200, yuchai-150kw-md150, yuchai-100kw, yunnei-15kw, yunnei-50kw, yunnei-100kw, kefo-50kw, united-11kw, cummins-100kw.
-  Water Pumps (80kW–250kW+): yuchai-80kw-pump, yunnei-pump-100kw, yunnei-120kw-pump-new, weifang-150kw-pump, kefo-180kw-pump, last-200kw-pump, weichai-250kw-pump, weichai-400kw-pump, yc-50p.
+  Water Pumps (Yuchai 60kW–250kW + Industrial): yuchai-60kw-pump, yuchai-80kw-pump, yuchai-100kw-pump, yuchai-120kw-pump, yuchai-150kw-pump, yuchai-180kw-pump, yuchai-200kw-pump, yuchai-250kw-pump, yunnei-pump-100kw, yunnei-120kw-pump-new, weifang-150kw-pump, kefo-180kw-pump, last-200kw-pump, weichai-250kw-pump, weichai-400kw-pump, yc-50p.
 - Once show_product_image runs, briefly describe the displayed unit in 1-2 sentences.`,
                     tools: [{
                         googleSearch: {}

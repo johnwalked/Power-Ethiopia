@@ -17,7 +17,7 @@ const Solutions: React.FC<PageProps> = () => {
   const t = translations[language].products;
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('All');
-  const [powerFilter, setPowerFilter] = useState<'all' | '80-250' | 'under-80' | '250+'>('all');
+  const [powerFilter, setPowerFilter] = useState<'all' | '60-250' | 'under-60' | '250+'>('all');
   const [selectedProduct, setSelectedProduct] = useState<WaterPump | null>(null);
   const [quotationPump, setQuotationPump] = useState<WaterPump | null>(null);
 
@@ -34,8 +34,8 @@ const Solutions: React.FC<PageProps> = () => {
       const kw = pump.powerKW || 0;
       const matchesPower =
         powerFilter === 'all' ? true :
-        powerFilter === '80-250' ? (kw >= 80 && kw <= 250) :
-        powerFilter === 'under-80' ? (kw < 80) :
+        powerFilter === '60-250' ? (kw >= 60 && kw <= 250) :
+        powerFilter === 'under-60' ? (kw < 60) :
         (kw > 250);
 
       return matchesSearch && matchesType && matchesPower;
@@ -78,8 +78,8 @@ const Solutions: React.FC<PageProps> = () => {
           <div className="flex flex-wrap gap-1.5 md:gap-2 w-full md:w-auto">
             {[
               { id: 'all', label: t.all },
-              { id: '80-250', label: '80–250 kW' },
-              { id: 'under-80', label: '< 80 kW' },
+              { id: '60-250', label: '60–250 kW' },
+              { id: 'under-60', label: '< 60 kW' },
               { id: '250+', label: '250+ kW' },
             ].map(pf => (
               <button

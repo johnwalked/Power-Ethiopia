@@ -89,3 +89,38 @@ describe('CE Assistant Product Glimpse Matcher', () => {
         expect(broadPump?.image.endsWith('.webp')).toBe(true);
     });
 });
+
+import { decodeBase64Bytes, decodePcm16ToFloat32, downsampleFloat32, float32ToPcm16Base64 } from './lib/audioUtils';
+
+describe('Voice Assistant Smooth Audio Utilities', () => {
+    it('round-trips Float32 -> PCM16 base64 -> Float32 without distortion', () => {
+        const input = new Float32Array([0, 0.5, -0.5, 1.0, -1.0]);
+        const b64 = float32ToPcm16Base64(input);
+        const bytes = decodeBase64Bytes(b64);
+        const decoded = decodePcm16ToFloat32(bytes);
+        expect(decoded.length).toBe(input.length);
+        for (let i = 0; i < input.length; i++) {
+            expect(Math.abs(decoded[i] - input[i])).toBeLessThan(0.001);
+        }
+    });
+
+    it('handles non-zero Uint8Array byteOffset cleanly when decoding PCM16', () => {
+        const raw = new Int16Array([9999, 16384, -16384]);
+        const slicedBytes = new Uint8Array(raw.buffer, 2, 4);
+        const decoded = decodePcm16ToFloat32(slicedBytes);
+        expect(decoded.length).toBe(2);
+        expect(Math.abs(decoded[0] - 0.5)).toBeLessThan(0.001);
+        expect(Math.abs(decoded[1] + 0.5)).toBeLessThan(0.001);
+    });
+
+    it('downsamples 48kHz capture cleanly to 16kHz and passes through 16kHz unchanged', () => {
+        const buf16 = new Float32Array([0.1, 0.2, 0.3]);
+        expect(downsampleFloat32(buf16, 16000, 16000)).toBe(buf16);
+
+        const buf48 = new Float32Array([0.3, 0.3, 0.3, -0.6, -0.6, -0.6]);
+        const down = downsampleFloat32(buf48, 48000, 16000);
+        expect(down.length).toBe(2);
+        expect(Math.abs(down[0] - 0.3)).toBeLessThan(0.0001);
+        expect(Math.abs(down[1] + 0.6)).toBeLessThan(0.0001);
+    });
+});

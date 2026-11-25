@@ -5,6 +5,12 @@ import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Minimize2, Pause, Play
 import { useLanguage } from '../lib/LanguageContext';
 import { findCatalogProduct } from '../lib/productMatcher';
 import { assetUrl } from '../lib/assetUtils';
+import {
+    decodeBase64Bytes,
+    decodePcm16ToFloat32,
+    downsampleFloat32,
+    float32ToPcm16Base64
+} from '../lib/audioUtils';
 
 export type BargeInFilterMode = 'strict' | 'balanced';
 
@@ -51,13 +57,19 @@ const VoiceAssistant: React.FC = () => {
 
     // Audio & Barge-in Refs
     const audioContextRef = useRef<AudioContext | null>(null);
+    const inputAudioContextRef = useRef<AudioContext | null>(null);
+    const outputGainRef = useRef<GainNode | null>(null);
+    const compressorRef = useRef<DynamicsCompressorNode | null>(null);
     const mediaStreamRef = useRef<MediaStream | null>(null);
+    const workletNodeRef = useRef<AudioWorkletNode | null>(null);
     const processorRef = useRef<ScriptProcessorNode | null>(null);
     const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
     const highpassFilterRef = useRef<BiquadFilterNode | null>(null);
     const lowpassFilterRef = useRef<BiquadFilterNode | null>(null);
     const silentGainRef = useRef<GainNode | null>(null);
-    
+
+    const inputSampleRateRef = useRef<number>(16000);
+    const lastMicUiUpdateRef = useRef<number>(0);
     const ambientNoiseFloorRef = useRef<number>(0.012);
     const bargeInModeRef = useRef<BargeInFilterMode>('strict');
     const nextStartTimeRef = useRef<number>(0);
@@ -85,58 +97,59 @@ const VoiceAssistant: React.FC = () => {
         return findCatalogProduct(query, fallbackName, category);
     }, []);
 
-    // Helper: Decode Audio
-    const decodeAudioData = async (
-        data: Uint8Array,
-        ctx: AudioContext,
-        sampleRate: number = 24000,
-        numChannels: number = 1
-    ): Promise<AudioBuffer> => {
-        const dataInt16 = new Int16Array(data.buffer);
-        const frameCount = dataInt16.length / numChannels;
-        const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+    // Synchronously schedule decoded Gemini 24kHz PCM chunk with jitter lookahead to eliminate crackling
+    const schedulePcmAudioChunk = useCallback((base64Audio: string) => {
+        const ctx = audioContextRef.current;
+        if (!ctx) return;
 
-        for (let channel = 0; channel < numChannels; channel++) {
-            const channelData = buffer.getChannelData(channel);
-            for (let i = 0; i < frameCount; i++) {
-                channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+        const bytes = decodeBase64Bytes(base64Audio);
+        const samples = decodePcm16ToFloat32(bytes);
+        if (samples.length === 0) return;
+
+        const JITTER_LOOKAHEAD_SEC = 0.085; // 85ms smooth network buffer cushion
+        const now = ctx.currentTime;
+        let startTime = nextStartTimeRef.current;
+        const isFreshOrUnderrun = startTime < now + 0.015;
+
+        if (isFreshOrUnderrun) {
+            startTime = now + JITTER_LOOKAHEAD_SEC;
+            // Apply a 2ms fade-in only after silence/underrun so edges never click
+            const fadeSamples = Math.min(48, Math.floor(samples.length / 4));
+            for (let i = 0; i < fadeSamples; i++) {
+                samples[i] *= i / fadeSamples;
             }
         }
-        return buffer;
-    };
 
-    // Helper: Decode Base64
-    const decodeBase64 = (base64: string) => {
-        const binaryString = atob(base64);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-        }
-        return bytes;
-    };
+        const buffer = ctx.createBuffer(1, samples.length, 24000);
+        buffer.getChannelData(0).set(samples);
 
-    // Helper: Encode to Base64 (for Input)
-    const encodeBase64 = (bytes: Uint8Array) => {
-        let binary = '';
-        const len = bytes.byteLength;
-        for (let i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return btoa(binary);
-    };
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(compressorRef.current || outputGainRef.current || ctx.destination);
 
-    const createPcmBlob = (data: Float32Array) => {
-        const l = data.length;
-        const int16 = new Int16Array(l);
-        for (let i = 0; i < l; i++) {
-            int16[i] = Math.max(-1, Math.min(1, data[i])) * 32768;
-        }
-        return {
-            data: encodeBase64(new Uint8Array(int16.buffer)),
-            mimeType: 'audio/pcm;rate=16000',
+        isTalkingRef.current = true;
+        setIsTalking(true);
+
+        source.onended = () => {
+            const idx = audioQueueRef.current.indexOf(source);
+            if (idx > -1) {
+                audioQueueRef.current.splice(idx, 1);
+            }
+            if (audioQueueRef.current.length === 0) {
+                isTalkingRef.current = false;
+                setIsTalking(false);
+            }
         };
-    };
+
+        source.start(startTime);
+        nextStartTimeRef.current = startTime + buffer.duration;
+        audioQueueRef.current.push(source);
+    }, []);
+
+    const createPcmBlob = (data: Float32Array) => ({
+        data: float32ToPcm16Base64(data),
+        mimeType: 'audio/pcm;rate=16000',
+    });
 
     // Stop playback immediately for barge-in / interruption
     const stopPlayback = useCallback(() => {
@@ -196,8 +209,14 @@ const VoiceAssistant: React.FC = () => {
     }, [stopPlayback]);
 
     // Audio Frame Dispatcher
-    const handleAudioFrame = useCallback((data: Float32Array) => {
+    const handleAudioFrame = useCallback((rawFrame: Float32Array) => {
+        const data = inputSampleRateRef.current !== 16000
+            ? downsampleFloat32(rawFrame, inputSampleRateRef.current, 16000)
+            : rawFrame;
+
         const len = data.length;
+        if (len === 0) return;
+
         let sum = 0;
         let zeroCrossings = 0;
         for (let i = 0; i < len; i++) {
@@ -220,8 +239,12 @@ const VoiceAssistant: React.FC = () => {
             }
         }
 
-        // Update live visual audio level
-        setMicAudioLevel(Math.min(1.0, rms * 6.0));
+        // Throttle React meter updates (~15fps) so main-thread UI re-renders never starve audio playback
+        const nowMs = typeof performance !== 'undefined' ? performance.now() : Date.now();
+        if (nowMs - lastMicUiUpdateRef.current >= 65) {
+            lastMicUiUpdateRef.current = nowMs;
+            setMicAudioLevel(Math.min(1.0, rms * 6.0));
+        }
 
         // Check if user is intentionally interrupting the assistant
         const isInterrupted = checkAndHandleBargeIn(rms, zcr);
@@ -335,12 +358,35 @@ const VoiceAssistant: React.FC = () => {
 
             const ai = new GoogleGenAI({ apiKey });
 
-            // Setup Audio Contexts
+            // Setup Audio Contexts (use native hardware output rate with 'playback' hint to avoid OS SRC crackling)
             const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-            audioContextRef.current = new AudioContextClass({ sampleRate: 24000 }); // Output rate
+            const outputContext = new AudioContextClass({ latencyHint: 'playback' });
+            if (outputContext.state === 'suspended') {
+                await outputContext.resume();
+            }
+            audioContextRef.current = outputContext;
+
+            // Smooth vocal dynamics compressor + master gain stage to prevent digital clipping
+            const compressor = outputContext.createDynamicsCompressor();
+            compressor.threshold.value = -8;
+            compressor.knee.value = 12;
+            compressor.ratio.value = 3;
+            compressor.attack.value = 0.003;
+            compressor.release.value = 0.15;
+            const outputGain = outputContext.createGain();
+            outputGain.gain.value = 1.0;
+            compressor.connect(outputGain);
+            outputGain.connect(outputContext.destination);
+            compressorRef.current = compressor;
+            outputGainRef.current = outputGain;
 
             // Input Context (Mic)
             const inputContext = new AudioContextClass({ sampleRate: 16000 });
+            if (inputContext.state === 'suspended') {
+                await inputContext.resume();
+            }
+            inputAudioContextRef.current = inputContext;
+            inputSampleRateRef.current = inputContext.sampleRate;
 
             // Get Mic Stream with noise suppression and AGC enabled for proper voice pickup
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -497,12 +543,25 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
                         let workletDone = false;
                         if (inputContext.audioWorklet && typeof inputContext.audioWorklet.addModule === 'function') {
                             try {
+                                const batchSize = inputContext.sampleRate >= 40000 ? 2048 : 1024;
                                 const workletCode = `
                                     class LiveMicProcessor extends AudioWorkletProcessor {
+                                        constructor() {
+                                            super();
+                                            this._buffer = new Float32Array(${batchSize});
+                                            this._offset = 0;
+                                        }
                                         process(inputs) {
                                             const input = inputs[0];
                                             if (input && input[0]) {
-                                                this.port.postMessage(input[0]);
+                                                const ch = input[0];
+                                                for (let i = 0; i < ch.length; i++) {
+                                                    this._buffer[this._offset++] = ch[i];
+                                                    if (this._offset >= this._buffer.length) {
+                                                        this.port.postMessage(this._buffer.slice());
+                                                        this._offset = 0;
+                                                    }
+                                                }
                                             }
                                             return true;
                                         }
@@ -521,6 +580,7 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
                                 };
                                 lowpass.connect(workletNode);
                                 workletNode.connect(silentGain);
+                                workletNodeRef.current = workletNode;
                                 workletDone = true;
                             } catch (e) {
                                 console.warn('[CE Assistant] AudioWorklet init error, using fallback:', e);
@@ -538,44 +598,14 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
                             processorRef.current.connect(silentGain);
                         }
                     },
-                    onmessage: async (msg: LiveServerMessage) => {
-                        // Handle Audio Output from Gemini Live
+                    onmessage: (msg: LiveServerMessage) => {
+                        // Synchronously decode and schedule all PCM chunks in order to eliminate overlaps/crackling
                         const parts = msg.serverContent?.modelTurn?.parts || [];
-                        const audioData = parts.find((p: any) => p.inlineData?.data)?.inlineData?.data;
-                        if (audioData && audioContextRef.current) {
-                            isTalkingRef.current = true;
-                            setIsTalking(true);
-                            const ctx = audioContextRef.current;
-                            nextStartTimeRef.current = Math.max(nextStartTimeRef.current, ctx.currentTime);
-
-                            const buffer = await decodeAudioData(
-                                decodeBase64(audioData),
-                                ctx,
-                                24000
-                            );
-
-                            const source = ctx.createBufferSource();
-                            source.buffer = buffer;
-                            source.connect(ctx.destination);
-
-                            // Natural 1.0x human cadence
-                            const playbackRate = 1.0;
-                            source.playbackRate.value = playbackRate;
-
-                            source.onended = () => {
-                                const idx = audioQueueRef.current.indexOf(source);
-                                if (idx > -1) {
-                                    audioQueueRef.current.splice(idx, 1);
-                                }
-                                if (audioQueueRef.current.length === 0 || (ctx && ctx.currentTime >= nextStartTimeRef.current - 0.08)) {
-                                    isTalkingRef.current = false;
-                                    setIsTalking(false);
-                                }
-                            };
-
-                            source.start(nextStartTimeRef.current);
-                            nextStartTimeRef.current += buffer.duration / playbackRate;
-                            audioQueueRef.current.push(source);
+                        for (const part of parts) {
+                            const audioData = (part as any)?.inlineData?.data;
+                            if (audioData) {
+                                schedulePcmAudioChunk(audioData);
+                            }
                         }
 
                         // Handle Tool Calls (Glimpse Feature)
@@ -743,11 +773,24 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
             silentGainRef.current.disconnect();
             silentGainRef.current = null;
         }
+        if (compressorRef.current) {
+            compressorRef.current.disconnect();
+            compressorRef.current = null;
+        }
+        if (outputGainRef.current) {
+            outputGainRef.current.disconnect();
+            outputGainRef.current = null;
+        }
 
         // Cleanup Mic & Audio Streams
         if (mediaStreamRef.current) {
             mediaStreamRef.current.getTracks().forEach(track => track.stop());
             mediaStreamRef.current = null;
+        }
+        if (workletNodeRef.current) {
+            workletNodeRef.current.port.onmessage = null;
+            workletNodeRef.current.disconnect();
+            workletNodeRef.current = null;
         }
         if (processorRef.current) {
             processorRef.current.disconnect();
@@ -756,6 +799,14 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
         if (sourceRef.current) {
             sourceRef.current.disconnect();
             sourceRef.current = null;
+        }
+        if (inputAudioContextRef.current) {
+            try {
+                inputAudioContextRef.current.close();
+            } catch (e) {
+                // Ignore if already closed
+            }
+            inputAudioContextRef.current = null;
         }
         if (audioContextRef.current) {
             try {

@@ -62,3 +62,40 @@ describe('Deployment assetUrl resolution', () => {
         expect(assetUrl('https://cepower.et/logo.webp', '/Power-Ethiopia/')).toBe('https://cepower.et/logo.webp');
     });
 });
+
+import { findCatalogProduct } from './lib/productMatcher';
+
+describe('CE Assistant Product Glimpse Matcher', () => {
+    it('resolves exact catalog IDs cleanly', () => {
+        expect(findCatalogProduct('weichai-500kw')?.image).toBe('/images/weichai-500kw.webp');
+        expect(findCatalogProduct('yuchai-80kw-pump')?.image).toBe('/images/perkins-pump-80.webp');
+        expect(findCatalogProduct('weichai-250kw-pump')?.category).toBe('pump');
+    });
+
+    it('resolves natural-language queries, brand+kW, and hallucinated model names', () => {
+        const weichai = findCatalogProduct('WPG500-60HZ', 'WEICHAI WPG500 Series 500KW Diesel Generator Set', 'generator');
+        expect(weichai?.id).toBe('weichai-500kw');
+        expect(weichai?.image).toBe('/images/weichai-500kw.webp');
+
+        const pump80 = findCatalogProduct('yuchai 80kw water pump');
+        expect(pump80?.id).toBe('yuchai-80kw-pump');
+        expect(pump80?.category).toBe('pump');
+
+        const pump150 = findCatalogProduct('weifang 150kw pump');
+        expect(pump150?.id).toBe('weifang-150kw-pump');
+        expect(pump150?.image).toBe('/images/volvo-pump-150.webp');
+
+        const gen200 = findCatalogProduct('200kw yuchai generator');
+        expect(gen200?.id).toBe('yuchai-200kw-md200');
+        expect(gen200?.image).toBe('/images/yuchai-200kw-md200.webp');
+    });
+
+    it('resolves Amharic product photo queries and category fallbacks', () => {
+        const amPump = findCatalogProduct('የዩቻይ 80 ኪሎዋት ፓምፕ');
+        expect(amPump?.id).toBe('yuchai-80kw-pump');
+
+        const broadPump = findCatalogProduct('show me a water pump');
+        expect(broadPump?.category).toBe('pump');
+        expect(broadPump?.image.endsWith('.webp')).toBe(true);
+    });
+});

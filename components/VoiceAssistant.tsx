@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, X, Volume2, Loader2, MessageSquare, Minimize2, Pause, Play, Key, Settings, Check, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 import { useLanguage } from '../lib/LanguageContext';
-import { GENERATORS, PUMPS } from '../lib/productData';
+import { findCatalogProduct } from '../lib/productMatcher';
 import { assetUrl } from '../lib/assetUtils';
 
 export type BargeInFilterMode = 'strict' | 'balanced';
@@ -23,7 +23,7 @@ const VoiceAssistant: React.FC = () => {
     const [isTalking, setIsTalking] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [activeGlimpse, setActiveGlimpse] = useState<{ id: string; name: string; image: string } | null>(null);
+    const [activeGlimpse, setActiveGlimpse] = useState<{ id: string; name: string; image: string; category?: 'generator' | 'pump' } | null>(null);
     const [selectedVoice, setSelectedVoice] = useState<string>(() => {
         try {
             return localStorage.getItem('ce_voice_name') || 'Puck';
@@ -82,21 +82,9 @@ const VoiceAssistant: React.FC = () => {
         bargeInModeRef.current = bargeInMode;
     }, [bargeInMode]);
 
-    // Helper: Find product by ID from local data
-    const findProductById = useCallback((id: string) => {
-        const gen = GENERATORS.find(g => g.id === id);
-        if (gen) return { name: gen.name, image: gen.image };
-        const pump = PUMPS.find(p => p.id === id);
-        if (pump) return { name: pump.name, image: pump.image };
-
-        // Fallback: loose search
-        const searchStr = id.toLowerCase();
-        const looseGen = GENERATORS.find(g => g.id.toLowerCase().includes(searchStr) || g.name.toLowerCase().includes(searchStr));
-        if (looseGen) return { name: looseGen.name, image: looseGen.image };
-        const loosePump = PUMPS.find(p => p.id.toLowerCase().includes(searchStr) || p.name.toLowerCase().includes(searchStr));
-        if (loosePump) return { name: loosePump.name, image: loosePump.image };
-
-        return null;
+    // Helper: Resolve product query / ID to a verified local catalog photo & title
+    const findProductForGlimpse = useCallback((query?: string, fallbackName?: string, category?: string) => {
+        return findCatalogProduct(query, fallbackName, category);
     }, []);
 
     // Helper: Decode Audio
@@ -345,7 +333,7 @@ const VoiceAssistant: React.FC = () => {
 
         try {
             // Dynamic Import for Performance Optimization
-            const { GoogleGenAI, Modality } = await import("@google/genai");
+            const { GoogleGenAI, Modality, Type } = await import("@google/genai");
 
             const ai = new GoogleGenAI({ apiKey });
 
@@ -445,33 +433,33 @@ CONVERSATIONAL PERSONA & RULES:
   • Naturally match user if they speak Afaan Oromoo, Tigrinya, or Chinese.
   • Current UI Language: ${language}.
 
-GLIMPSE FEATURE:
-- Whenever the user asks to see a product or expresses interest in a specific generator or pump model, call the "show_product_image" tool. 
-- This will show a 10-second floating glimpse of the product on their screen while you introduce it.`,
+GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
+- Whenever the user asks to see a product photo, picture, visual, or expresses interest in a specific generator or water pump model (in English, Amharic e.g. "ፎቶ አሳየኝ", or any language), ALWAYS call the "show_product_image" tool immediately BEFORE finishing your spoken answer.
+- Pass a concise English query with brand, kW rating, and type (e.g. "weichai 500kw generator", "yuchai 200kw generator", "united power 5kw generator", "yuchai 80kw pump", "yunnei 100kw pump", "weifang 150kw pump", "kefo 180kw pump", "last 200kw pump", "weichai 250kw pump"). Never invent external URLs — the app resolves the real studio photo automatically.
+- Key verified catalog IDs you can pass in productQuery:
+  Generators: weichai-500kw, weichai-400kw-new, weichai-80kw, yuchai-200kw-md200, yuchai-150kw-md150, yuchai-100kw, yunnei-15kw, yunnei-50kw, yunnei-100kw, kefo-50kw, united-11kw, cummins-100kw.
+  Water Pumps (80kW–250kW+): yuchai-80kw-pump, yunnei-pump-100kw, yunnei-120kw-pump-new, weifang-150kw-pump, kefo-180kw-pump, last-200kw-pump, weichai-250kw-pump, weichai-400kw-pump, yc-50p.
+- Once show_product_image runs, briefly describe the displayed unit in 1-2 sentences.`,
                     tools: [{
                         googleSearch: {}
                     }, {
                         functionDeclarations: [
                             {
                                 name: "show_product_image",
-                                description: "Display a 10-second floating glimpse of a specific product image.",
+                                description: "Display a 10-second floating glimpse photo of a specific CE Power generator or water pump on the user's screen.",
                                 parameters: {
-                                    type: "object" as any,
+                                    type: Type.OBJECT,
                                     properties: {
-                                        productId: {
-                                            type: "string" as any,
-                                            description: "The unique ID of the product to show (e.g., 'weichai-500kw', 'yuchai-80kw-pump')."
+                                        productQuery: {
+                                            type: Type.STRING,
+                                            description: "Catalog ID or natural brand + kW + type query (e.g. 'weichai-500kw', 'yuchai-80kw-pump', 'yunnei 100kw generator')."
                                         },
-                                        productName: {
-                                            type: "string" as any,
-                                            description: "The display name of the product."
-                                        },
-                                        imageUrl: {
-                                            type: "string" as any,
-                                            description: "The relative path to the image (e.g., '/images/yuchai-200kw-md200.webp')."
+                                        category: {
+                                            type: Type.STRING,
+                                            description: "Optional category hint: 'generator' or 'pump'."
                                         }
                                     },
-                                    required: ["productId", "productName", "imageUrl"]
+                                    required: ["productQuery"]
                                 }
                             }
                         ]
@@ -554,7 +542,8 @@ GLIMPSE FEATURE:
                     },
                     onmessage: async (msg: LiveServerMessage) => {
                         // Handle Audio Output from Gemini Live
-                        const audioData = msg.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
+                        const parts = msg.serverContent?.modelTurn?.parts || [];
+                        const audioData = parts.find((p: any) => p.inlineData?.data)?.inlineData?.data;
                         if (audioData && audioContextRef.current) {
                             isTalkingRef.current = true;
                             setIsTalking(true);
@@ -592,24 +581,37 @@ GLIMPSE FEATURE:
                         }
 
                         // Handle Tool Calls (Glimpse Feature)
+                        const inlineFunctionCalls = parts
+                            .map((p: any) => p.functionCall)
+                            .filter(Boolean);
                         const toolCallMsg = (msg as any).toolCall;
-                        if (toolCallMsg) {
-                            console.log('[CE Assistant] Tool call received:', JSON.stringify(toolCallMsg));
-                            const functionCalls = toolCallMsg.functionCalls || [];
+                        const functionCalls = [
+                            ...(toolCallMsg?.functionCalls || []),
+                            ...inlineFunctionCalls
+                        ];
+                        if (functionCalls.length > 0) {
+                            console.log('[CE Assistant] Tool call received:', JSON.stringify(functionCalls));
                             const showImageCall = functionCalls.find((fc: any) => fc.name === 'show_product_image');
                             if (showImageCall) {
-                                const { productId, productName, imageUrl } = showImageCall.args || {};
-                                console.log('[CE Assistant] Showing glimpse for:', productId, productName, imageUrl);
+                                const args = showImageCall.args || {};
+                                const queryArg = args.productQuery || args.productId || '';
+                                const nameArg = args.productName || '';
+                                const categoryArg = args.category || '';
+                                console.log('[CE Assistant] Resolving glimpse for:', queryArg, nameArg, categoryArg);
 
-                                // Prefer verified local catalog data & image when matched
-                                const localProduct = findProductById(productId);
-                                const finalName = localProduct?.name || productName || productId;
-                                const finalImage = localProduct?.image || imageUrl || '/images/yuchai-200kw-md200.webp';
+                                const localProduct = findProductForGlimpse(queryArg, nameArg, categoryArg);
+                                const isPumpQuery = categoryArg === 'pump' || /pump|ፓምፕ|irrigation/i.test(`${queryArg} ${nameArg}`);
+                                const fallbackImage = isPumpQuery ? '/images/perkins-pump-80.webp' : '/images/yuchai-200kw-md200.webp';
+
+                                const finalId = localProduct?.id || queryArg || (isPumpQuery ? 'yuchai-80kw-pump' : 'yuchai-200kw-md200');
+                                const finalName = localProduct?.name || nameArg || queryArg || 'CE Power Equipment';
+                                const finalImage = localProduct?.image || fallbackImage;
+                                const finalCategory: 'generator' | 'pump' = localProduct?.category || (isPumpQuery ? 'pump' : 'generator');
 
                                 // Clear any previous timer
                                 if (glimpseTimerRef.current) clearTimeout(glimpseTimerRef.current);
 
-                                setActiveGlimpse({ id: productId, name: finalName, image: finalImage });
+                                setActiveGlimpse({ id: finalId, name: finalName, image: finalImage, category: finalCategory });
 
                                 // 10-second auto-dismiss
                                 glimpseTimerRef.current = setTimeout(() => {
@@ -617,12 +619,20 @@ GLIMPSE FEATURE:
                                     glimpseTimerRef.current = null;
                                 }, 10000);
 
-                                // Send tool response to let the model continue speaking
+                                // Send tool response with matched product info so the model continues smoothly
                                 sessionPromiseRef.current?.then(session => {
                                     session.sendToolResponse({
                                         functionResponses: [{
                                             name: 'show_product_image',
-                                            response: { displayed: true, productId },
+                                            response: {
+                                                output: {
+                                                    displayed: true,
+                                                    productId: finalId,
+                                                    productName: finalName,
+                                                    category: finalCategory,
+                                                    powerKW: localProduct?.powerKW
+                                                }
+                                            },
                                             id: showImageCall.id
                                         }]
                                     });
@@ -767,6 +777,7 @@ GLIMPSE FEATURE:
     if (loading) return null;
 
     return (
+        <>
         <div className="fixed bottom-6 right-6 z-[95] flex flex-col items-end gap-4">
 
             {/* Expanded Interface */}
@@ -1052,68 +1063,6 @@ GLIMPSE FEATURE:
                 </div>
             )}
 
-            {/* Full-Screen Centered Glimpse Overlay */}
-            <AnimatePresence>
-                {activeGlimpse && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-xl p-4 md:p-12 pointer-events-none"
-                    >
-                        <motion.div
-                            key={activeGlimpse.id}
-                            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className="relative w-full max-w-5xl max-h-full flex flex-col overflow-hidden rounded-3xl bg-slate-900/50 backdrop-blur-3xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto inner-glow"
-                        >
-                            {/* Shimmer sweep */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_ease-in-out_infinite] pointer-events-none z-10" />
-
-                            {/* Close Glimpse Button */}
-                            <button
-                                onClick={() => setActiveGlimpse(null)}
-                                className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/40 hover:bg-red-600 text-white transition-all backdrop-blur-md"
-                                title="Close Glimpse"
-                            >
-                                <X size={20} />
-                            </button>
-
-                            <div className="p-4 md:p-8 flex-1 flex items-center justify-center bg-slate-800/20">
-                                <img
-                                    src={assetUrl(activeGlimpse.image)}
-                                    alt={activeGlimpse.name}
-                                    className="w-full h-auto max-h-[65vh] object-contain drop-shadow-2xl"
-                                />
-                            </div>
-
-                            <div className="px-6 py-6 md:py-8 bg-gradient-to-t from-red-900/90 to-red-800/80 text-white flex flex-col items-center text-center">
-                                <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.3em] text-red-300/80 mb-2 md:mb-3">⚡ Live Product Glimpse</p>
-                                <h4 className="font-bold text-2xl md:text-4xl leading-tight mb-4">{activeGlimpse.name}</h4>
-
-                                <div className="flex items-center gap-3 mb-5">
-                                    <button
-                                        onClick={() => {
-                                            setActiveGlimpse(null);
-                                            window.location.hash = '#/product';
-                                        }}
-                                        className="px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-white text-slate-900 hover:bg-slate-200 transition-colors shadow-lg"
-                                    >
-                                        View in Catalog →
-                                    </button>
-                                </div>
-
-                                <div className="h-1.5 w-full max-w-lg bg-black/40 rounded-full overflow-hidden">
-                                    <div className="h-full bg-red-400 rounded-full animate-progress" />
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
             {/* Floating Action Button */}
             {!isOpen && (
                 <button
@@ -1140,6 +1089,82 @@ GLIMPSE FEATURE:
                 </button>
             )}
         </div>
+
+        {/* Full-Screen Centered Glimpse Overlay (Rendered above floating panel stacking context) */}
+        <AnimatePresence>
+            {activeGlimpse && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center bg-black/65 backdrop-blur-xl p-4 md:p-12 pointer-events-none"
+                >
+                    <motion.div
+                        key={activeGlimpse.id}
+                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        className="relative w-full max-w-5xl max-h-full flex flex-col overflow-hidden rounded-3xl bg-slate-900/90 backdrop-blur-3xl border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.8)] pointer-events-auto inner-glow"
+                    >
+                        {/* Shimmer sweep */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_ease-in-out_infinite] pointer-events-none z-10" />
+
+                        {/* Close Glimpse Button */}
+                        <button
+                            onClick={() => setActiveGlimpse(null)}
+                            className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/50 hover:bg-red-600 text-white transition-all backdrop-blur-md"
+                            title="Close Glimpse"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <div className="p-4 md:p-8 flex-1 flex items-center justify-center studio-stage">
+                            <img
+                                src={assetUrl(activeGlimpse.image)}
+                                alt={activeGlimpse.name}
+                                onError={(e) => {
+                                    const img = e.currentTarget;
+                                    const fallback = assetUrl(
+                                        activeGlimpse.category === 'pump'
+                                            ? '/images/perkins-pump-80.webp'
+                                            : '/images/yuchai-200kw-md200.webp'
+                                    );
+                                    if (img.src !== fallback && !img.dataset.fallbackApplied) {
+                                        img.dataset.fallbackApplied = '1';
+                                        img.src = fallback;
+                                    }
+                                }}
+                                className="w-full h-auto max-h-[60vh] object-contain drop-shadow-2xl"
+                            />
+                        </div>
+
+                        <div className="px-6 py-6 md:py-8 bg-gradient-to-t from-red-900/90 to-red-800/80 text-white flex flex-col items-center text-center">
+                            <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.3em] text-red-300/80 mb-2 md:mb-3">⚡ Live Product Glimpse</p>
+                            <h4 className="font-bold text-2xl md:text-4xl leading-tight mb-4">{activeGlimpse.name}</h4>
+
+                            <div className="flex items-center gap-3 mb-5">
+                                <button
+                                    onClick={() => {
+                                        const targetHash = activeGlimpse.category === 'pump' ? '#/solutions' : '#/product';
+                                        setActiveGlimpse(null);
+                                        window.location.hash = targetHash;
+                                    }}
+                                    className="px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-white text-slate-900 hover:bg-slate-200 transition-colors shadow-lg"
+                                >
+                                    View in Catalog →
+                                </button>
+                            </div>
+
+                            <div className="h-1.5 w-full max-w-lg bg-black/40 rounded-full overflow-hidden">
+                                <div className="h-full bg-red-400 rounded-full animate-progress" />
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 

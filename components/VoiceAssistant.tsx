@@ -434,7 +434,7 @@ REAL-WORLD ENGINE PLATFORMS & VERIFIED KALITY GENERATOR INVENTORY:
 • KOFO / Kefo (ኮፎ / ኬፎ):
   - Warehouse focus: KOFO 200kW Silent (K6126ZLD-200, ~48 L/hr), plus Kefo 50kW, 120kW, 150kW, 180kW industrial units.
 • United Power (ዩናይትድ ፓወር):
-  - Warehouse focus: 2.2kW, 3kW, 3.5kW, 5kW, 5.5kW, 6kW, 6.5kW portable open-frame with wheels (220V single-phase, ~0.9–2.0 L/hr) and 7.5kW, 8.5kW, 11kW compact enclosed silent units (220V/380V).
+  - Warehouse focus: 2.2kW, 3kW, 3.5kW, 5kW, 5.5kW, 6kW, 6.5kW, 7kW, 7.5kW, 8kW, 8.5kW (available in BOTH Open-frame and Silent canopy variants, 220V / 220-380V, ~0.9–2.6 L/hr), plus 11kW Silent canopy only (220V/380V, ~2.7 L/hr).
 • Cummins & Last (Heavy / Multi-brand):
   - Cummins 24kW, 100kW, 220kW, 1000kW, and custom 1120kW (KTA50-G3, 10kV High Voltage) plus Last 25kW–200kW units.
 

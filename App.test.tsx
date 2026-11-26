@@ -83,8 +83,11 @@ describe('CE Assistant Product Glimpse Matcher', () => {
 
         expect(findCatalogProduct('Yuchai 450', null, 'generator')?.id).toBe('yuchai-450kw');
         expect(findCatalogProduct('Weifang 150', null, 'generator')?.id).toBe('weifang-150kw');
-        expect(findCatalogProduct('United Power 2.2', null, 'generator')?.id).toBe('united-2.2kw');
+        expect(findCatalogProduct('United Power 2.2 open', null, 'generator')?.id).toBe('united-2.2kw');
+        expect(findCatalogProduct('United Power 2.2', null, 'generator')?.powerKW).toBe(2.2);
         expect(findCatalogProduct('united-5kw')?.image).toBe('/images/united-power-open.webp');
+        expect(findCatalogProduct('united power 5kw silent')?.image).toBe('/images/united-power-silent.webp');
+        expect(findCatalogProduct('united power 7.5kw open')?.image).toBe('/images/united-power-open.webp');
         expect(findCatalogProduct('united-8.5kw')?.image).toBe('/images/united-power-silent.webp');
         expect(findCatalogProduct('united-11kw')?.image).toBe('/images/united-power-silent-11kw.webp');
     });

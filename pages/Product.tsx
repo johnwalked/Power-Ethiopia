@@ -415,7 +415,7 @@ const Product: React.FC<PageProps> = () => {
                         <span className="text-slate-500 flex items-center gap-1.5">
                           <Zap size={10} className="text-red-500" /> {t.powerOutput}
                         </span>
-                        <span className="text-slate-200 font-mono font-bold">{product.powerKW} kW</span>
+                        <span className="text-slate-200 font-mono font-bold">{product.powerRange || `${product.powerKW} kW`}</span>
                       </div>
 
                       {/* Engine */}
@@ -567,10 +567,11 @@ const Product: React.FC<PageProps> = () => {
                         {row.icon} <span className="truncate">{row.label}</span>
                       </td>
                       {getCompareProducts().map(p => {
-                        const rawVal = (p as any)[row.key];
+                        const rawVal = row.key === 'powerKW' && p.powerRange ? p.powerRange : (p as any)[row.key];
+                        const suffix = row.key === 'powerKW' && p.powerRange ? '' : (row.suffix || '');
                         return (
                           <td key={p.id} className="p-2.5 md:p-4 border-b border-white/10 text-center text-white font-mono">
-                            {rawVal ? `${rawVal}${row.suffix || ''}` : '—'}
+                            {rawVal ? `${rawVal}${suffix}` : '—'}
                           </td>
                         );
                       })}
@@ -649,7 +650,7 @@ const Product: React.FC<PageProps> = () => {
                 <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Zap className="w-5 h-5 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-[10px] text-slate-500 uppercase font-bold">{t.powerOutput}</div>
-                  <div className="text-base md:text-lg font-bold text-white">{selectedProduct.powerKW} KW</div>
+                  <div className="text-base md:text-lg font-bold text-white">{selectedProduct.powerRange || `${selectedProduct.powerKW} KW`}</div>
                 </div>
                 <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                   <Activity className="w-5 h-5 text-blue-500 mb-2 group-hover:scale-110 transition-transform" />
@@ -690,7 +691,8 @@ const Product: React.FC<PageProps> = () => {
                 <button
                   onClick={() => {
                     const phone = "251966330309";
-                    const msg = encodeURIComponent(`Hello CE Power, I would like to inquire about: ${selectedProduct.name} (${selectedProduct.powerKW} kW, ${selectedProduct.type} frame). Please provide current stock availability and pro-forma invoice.`);
+                    const powerLabel = selectedProduct.powerRange || `${selectedProduct.powerKW} kW`;
+                    const msg = encodeURIComponent(`Hello CE Power, I would like to inquire about: ${selectedProduct.name} (${powerLabel}, ${selectedProduct.type} frame). Please provide current stock availability and pro-forma invoice.`);
                     window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
                   }}
                   className="w-full sm:w-1/2 py-3.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-900/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 active:scale-98"

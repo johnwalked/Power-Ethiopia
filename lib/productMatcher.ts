@@ -5,6 +5,8 @@ export interface CatalogMatch {
     name: string;
     brand: string;
     powerKW?: number;
+    powerMinKW?: number;
+    powerMaxKW?: number;
     image: string;
     category: 'generator' | 'pump';
     inStock: boolean;
@@ -67,6 +69,8 @@ const INDEXED_CATALOG: IndexedProduct[] = [
         name: g.name,
         brand: g.brand,
         powerKW: g.powerKW,
+        powerMinKW: g.powerMinKW,
+        powerMaxKW: g.powerMaxKW,
         image: g.image,
         category: 'generator',
         inStock: g.inStock,
@@ -183,10 +187,11 @@ export function findCatalogProduct(
             }
         }
 
-        // Power rating match (prioritize exact kW over kVA approximation in name)
+        // Power rating match (prioritize exact kW or range inclusion over kVA approximation in name)
         if (item.powerKW && targetKWs.length > 0) {
             for (const target of targetKWs) {
-                if (item.powerKW === target) {
+                const inRange = item.powerMinKW !== undefined && item.powerMaxKW !== undefined && target >= item.powerMinKW && target <= item.powerMaxKW;
+                if (item.powerKW === target || inRange) {
                     score += 85;
                 } else {
                     const diffRatio = Math.abs(item.powerKW - target) / Math.max(target, 1);

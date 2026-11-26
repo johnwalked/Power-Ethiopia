@@ -482,7 +482,7 @@ GLIMPSE FEATURE (DISPLAYING PRODUCT PHOTOS ON SCREEN):
 - Whenever the user asks to see a product photo, picture, visual, or explores a specific generator or pump model (in English, Amharic e.g. "ፎቶ አሳየኝ", or any language), ALWAYS call the "show_product_image" tool immediately BEFORE finishing your spoken answer.
 - Pass a concise English query with brand, kW rating, and type (e.g. "weichai 500kw generator", "yuchai 200kw generator", "yuchai 120kw pump", "yuchai 80kw pump"). Never invent external URLs.
 - Key verified catalog IDs:
-  Generators: weichai-500kw, weichai-400kw-new, weichai-300kw, weichai-200kw, weichai-80kw, yuchai-200kw-md200, yuchai-150kw-md150, yuchai-100kw, yuchai-60kw, yunnei-15kw, yunnei-50kw, yunnei-100kw, weifang-100kw, kofo-200kw, united-11kw, cummins-100kw.
+  Generators: weichai-500kw, weichai-400kw-new, weichai-300kw, weichai-200kw, weichai-80kw, yuchai-200kw-md200, yuchai-150kw-md150, yuchai-100kw, yuchai-60kw, yunnei-15kw, yunnei-50kw, yunnei-100kw, weifang-100kw, kofo-200kw, united-power-open-series, united-power-silent-series, united-11kw, cummins-100kw.
   Water Pumps: yc-50p, yuchai-60kw-pump, yuchai-80kw-pump, yuchai-100kw-pump, yuchai-120kw-pump, yuchai-150kw-pump, yuchai-180kw-pump, yuchai-200kw-pump, yuchai-250kw-pump, yunnei-pump-100kw, yunnei-120kw-pump-new, weifang-150kw-pump, kefo-180kw-pump, last-200kw-pump, weichai-250kw-pump, weichai-400kw-pump, cum-pump-100, united-11kw-pump.
 - Once show_product_image runs, briefly summarize the key real-world specs of that unit in 1–2 sentences.`,
                     tools: [{
